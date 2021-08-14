@@ -1,11 +1,16 @@
 //importing dependencies
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
+
+//routes
+const DestinationsRouter = require("./routes/destinations");
 
 //creating express app
 const app = express();
 require("dotenv").config();
-
+app.use(express.json());
+app.use(cors());
 //configuring dotenv variables
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
@@ -29,3 +34,4 @@ app.listen(PORT, async () => {
 });
 
 //routes
+app.use("/destinations", DestinationsRouter);

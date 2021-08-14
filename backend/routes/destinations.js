@@ -16,6 +16,9 @@ router.get("/get_one/:id", async (req, res) => {
 
   try {
     const destination = await Destination.findById(id);
+    if (destination == null) {
+      return res.json({ error: "No such destination" });
+    }
     res.json({ destination });
   } catch (error) {
     res.json({ error });
@@ -55,6 +58,16 @@ router.post("/update", async (req, res) => {
     res.json({ success: "Record Successfully Updated!" });
   } catch (error) {
     res.json({ error: "Couldn't update the Record!" });
+  }
+});
+
+router.delete("/delete", async (req, res) => {
+  const id = req.body.id;
+  try {
+    await Destination.findByIdAndDelete(id);
+    res.json({ success: "Record Successfully Deleted!" });
+  } catch (error) {
+    res.json({ error: "Couldn't delete the Record!" });
   }
 });
 

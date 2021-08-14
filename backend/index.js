@@ -1,6 +1,7 @@
 //importing dependencies
 const express = require("express");
 const mongoose = require("mongoose");
+const DestinationsRouter = require("./routes/destinations");
 
 //creating express app
 const app = express();
@@ -29,3 +30,4 @@ app.listen(PORT, async () => {
 });
 
 //routes
+app.use("/destinations", DestinationsRouter);

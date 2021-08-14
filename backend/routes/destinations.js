@@ -11,6 +11,17 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/get_one/:id", async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const destination = await Destination.findById(id);
+    res.json({ destination });
+  } catch (error) {
+    res.json({ error });
+  }
+});
+
 router.post("/add", async (req, res) => {
   const destination = await new Destination();
   destination.destination = req.body.destination;

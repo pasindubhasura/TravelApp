@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
   } catch (error) {
     res.json({ error });
   }
-});
+}); //get all destination records
 
 router.get("/get_one/:id", async (req, res) => {
   const id = req.params.id;
@@ -23,7 +23,7 @@ router.get("/get_one/:id", async (req, res) => {
   } catch (error) {
     res.json({ error });
   }
-});
+}); //get one destination record
 
 router.post("/add", async (req, res) => {
   const destination = await new Destination();
@@ -40,7 +40,7 @@ router.post("/add", async (req, res) => {
   } catch (error) {
     res.json({ error: "Record added failed!" });
   }
-});
+}); //add destination record
 
 router.post("/update", async (req, res) => {
   try {
@@ -59,7 +59,7 @@ router.post("/update", async (req, res) => {
   } catch (error) {
     res.json({ error: "Couldn't update the Record!" });
   }
-});
+}); //update destination record
 
 router.delete("/delete", async (req, res) => {
   const id = req.body.id;
@@ -69,6 +69,6 @@ router.delete("/delete", async (req, res) => {
   } catch (error) {
     res.json({ error: "Couldn't delete the Record!" });
   }
-});
+}); //delete destination record
 
 module.exports = router;

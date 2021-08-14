@@ -39,4 +39,23 @@ router.post("/add", async (req, res) => {
   }
 });
 
+router.post("/update", async (req, res) => {
+  try {
+    const id = req.body.id;
+    const destination = await Destination.findById(id);
+
+    destination.destination = req.body.destination;
+    destination.city = req.body.city;
+    destination.district = req.body.district;
+    destination.province = req.body.province;
+    destination.description = req.body.description;
+    destination.image = req.body.image;
+
+    await destination.save();
+    res.json({ success: "Record Successfully Updated!" });
+  } catch (error) {
+    res.json({ error: "Couldn't update the Record!" });
+  }
+});
+
 module.exports = router;

@@ -5,7 +5,7 @@ const Room = require("../models/room");
 
 /*******************     Insert data to database     ******************/
 
-http://localhost:8070/room/add
+http://localhost:5000/room/add
 
 router.post(`/room/add`,(req, res) => {
 
@@ -30,7 +30,7 @@ router.post(`/room/add`,(req, res) => {
 
 /**********************     Retreive Data    *********************/
 
-http://localhost:8070/room/
+http://localhost:5000/room/
 
 router.get('/room/',(req, res) => {
 
@@ -54,7 +54,7 @@ router.get('/room/',(req, res) => {
 
 /*********************      Update Data     *********************/
 
-http://localhost:8070/room/update/ _id
+http://localhost:5000/room/update/ _id
 
 router.put('/room/update/:id',(req, res) => {
 
@@ -82,7 +82,7 @@ router.put('/room/update/:id',(req, res) => {
 
 /*********************     Delete Data     **********************/
 
-http://localhost:8070/room/delete/ _id
+http://localhost:5000/room/delete/ _id
 
 router.delete('/room/delete/:id',(req, res) => {
 
@@ -105,7 +105,7 @@ router.delete('/room/delete/:id',(req, res) => {
 
 /*********************     Search by Id     *******************/
 
-http://localhost:8070/room/ _id
+http://localhost:5000/room/ _id
 
 router.get('/room/:id',(req, res) => {
 

@@ -1,10 +1,8 @@
 //importing dependencies
-const express = require('express');
-const guide = require('../models/guide');
+const router = require('express').Router();
+const Guide = require('../models/guide');
 
 
-//invoke express 
-const router = express.Router();
 
 //Insert guide deatils 
 router.post('/guide/add',(req,res)=>{
@@ -26,5 +24,3 @@ router.post('/guide/add',(req,res)=>{
 
 
 module.exports = router;
-//delete this comment
-//mekat delete karanna

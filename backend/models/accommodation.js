@@ -22,5 +22,6 @@ const accommodationScheema = new mongoose.Schema({
     timestamps: true,
 })
 
+
 //export Accomdation model for router usage
 module.exports = mongoose.model("accommodation", accommodationScheema);

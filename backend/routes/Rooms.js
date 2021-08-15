@@ -4,6 +4,7 @@ const room = require("../models/room");
 const Room = require("../models/room");
 
 
+
 /*******************     Insert data to database     ******************/
 
 http://localhost:8070/room/add

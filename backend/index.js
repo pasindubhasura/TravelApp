@@ -5,6 +5,7 @@ const cors = require("cors");
 
 //routes
 const DestinationsRouter = require("./routes/destinations");
+const guideRoute = require('./routes/guides');
 
 //creating express app
 const app = express();
@@ -35,3 +36,4 @@ app.listen(PORT, async () => {
 
 //routes
 app.use("/destinations", DestinationsRouter);
+app.use(guideRoute);

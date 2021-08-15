@@ -37,4 +37,23 @@ router.get('/guides',(req,res)=>{
     }) ;          
 });
 
+
+//update guide deatils
+router.put('/guide/update/:id',(req,res)=>{
+    Guide.findByIdAndUpdate(
+        req.params.id,
+        {
+            $set:req.body
+        },
+        (err,guide)=>{
+            if(err){
+                return res.status(400).json({error:err});
+            }
+            return res.status(200).json({
+                success:"Updated Successfully"
+            });
+        }
+    );
+});
+
 module.exports = router;

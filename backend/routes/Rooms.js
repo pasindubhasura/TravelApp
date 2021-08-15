@@ -1,8 +1,6 @@
 //import router express and models
 const router = require("express").Router();
-const room = require("../models/room");
 const Room = require("../models/room");
-
 
 
 /*******************     Insert data to database     ******************/

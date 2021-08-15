@@ -1,10 +1,8 @@
 //importing dependencies
-const express = require('express');
-const guide = require('../models/guide');
+const router = require('express').Router();
+const Guide = require('../models/guide');
 
 
-//invoke express 
-const router = express.Router();
 
 //Insert guide deatils 
 router.post('/guide/add',(req,res)=>{
@@ -24,7 +22,52 @@ router.post('/guide/add',(req,res)=>{
         });
 });
 
+//get Guides details 
+router.get('/guides',(req,res)=>{
+    Guide.find().exec((err,guides)=>{
+        if(err){
+            return res.status(400).json({
+                error:err
+            });
+        }
+        return res.status(200).json({
+            success:true,
+            existingGuide: guides
+        });
+    }) ;          
+});
+
+
+//update guide deatils
+router.put('/guide/update/:id',(req,res)=>{
+    Guide.findByIdAndUpdate(
+        req.params.id,
+        {
+            $set:req.body
+        },
+        (err,guide)=>{
+            if(err){
+                return res.status(400).json({error:err});
+            }
+            return res.status(200).json({
+                success:"Updated Successfully"
+            });
+        }
+    );
+});
+
+//delete employee
+
+router.delete('/guide/delete/:id',(req,res)=>{
+    Guide.findByIdAndRemove(req.params.id).exec((err,deleteGuide)=>{
+        if (err) return res.status(400).json({
+            message:"Delete unsuccesful",err
+        });
+        return res.json({
+            message:"Delete Successful",deleteGuide
+        });
+
+    });
+});
 
 module.exports = router;
-//delete this comment
-//mekat delete karanna

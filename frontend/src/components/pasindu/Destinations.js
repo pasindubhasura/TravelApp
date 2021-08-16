@@ -24,18 +24,20 @@ export default function Destinations() {
           <ButtonSecondary color={"green"}>Download</ButtonSecondary>
         </ButtonSection>
         <SearchBar>
-          <SearchBarInput></SearchBarInput>
+          <SearchBarInput placeholder={"Search here..."}></SearchBarInput>
         </SearchBar>
       </Row>
       <TableContainer>
         <Table>
           <thead>
-            <th>No</th>
-            <th>Destination</th>
-            <th>City</th>
-            <th>District</th>
-            <th>Province</th>
-            <th>Action</th>
+            <tr>
+              <th>No</th>
+              <th>Destination</th>
+              <th>City</th>
+              <th>District</th>
+              <th>Province</th>
+              <th>Action</th>
+            </tr>
           </thead>
           <tbody>
             {destinations.map((item) => {
@@ -101,15 +103,20 @@ margin: 10px 20px;
 const SearchBarInput = Styled.input`
 width: 100%;
 height:100%;
-padding: 0px;
+border-radius:12px; 
+border:1px solid black;
 `;
 const TableContainer = Styled.div`
 margin:10px 20px;
 `;
 const Table = Styled.table`
+border-radius:;
 th,td{
   border: 1px solid black;
   padding:5px;
+}
+th{
+  padding: 12px;
 }
 tr td:last-child {
     width: 1%;

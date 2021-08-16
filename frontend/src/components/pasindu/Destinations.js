@@ -48,10 +48,18 @@ export default function Destinations() {
                   <td>{item.province}</td>
                   <td>
                     <Center>
-                      <Button color={"blue"} style={{ marginRight: "7px" }}>
+                      <Button
+                        color={"blue"}
+                        style={{ margin: "5px 7px 5px 15px" }}
+                      >
                         Edit
                       </Button>
-                      <Button color={"red"}>Delete</Button>
+                      <Button
+                        color={"red"}
+                        style={{ margin: "5px 15px 5px 0px" }}
+                      >
+                        Delete
+                      </Button>
                     </Center>
                   </td>
                 </tr>
@@ -72,7 +80,7 @@ flex-direction: column;
 min-height:100vh;
 `;
 const H2 = Styled.h2`
-margin:20px;
+margin:20px 0px 10px 20px;
 
 `;
 const Row = Styled.div`
@@ -103,6 +111,16 @@ th,td{
   border: 1px solid black;
   padding:5px;
 }
+tr td:last-child {
+    width: 1%;
+    white-space: nowrap;
+}
+thead{
+  background-color:green;
+  color:white;
+  max-width:
+}
+font-weight:bold;
 border: 1px solid black;
 border-collapse: collapse;
 width: 100%;
@@ -111,8 +129,9 @@ const Button = Styled.button`
 background-color: ${(props) => props.color};
 color: ${(props) => props.fontColor || "white"};
 border: 2px solid ${(props) => props.color};
-border-radius:8px ;
-padding: 7px 12px;
+border-radius:12px; 
+font-weight:bold;
+padding: 8px 14px;
 &:hover{
   filter: brightness(85%);
   cursor:pointer;
@@ -120,9 +139,10 @@ padding: 7px 12px;
 
 const ButtonSecondary = Styled.button`
 background-color: white;
-color: ${(props) => props.fontColor || "black"};
+color: ${(props) => props.color || "black"};
 border: 2px solid ${(props) => props.color};
-border-radius:8px ;
+border-radius:12px ;
+font-weight:bold;
 padding: 7px 12px;
 &:hover{
   background-color:${(props) => props.color};

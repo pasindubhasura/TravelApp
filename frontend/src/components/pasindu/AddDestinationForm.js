@@ -100,7 +100,8 @@ const Column = styled.div`
 
 const TextInput = styled.input`
   width: 100%;
-  padding: 5px;
+  padding-left: 5px;
+  height: 40px;
   margin-bottom: 20px;
   border-radius: 5px;
   border: 1px solid;
@@ -154,7 +155,8 @@ padding: 8px 14px;
 }`;
 const Dropdown = styled.select`
   width: 100%;
-  padding: 5px;
+  padding-left: 5px;
+  height: 40px;
   margin-bottom: 20px;
   border-radius: 5px;
   border-style: solid;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
 import axios from "axios";
+import { colors } from "./data";
 export default function Destinations() {
   const [destinations, setdestinations] = useState([]);
 
@@ -18,17 +19,20 @@ export default function Destinations() {
       <H2>Destination</H2>
       <Row>
         <ButtonSection>
-          <Button color={"green"} style={{ margin: "0px 7px 0px 20px" }}>
+          <Button
+            color={colors.darkerGreen}
+            style={{ margin: "0px 7px 0px 20px" }}
+          >
             Add Destination
           </Button>
-          <ButtonSecondary color={"green"}>Download</ButtonSecondary>
+          <ButtonSecondary color={colors.darkerGreen}>Download</ButtonSecondary>
         </ButtonSection>
         <SearchBar>
           <SearchBarInput placeholder={"Search here..."}></SearchBarInput>
         </SearchBar>
       </Row>
       <TableContainer>
-        <Table>
+        <Table bgcolor={colors.darkerGreen}>
           <thead>
             <tr>
               <th>No</th>
@@ -123,7 +127,7 @@ tr td:last-child {
     white-space: nowrap;
 }
 thead{
-  background-color:green;
+  background-color:${(props) => props.bgcolor};
   color:white;
   max-width:
 }

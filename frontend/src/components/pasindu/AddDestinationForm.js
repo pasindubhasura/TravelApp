@@ -18,14 +18,28 @@ export default function AddDestinationForm() {
         <Column>
           <TextInput placeholder="Destination" type="text" />
           <TextInput placeholder="City" type="text" />
-          <Dropdown onChange={(e) => setdistrict(e.target.value)}>
+          <Dropdown onChange={(e) => setdistrict(e.target.value)} value="none">
+            <option value="none" disabled hidden>
+              District
+            </option>
             {districts.map((item) => {
-              return <option value={item}>{item}</option>;
+              return (
+                <option value={item} key={item}>
+                  {item}
+                </option>
+              );
             })}
           </Dropdown>
-          <Dropdown onChange={(e) => setprovince(e.target.value)}>
+          <Dropdown onChange={(e) => setprovince(e.target.value)} value="none">
+            <option value="none" disabled hidden>
+              Province
+            </option>
             {provinces.map((item) => {
-              return <option value={item}>{item}</option>;
+              return (
+                <option value={item} key={item}>
+                  {item}
+                </option>
+              );
             })}
           </Dropdown>
           <TextInputBox placeholder="Description" rows={8} />
@@ -37,7 +51,7 @@ export default function AddDestinationForm() {
         <Column>
           <Center>
             <Image src={img} />
-            <UploadButton class="custom-file-upload">
+            <UploadButton>
               <FileInput type="file" />
               Upload Image
             </UploadButton>
@@ -79,7 +93,7 @@ const FormGrid = styled.form`
   margin: 20px;
 `;
 const Column = styled.div`
-  background-color: red;
+  //background-color: red;
   width: 100%;
   padding-right: 20px;
 `;

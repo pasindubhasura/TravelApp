@@ -7,16 +7,40 @@ import { districts, provinces, colors } from "./data";
 
 export default function AddDestinationForm() {
   const [img, setImg] = useState(defaultImage);
-  const [district, setdistrict] = useState("");
-  const [province, setprovince] = useState("");
+  const [district, setdistrict] = useState("none");
+  const [province, setprovince] = useState("none");
+  const [destination, setdestination] = useState("");
+  const [city, setcity] = useState("");
+  const [description, setdescription] = useState("");
+
+  const clear = () => {
+    setcity("");
+    setdistrict("none");
+    setprovince("none");
+    setdestination("");
+    setdescription("");
+  };
   return (
     <MainDiv>
       <H2>Add Destination Details</H2>
       <FormGrid>
         <Column>
-          <TextInput placeholder="Destination" type="text" />
-          <TextInput placeholder="City" type="text" />
-          <Dropdown onChange={(e) => setdistrict(e.target.value)} value="none">
+          <TextInput
+            placeholder="Destination"
+            type="text"
+            value={destination}
+            onChange={(e) => setdestination(e.target.value)}
+          />
+          <TextInput
+            placeholder="City"
+            type="text"
+            onChange={(e) => setcity(e.target.value)}
+            value={city}
+          />
+          <Dropdown
+            onChange={(e) => setdistrict(e.target.value)}
+            value={district}
+          >
             <option value="none" disabled hidden>
               District
             </option>
@@ -28,7 +52,10 @@ export default function AddDestinationForm() {
               );
             })}
           </Dropdown>
-          <Dropdown onChange={(e) => setprovince(e.target.value)} value="none">
+          <Dropdown
+            onChange={(e) => setprovince(e.target.value)}
+            value={province}
+          >
             <option value="none" disabled hidden>
               Province
             </option>
@@ -40,8 +67,18 @@ export default function AddDestinationForm() {
               );
             })}
           </Dropdown>
-          <TextInputBox placeholder="Description" rows={8} />
-          <Button color={colors.darkerGreen} style={{ marginRight: "2%" }}>
+          <TextInputBox
+            placeholder="Description"
+            rows={8}
+            onChange={(e) => setdescription(e.target.value)}
+            value={description}
+          />
+          <Button
+            color={colors.darkerGreen}
+            style={{ marginRight: "2%" }}
+            onClick={clear}
+            type="button"
+          >
             Clear
           </Button>
           <ButtonSecondary color={colors.darkerGreen}>

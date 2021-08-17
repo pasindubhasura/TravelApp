@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
 
 router.get("/get_one/:id", async (req, res) => {
   const id = req.params.id;
-
+  console.log(id);
   try {
     const destination = await Destination.findById(id);
     if (destination == null) {

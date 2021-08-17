@@ -5,7 +5,7 @@ import styled from "styled-components";
 import defaultImage from "../../images/defaultImage.jpg";
 import { districts, provinces, colors } from "./data";
 
-export default function AddDestinationForm(props) {
+export default function EditDestinationForm(props) {
   const [img, setImg] = useState(defaultImage);
   const [district, setdistrict] = useState("none");
   const [province, setprovince] = useState("none");
@@ -19,16 +19,16 @@ export default function AddDestinationForm(props) {
   }, id);
 
   const fetchData = async () => {
-    const response = axios.get(
-      `http://localhost:5001/destinations//get_one/${id}`
+    const response = await axios.get(
+      `http://localhost:5001/destinations/get_one/${id}`
     );
     if (response.data.destination) {
       const destination = response.data.destination;
       setcity(destination.city);
-      setdistrict("none");
-      setprovince("none");
-      setdestination("");
-      setdescription("");
+      setdistrict(destination.district);
+      setprovince(destination.province);
+      setdestination(destination.destination);
+      setdescription(destination.description);
     }
   };
 
@@ -114,7 +114,7 @@ export default function AddDestinationForm(props) {
             type="button"
             onClick={(e) => formHandler(e)}
           >
-            Add Destination
+            Edit Destination
           </ButtonSecondary>
         </Column>
         <Column>

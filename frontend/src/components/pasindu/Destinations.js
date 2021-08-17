@@ -61,6 +61,7 @@ export default function Destinations(props) {
               <th>City</th>
               <th>District</th>
               <th>Province</th>
+              <th>Description</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -73,6 +74,7 @@ export default function Destinations(props) {
                   <td>{item.city}</td>
                   <td>{item.district}</td>
                   <td>{item.province}</td>
+                  <td>{item.description}</td>
                   <td>
                     <Center>
                       <Button

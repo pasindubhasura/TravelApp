@@ -48,12 +48,12 @@ export default class AddGuide extends Component {
             case "email":
             formErrors.email = invoiceRegx.test(value)
             ? ""
-            : "Please enter a valid email address";
+            : "Didn't match pattern";
             break;
             case "phoneNo":
             formErrors.phoneNo =
             value.length > 10 || value.length > 10
-            ? "Please enter a valid phone number"
+            ? "Must be 10 digits"
             :"";
             break;
             default:

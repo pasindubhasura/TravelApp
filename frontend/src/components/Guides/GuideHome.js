@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import { Link } from "react-router-dom";
-// import '../styles.css'
+import './styles.css'
 // import {jsPDF} from 'jspdf'
 // import 'jspdf-autotable'
 // import './estyle.css';
@@ -110,7 +110,7 @@ handleSearchArea=(e)=>{
 
         </div> 
             <div className="py-4">
-            <h1>Guides Dashbord</h1>
+            <h1>Guides</h1>
             <table class=" table table-striped borde" >
                 <thead class="thead-dark">
                     <tr>
@@ -147,7 +147,7 @@ handleSearchArea=(e)=>{
                           
                           <td>
                                
-                            <Link  className="btn btn-outline-primary" to={`/emp_update/${guide._id}`}>
+                            <Link  className="btn btn-outline-primary" to={`/guide_update/${guide._id}`}>
                               <i className="fas fa-edit"></i> &nbsp;Update
                             
                             </Link>

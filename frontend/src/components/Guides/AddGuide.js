@@ -127,7 +127,7 @@ export default class AddGuide extends Component {
                     <div className="col-6 shadowBox" >
                         
                         <center>
-                            <h1 className="h3 mb-3 font-weight-normal">Add New Guide</h1>
+                            <h1 className="h3 mb-3 font-weight-normal head-line">Add New Guide</h1>
                         </center>
 
                     <form className="needs-validation " noValidate >
@@ -231,15 +231,14 @@ export default class AddGuide extends Component {
                             </div>
 
                     
-                            <center>
-                                <div class="d-grid gap-2 col-6 mx-auto  ">
-                                    <button type="submit" className="btn btn-primary sub_btn" onClick={this.onSubmit}><i class="far fa-save"></i>&nbsp;Add</button>
+                           
+                                <div>
+                                <button href="/guide_add" type="submit" className="btn btn-primary sub_btn2 " ><i class="far fa-times-circle"></i>&nbsp;Reset</button>
+                                <button type="submit" className="btn btn-primary sub_btn" onClick={this.onSubmit}><i class="far fa-save"></i>&nbsp;Add</button>
                                     
                                 </div>
-                                <div class="d-grid gap-2 col-6 mx-auto  ">
-                                    <button href="/guide_add" type="submit" className="btn btn-primary sub_btn " ><i class="far fa-times-circle"></i>&nbsp;Reset</button>
-                                </div>
-                            </center>
+                                
+                           
                         </form>
                     </div>
                     <div className="col-6">

@@ -136,7 +136,7 @@ const Button = Styled.button`
 background-color: ${(props) => props.color};
 color: ${(props) => props.fontColor || "white"};
 border: 2px solid ${(props) => props.color};
-border-radius:12px; 
+border-radius:5px; 
 font-weight:bold;
 padding: 8px 14px;
 &:hover{
@@ -148,9 +148,9 @@ const ButtonSecondary = Styled.button`
 background-color: white;
 color: ${(props) => props.color || "black"};
 border: 2px solid ${(props) => props.color};
-border-radius:12px ;
+border-radius:5px ;
 font-weight:bold;
-padding: 7px 12px;
+padding: 8px 14px;
 &:hover{
   background-color:${(props) => props.color};
   color: white;

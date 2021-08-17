@@ -160,7 +160,7 @@ handleSearchArea=(e)=>{
 
                 </tbody>
                 </table>
-                <Link to="emp_add" className="btn btn-warning"><i className="fas fa-user-plus"></i>&nbsp;Add Employee</Link>&nbsp;
+                <Link to="/guide_add" className="btn btn-warning"><i className="fas fa-user-plus"></i>&nbsp;Add Guide</Link>&nbsp;
                 {/* <Link onClick={()=>this.exportPDF()} to="#" className="btn btn-success"><i class="fas fa-download"></i>&nbsp;Download Report</Link> */}
                 
                 

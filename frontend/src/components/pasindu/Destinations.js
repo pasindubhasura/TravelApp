@@ -77,7 +77,7 @@ export default function Destinations(props) {
                   <td>{item.description}</td>
                   <td>
                     <Center>
-                      <Button
+                      <ButtonSecondary
                         color={"blue"}
                         style={{ margin: "5px 7px 5px 15px" }}
                         onClick={() => {
@@ -85,15 +85,15 @@ export default function Destinations(props) {
                         }}
                       >
                         Edit
-                      </Button>
-                      <Button
+                      </ButtonSecondary>
+                      <ButtonSecondary
                         color={"red"}
                         style={{ margin: "5px 15px 5px 0px" }}
                         type="button"
                         onClick={() => deleteItem(item._id)}
                       >
                         Delete
-                      </Button>
+                      </ButtonSecondary>
                     </Center>
                   </td>
                 </tr>

@@ -7,7 +7,7 @@ export default function App() {
   return (
     <Router>
       <GlobalStyle />
-      <Route component={Destinations} path={"/destinations"}></Route>
+      <Route exact component={Destinations} path={"/destinations"}></Route>
     </Router>
   );
 }

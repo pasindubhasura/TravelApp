@@ -61,8 +61,9 @@ router.post("/update", async (req, res) => {
   }
 }); //update destination record
 
-router.delete("/delete", async (req, res) => {
+router.post("/delete", async (req, res) => {
   const id = req.body.id;
+  console.log(id);
   try {
     await Destination.findByIdAndDelete(id);
     res.json({ success: "Record Successfully Deleted!" });

@@ -1,17 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
 import axios from "axios";
 import styled from "styled-components";
 import defaultImage from "../../images/defaultImage.jpg";
 import { districts, provinces, colors } from "./data";
 
-export default function AddDestinationForm() {
+export default function AddDestinationForm(props) {
   const [img, setImg] = useState(defaultImage);
   const [district, setdistrict] = useState("none");
   const [province, setprovince] = useState("none");
   const [destination, setdestination] = useState("");
   const [city, setcity] = useState("");
   const [description, setdescription] = useState("");
+  const [id, setid] = useState(props.history.location.state.id);
+
+  useEffect(() => {
+    fetchData();
+  }, id);
+
+  const fetchData = async () => {
+    const response = axios.get(
+      `http://localhost:5001/destinations//get_one/${id}`
+    );
+    if (response.data.destination) {
+      const destination = response.data.destination;
+      setcity(destination.city);
+      setdistrict("none");
+      setprovince("none");
+      setdestination("");
+      setdescription("");
+    }
+  };
 
   const clear = () => {
     setcity("");
@@ -23,15 +42,15 @@ export default function AddDestinationForm() {
   const formHandler = async (e) => {
     e.preventDefault();
     const response = await axios.post(
-      "http://localhost:5001/destinations/add",
-      { district, province, destination, city, description }
+      "http://localhost:5001/destinations/update",
+      { id, district, province, destination, city, description }
     );
     if (response.data.success) window.location = "/destinations";
     if (response.data.error) alert(response.data.error);
   };
   return (
     <MainDiv>
-      <H2>Add Destination Details</H2>
+      <H2>Edit Destination Details</H2>
       <FormGrid>
         <Column>
           <TextInput

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
 import axios from "axios";
 import { colors } from "./data";
-export default function Destinations() {
+export default function Destinations(props) {
   const [destinations, setdestinations] = useState([]);
 
   useEffect(() => {
@@ -13,6 +13,26 @@ export default function Destinations() {
     const response = await axios.get("http://localhost:5001/destinations");
     if (!response.data.error) setdestinations(response.data.destinations);
   };
+
+  const addDestinationForm = () => {
+    window.location = "/destinations/add";
+  };
+  const deleteItem = async (id) => {
+    alert("Are you sure?");
+    console.log(id);
+    const response = await axios.post(
+      "http://localhost:5001/destinations/delete",
+      {
+        id,
+      }
+    );
+    if (response.data.success) window.location = "/destinations";
+    if (response.data.error) alert(response.data.error);
+  };
+  const editDestinationForm = (id) => {
+    props.history.push("destinations/edit", { id });
+  };
+
   let x = 1;
   return (
     <MainDiv>
@@ -22,6 +42,7 @@ export default function Destinations() {
           <Button
             color={colors.darkerGreen}
             style={{ margin: "0px 7px 0px 20px" }}
+            onClick={addDestinationForm}
           >
             Add Destination
           </Button>
@@ -57,12 +78,17 @@ export default function Destinations() {
                       <Button
                         color={"blue"}
                         style={{ margin: "5px 7px 5px 15px" }}
+                        onClick={() => {
+                          editDestinationForm(item._id);
+                        }}
                       >
                         Edit
                       </Button>
                       <Button
                         color={"red"}
                         style={{ margin: "5px 15px 5px 0px" }}
+                        type="button"
+                        onClick={() => deleteItem(item._id)}
                       >
                         Delete
                       </Button>

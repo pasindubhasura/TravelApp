@@ -3,9 +3,14 @@ import Styled from "styled-components";
 import axios from "axios";
 import styled from "styled-components";
 import defaultImage from "../../images/defaultImage.jpg";
+import { districts, provinces } from "./data";
 
 export default function AddDestinationForm() {
   const [img, setImg] = useState(defaultImage);
+  const [district, setdistrict] = useState("");
+  const [province, setprovince] = useState("");
+  console.log(district);
+  console.log(province);
   return (
     <MainDiv>
       <H2>Add Destination Details</H2>
@@ -13,8 +18,16 @@ export default function AddDestinationForm() {
         <Column>
           <TextInput placeholder="Destination" type="text" />
           <TextInput placeholder="City" type="text" />
-          <TextInput placeholder="District" type="text" />
-          <TextInput placeholder="Province" type="text" />
+          <Dropdown onChange={(e) => setdistrict(e.target.value)}>
+            {districts.map((item) => {
+              return <option value={item}>{item}</option>;
+            })}
+          </Dropdown>
+          <Dropdown onChange={(e) => setprovince(e.target.value)}>
+            {provinces.map((item) => {
+              return <option value={item}>{item}</option>;
+            })}
+          </Dropdown>
           <TextInputBox placeholder="Description" rows={8} />
           <Button color="green" style={{ marginRight: "2%" }}>
             Clear
@@ -70,12 +83,7 @@ const Column = styled.div`
   width: 100%;
   padding-right: 20px;
 `;
-// const Column2 = styled.div`
-//   grid-column-start: 2;
-//   grid-column-end: 2;
-//   background-color: green;
-//   width: 50%;
-// `;
+
 const TextInput = styled.input`
   width: 100%;
   padding: 5px;
@@ -130,3 +138,10 @@ padding: 8px 14px;
   color: white;
   cursor:pointer;
 }`;
+const Dropdown = styled.select`
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border-style: solid;
+`;

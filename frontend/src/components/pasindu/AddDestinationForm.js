@@ -3,14 +3,12 @@ import Styled from "styled-components";
 import axios from "axios";
 import styled from "styled-components";
 import defaultImage from "../../images/defaultImage.jpg";
-import { districts, provinces } from "./data";
+import { districts, provinces, colors } from "./data";
 
 export default function AddDestinationForm() {
   const [img, setImg] = useState(defaultImage);
   const [district, setdistrict] = useState("");
   const [province, setprovince] = useState("");
-  console.log(district);
-  console.log(province);
   return (
     <MainDiv>
       <H2>Add Destination Details</H2>
@@ -43,15 +41,17 @@ export default function AddDestinationForm() {
             })}
           </Dropdown>
           <TextInputBox placeholder="Description" rows={8} />
-          <Button color="green" style={{ marginRight: "2%" }}>
+          <Button color={colors.darkerGreen} style={{ marginRight: "2%" }}>
             Clear
           </Button>
-          <ButtonSecondary color="green">Add Destination</ButtonSecondary>
+          <ButtonSecondary color={colors.darkerGreen}>
+            Add Destination
+          </ButtonSecondary>
         </Column>
         <Column>
           <Center>
             <Image src={img} />
-            <UploadButton>
+            <UploadButton color={colors.darkerGreen}>
               <FileInput type="file" />
               Upload Image
             </UploadButton>
@@ -103,7 +103,7 @@ const TextInput = styled.input`
   padding: 5px;
   margin-bottom: 20px;
   border-radius: 5px;
-  border-style: solid;
+  border: 1px solid;
 `;
 const TextInputBox = styled.textarea`
   width: 100%;
@@ -126,12 +126,12 @@ const FileInput = styled.input`
   display: none;
 `;
 const UploadButton = styled.button`
-  border: 1px solid green;
+  border: 1px solid ${(props) => props.color};
   display: inline-block;
   border-radius: 5px;
   font-weight: bold;
   padding: 8px 14px;
-  background-color: green;
+  background-color: ${(props) => props.color};
   margin: 10px 0px;
   color: white;
   &:hover {

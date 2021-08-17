@@ -36,3 +36,9 @@ export const provinces = [
   "Sabaragamuwa",
   "North Western",
 ];
+
+export const colors = {
+  green: "#9ef01a",
+  darkGreen: "#70e000",
+  darkerGreen: "#38b000",
+};

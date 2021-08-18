@@ -46,7 +46,9 @@ export default function Destinations(props) {
           >
             <i className="fas fa-user-plus"></i> Add Destination
           </Button>
-          <ButtonSecondary color={colors.darkerGreen}>Download</ButtonSecondary>
+          <ButtonSecondary color={colors.darkerGreen}>
+            <i class="fas fa-save"></i> Download
+          </ButtonSecondary>
         </ButtonSection>
         <SearchBar>
           <SearchBarInput placeholder={"Search here..."}></SearchBarInput>

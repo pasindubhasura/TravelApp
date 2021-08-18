@@ -37,6 +37,19 @@ router.get('/guides',(req,res)=>{
     }) ;          
 });
 
+//get Individuale Gide deatils
+router.get("/guide/:id",(req,res)=>{
+    let gId = req.params.id;
+    Guide.findById(gId,(err,guide)=>{
+        if(err){
+            return res.status(400).json({success:false,err});
+        }
+        return res.status(200).json({
+            success:true,
+            guide
+        });
+    });
+});
 
 //update guide deatils
 router.put('/guide/update/:id',(req,res)=>{
@@ -56,7 +69,7 @@ router.put('/guide/update/:id',(req,res)=>{
     );
 });
 
-//delete employee
+//delete guide
 
 router.delete('/guide/delete/:id',(req,res)=>{
     Guide.findByIdAndRemove(req.params.id).exec((err,deleteGuide)=>{

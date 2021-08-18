@@ -69,7 +69,7 @@ export default function Destinations(props) {
     doc.autoTable({
       theme: "grid",
       styles: { halign: "center" },
-      headStyles: { fillColor: [12, 113, 250] },
+      headStyles: { fillColor: colors.darkerGreen },
       startY: 22,
       head: [
         ["No", "Destiation", "City", "District", "Province", "Description"],

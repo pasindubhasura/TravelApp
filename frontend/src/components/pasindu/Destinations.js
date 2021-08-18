@@ -3,8 +3,8 @@ import Styled from "styled-components";
 import axios from "axios";
 import { colors } from "./data";
 export default function Destinations(props) {
-  const [destinations, setdestinations] = useState([]);
-
+  let [destinations, setdestinations] = useState([]);
+  let [search, setsearch] = useState("");
   useEffect(() => {
     fetchData();
   }, []);
@@ -32,6 +32,11 @@ export default function Destinations(props) {
   const editDestinationForm = (id) => {
     props.history.push("destinations/edit", { id });
   };
+  if (search.length > 0) {
+    destinations = destinations.filter((i) => {
+      return i.destination.toLowerCase().match(search.toLowerCase());
+    });
+  }
 
   let x = 1;
   return (
@@ -51,7 +56,11 @@ export default function Destinations(props) {
           </ButtonSecondary>
         </ButtonSection>
         <SearchBar>
-          <SearchBarInput placeholder={"Search here..."}></SearchBarInput>
+          <SearchBarInput
+            placeholder={`Search here...`}
+            value={search}
+            onChange={(e) => setsearch(e.target.value)}
+          />
         </SearchBar>
       </Row>
       <TableContainer>
@@ -139,6 +148,7 @@ width: 100%;
 height:100%;
 border-radius:12px; 
 border:1px solid black;
+padding-left:8px;
 `;
 const TableContainer = Styled.div`
 margin:10px 20px;

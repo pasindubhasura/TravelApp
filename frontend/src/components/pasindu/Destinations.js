@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
 import axios from "axios";
 import { colors } from "./data";
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
+
 export default function Destinations(props) {
   let [destinations, setdestinations] = useState([]);
   let [search, setsearch] = useState("");
@@ -38,6 +41,44 @@ export default function Destinations(props) {
     });
   }
 
+  const pdf = () => {
+    let bodyData = [];
+    let length = destinations.length;
+    let x = 1;
+    for (let i = 0; i < length; i++) {
+      bodyData.push([
+        x++,
+        destinations[i].destination,
+        destinations[i].city,
+        destinations[i].district,
+        destinations[i].province,
+        destinations[i].description,
+      ]);
+    } //save json data to bodydata in order to print in the pdf table
+
+    const doc = new jsPDF({ orientation: "portrait" });
+    var time = new Date().toLocaleString();
+    doc.setFontSize(27);
+    doc.text(`Destination Details Report`, 105, 13, null, null, "center");
+    doc.setFontSize(10);
+    doc.text(`(Generated on ${time})`, 105, 17, null, null, "center");
+    doc.setFontSize(14);
+    // doc.text("Thilina Hardware", 105, 20, null, null, "center");
+    // doc.text("No 55, Main Road, Horana", 105, 25, null, null, "center");
+    //doc.addImage(img, "JPEG",0,20);
+    doc.autoTable({
+      theme: "grid",
+      styles: { halign: "center" },
+      headStyles: { fillColor: [12, 113, 250] },
+      startY: 22,
+      head: [
+        ["No", "Destiation", "City", "District", "Province", "Description"],
+      ],
+      body: bodyData,
+    });
+    doc.save("DestinationsReport.pdf");
+  }; //report generation function
+
   let x = 1;
   return (
     <MainDiv>
@@ -51,7 +92,7 @@ export default function Destinations(props) {
           >
             <i className="fas fa-user-plus"></i> Add Destination
           </Button>
-          <ButtonSecondary color={colors.darkerGreen}>
+          <ButtonSecondary color={colors.darkerGreen} onClick={pdf}>
             <i class="fas fa-save"></i> Download
           </ButtonSecondary>
         </ButtonSection>

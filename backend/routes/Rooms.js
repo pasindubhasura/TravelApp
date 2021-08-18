@@ -127,3 +127,6 @@ router.get('/room/:id',(req, res) => {
 
 
 /**************************************************************/
+
+//exporting router for server usage
+module.exports = router;

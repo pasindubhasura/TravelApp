@@ -44,7 +44,7 @@ export default function Destinations(props) {
             style={{ margin: "0px 7px 0px 20px" }}
             onClick={addDestinationForm}
           >
-            Add Destination
+            <i className="fas fa-user-plus"></i> Add Destination
           </Button>
           <ButtonSecondary color={colors.darkerGreen}>Download</ButtonSecondary>
         </ButtonSection>
@@ -92,8 +92,7 @@ export default function Destinations(props) {
                         type="button"
                         onClick={() => deleteItem(item._id)}
                       >
-                        <i className="far fa-trash-alt"></i>
-                        Delete
+                        <i className="far fa-trash-alt"></i> Delete
                       </ButtonSecondary>
                     </Center>
                   </td>

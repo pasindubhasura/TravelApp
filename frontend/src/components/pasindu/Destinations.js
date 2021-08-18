@@ -84,7 +84,7 @@ export default function Destinations(props) {
                           editDestinationForm(item._id);
                         }}
                       >
-                        Edit
+                        <i className="fas fa-edit"></i>Edit
                       </ButtonSecondary>
                       <ButtonSecondary
                         color={"red"}
@@ -92,6 +92,7 @@ export default function Destinations(props) {
                         type="button"
                         onClick={() => deleteItem(item._id)}
                       >
+                        <i className="far fa-trash-alt"></i>
                         Delete
                       </ButtonSecondary>
                     </Center>

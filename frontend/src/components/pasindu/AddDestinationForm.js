@@ -4,6 +4,7 @@ import axios from "axios";
 import styled from "styled-components";
 import defaultImage from "../../images/defaultImage.jpg";
 import { districts, provinces, colors } from "./data";
+import Schema from "./validation";
 
 export default function AddDestinationForm() {
   const [img, setImg] = useState(defaultImage);
@@ -12,6 +13,7 @@ export default function AddDestinationForm() {
   const [destination, setdestination] = useState("");
   const [city, setcity] = useState("");
   const [description, setdescription] = useState("");
+  const [errors, seterrors] = useState("");
 
   const clear = () => {
     setcity("");
@@ -22,13 +24,33 @@ export default function AddDestinationForm() {
   };
   const formHandler = async (e) => {
     e.preventDefault();
-    const response = await axios.post(
-      "http://localhost:5001/destinations/add",
-      { district, province, destination, city, description }
-    );
-    if (response.data.success) window.location = "/destinations";
-    if (response.data.error) alert(response.data.error);
+    validation();
+    // const response = await axios.post(
+    //   "http://localhost:5001/destinations/add",
+    //   { district, province, destination, city, description }
+    // );
+    // if (response.data.success) window.location = "/destinations";
+    // if (response.data.error) alert(response.data.error);
   };
+  const validation = async () => {
+    // try {
+    //   await Schema.validateAsync(
+    //     {
+    //       destination,
+    //       city,
+    //       description,
+    //     },
+    //     { abortEarly: false }
+    //   );
+    // } catch (error) {
+    //   const x = error.toString().split(".");
+    //   console.log(x);
+    //   // console.log(errors);
+    // }
+  };
+  if (destination.trim() === "") {
+    seterrors("Destination can't be empty!");
+  }
   return (
     <MainDiv>
       <H2>Add Destination Details</H2>
@@ -40,6 +62,7 @@ export default function AddDestinationForm() {
             value={destination}
             onChange={(e) => setdestination(e.target.value)}
           />
+          <span>{errors.length > 0 ? errors : null}</span>
           <TextInput
             placeholder="City"
             type="text"

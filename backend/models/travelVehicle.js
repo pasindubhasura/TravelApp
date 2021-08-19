@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const vehicleSchema = new mongoose.Schema(
+const vehicleSchema = new Schema(
   {
     vehicleId: {
       type: String,
@@ -36,5 +37,7 @@ const vehicleSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+const Vehicle = mongoose.model("travelVehicle", vehicleSchema);
 
 module.exports = mongoose.model("room", roomSchema);

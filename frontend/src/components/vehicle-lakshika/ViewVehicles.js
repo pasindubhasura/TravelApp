@@ -15,7 +15,7 @@ export default function AddVehicles() {
         <table className="table">
           <thead className="thead-dark">
             <tr>
-              <th scope="col">ID</th>
+              <th scope="col">Vehicle ID</th>
               <th scope="col">Vehicle Type</th>
               <th scope="col">Location</th>
               <th scope="col">Price Per KM</th>

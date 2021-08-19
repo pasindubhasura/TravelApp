@@ -5,6 +5,7 @@ const cors = require("cors");
 
 //routes
 const DestinationsRouter = require("./routes/destinations");
+const travelVehicleRouter = require("./routes/travelVehicles");
 
 //creating express app
 const app = express();
@@ -35,3 +36,4 @@ app.listen(PORT, async () => {
 
 //routes
 app.use("/destinations", DestinationsRouter);
+app.use(travelVehicleRouter);

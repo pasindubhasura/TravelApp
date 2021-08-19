@@ -84,7 +84,6 @@ export default function Destinations(props) {
   return (
     <MainDiv>
       <H2>Destination</H2>
-      <img src={Logo} style={{ height: "100px", width: "100px" }} />
       <Row>
         <ButtonSection>
           <Button
@@ -107,16 +106,19 @@ export default function Destinations(props) {
         </SearchBar>
       </Row>
       <TableContainer>
-        <Table bgcolor={colors.darkerGreen}>
-          <thead>
+        <Table
+          bgcolor={colors.darkerGreen}
+          className="table table-striped borde"
+        >
+          <thead className="thead-dark">
             <tr>
-              <th>No</th>
-              <th>Destination</th>
-              <th>City</th>
-              <th>District</th>
-              <th>Province</th>
-              <th>Description</th>
-              <th>Action</th>
+              <th scope="col">No</th>
+              <th scope="col">Destination</th>
+              <th scope="col">City</th>
+              <th scope="col">District</th>
+              <th scope="col">Province</th>
+              <th scope="col">Description</th>
+              <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>

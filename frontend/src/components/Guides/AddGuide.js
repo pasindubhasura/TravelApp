@@ -108,7 +108,7 @@ export default class AddGuide extends Component {
         });
     }
     else{
-        toast(`Your Inserting blank! `, {
+        toast(`😀 Plaese fill out the field. `, {
             type: toast.TYPE.ERROR,
             autoClose: 4000
         });
@@ -209,12 +209,19 @@ export default class AddGuide extends Component {
                         {/* Language */}
                             <div className="form-group" style={{ marginBottom: '15px' }}>
                                 <label style={{ marginBottom: '5px' }}>Language</label>
-                                <input type="text"
+                                <select id="language" className="form-control" name="language" onChange={this.handleInputChange} value={this.state.language} required>  
+                                <option selected>Choose Language</option>
+                                <option value="English">English</option>
+                                <option value="Tamil,English">Tamil,English</option>
+                                <option value="German,English">German,English </option>
+                                <option value="French,English">French,English </option>
+                            </select> 
+                                {/* <input type="text"
                                     className="form-control"
                                     name="language"
                                     placeholder="Enter Language"
                                     value={this.state.language}
-                                    onChange={this.handleInputChange} />
+                                    onChange={this.handleInputChange} /> */}
                             </div>
                         
                 
@@ -222,20 +229,26 @@ export default class AddGuide extends Component {
                         {/* availability */}
                             <div className="form-group" style={{ marginBottom: '15px' }}>
                                 <label style={{ marginBottom: '5px' }}>Availability</label>
-                                <input type="text"
+                                <select id="availability" className="form-control" name="availability" onChange={this.handleInputChange} value={this.state.availability} required>  
+                                <option selected>Choose Availability</option>
+                                <option value="Available">Available</option>
+                                <option value="Unavailable">Unavailable</option>
+                                </select> 
+                                
+                                {/* <input type="text"
                                     className="form-control"
                                     name="availability"
                                     placeholder="Enter Availability"
                                     value={this.state.availability}
-                                    onChange={this.handleInputChange} />
+                                    onChange={this.handleInputChange} /> */}
                             </div>
 
                     
                            
                                 <div>
-                                <button href="/guide_add" type="submit" className="btn btn-primary sub_btn2 " ><i class="far fa-times-circle"></i>&nbsp;Reset</button>
+                                <button href="/guide_add" type="submit"  className="btn btn-outline-success sub_btn2"><i class="far fa-times-circle"></i>&nbsp;Reset</button>
                                 <button type="submit" className="btn btn-primary sub_btn" onClick={this.onSubmit}><i class="far fa-save"></i>&nbsp;Add</button>
-                                    
+                            
                                 </div>
                                 
                            

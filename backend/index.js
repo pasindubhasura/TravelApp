@@ -36,4 +36,4 @@ app.listen(PORT, async () => {
 
 //routes
 app.use("/destinations", DestinationsRouter);
-app.use(travelVehicleRouter);
+app.use("/travelVehicle", travelVehicleRouter);

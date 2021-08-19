@@ -3,11 +3,12 @@ const router = express.Router();
 let Vehicle = require("../models/travelVehicle");
 
 //Add Vehicles
-router.post("/travelVehicle/add", (req, res) => {
+router.post("/add", (req, res) => {
   let newVehicle = new Vehicle(req.body);
+  console.log("in post");
 
   //javascript promise = then
-  newVeVehicle.save((err) => {
+  newVehicle.save((err) => {
     if (err) {
       return res.status(400).json({
         error: err,

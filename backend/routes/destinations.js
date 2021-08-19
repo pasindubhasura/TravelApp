@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Destination = require("../models/destination");
 const router = require("express").Router();
+const imgbbUploader = require("imgbb-uploader");
 
 router.get("/", async (req, res) => {
   try {
@@ -71,5 +72,19 @@ router.post("/delete", async (req, res) => {
     res.json({ error: "Couldn't delete the Record!" });
   }
 }); //delete destination record
+
+//image handling
+router.post("/upload", async (req, res) => {
+  const path = req.body.path;
+
+  const options = {
+    apiKey: "b9873515ab55dff911b045133a42e546",
+    base64string: path,
+  };
+  const response = await imgbbUploader(options);
+
+  console.log(response.image.url);
+  res.json({ imgUrl: response.image.url });
+});
 
 module.exports = router;

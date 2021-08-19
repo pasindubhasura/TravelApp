@@ -4,6 +4,7 @@ import axios from "axios";
 import styled from "styled-components";
 import defaultImage from "../../images/defaultImage.jpg";
 import { districts, provinces, colors } from "./data";
+import spinner from "../../images/spinner.gif";
 
 export default function EditDestinationForm(props) {
   const [img, setImg] = useState(defaultImage);
@@ -13,6 +14,13 @@ export default function EditDestinationForm(props) {
   const [city, setcity] = useState("");
   const [description, setdescription] = useState("");
   const [id, setid] = useState(props.history.location.state.id);
+  const [destinationError, setdestinationError] = useState("");
+  const [cityError, setcityError] = useState("");
+  const [districtError, setdistrictError] = useState("");
+  const [provinceError, setprovinceError] = useState("");
+  const [descriptionError, setdescriptionError] = useState("");
+  const [imgError, setimgError] = useState("");
+  const [isLoading, setisLoading] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -29,6 +37,7 @@ export default function EditDestinationForm(props) {
       setprovince(destination.province);
       setdestination(destination.destination);
       setdescription(destination.description);
+      setImg(destination.image);
     }
   };
 
@@ -38,6 +47,7 @@ export default function EditDestinationForm(props) {
     setprovince("none");
     setdestination("");
     setdescription("");
+    setImg(defaultImage);
   };
   const formHandler = async (e) => {
     e.preventDefault();
@@ -119,10 +129,28 @@ export default function EditDestinationForm(props) {
         </Column>
         <Column>
           <Center>
-            <Image src={img} />
-            <UploadButton color={colors.darkerGreen}>
-              <FileInput type="file" />
-              Upload Image
+            <ImageContainner>
+              {isLoading ? <Spinner src={spinner} /> : <Image src={img} />}
+            </ImageContainner>
+            {imgError.length > 0 ? (
+              <Span style={{ marginLeft: "15px", width: "90%" }}>
+                {imgError}
+              </Span>
+            ) : (
+              <Span style={{ visibility: "hidden" }}></Span>
+            )}
+            <FileInput
+              type="file"
+              onChange={imageHandler}
+              id="fileInput"
+              required
+            />
+            <UploadButton
+              color={colors.darkerGreen}
+              type="button"
+              onClick={uploadButtonClickHandler}
+            >
+              <I className="fas fa-images"></I>Upload Image
             </UploadButton>
           </Center>
         </Column>
@@ -229,4 +257,30 @@ const Dropdown = styled.select`
   margin-bottom: 20px;
   border-radius: 5px;
   border-style: solid;
+`;
+const Span = styled.p`
+  width: 100%;
+  margin: 15px 0px 0px 0px;
+  color: red;
+  font-weight: bold;
+  font-size: 14px;
+`;
+const Spinner = styled.img`
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+`;
+const ImageContainner = styled.div`
+  width: 90%;
+  height: 300px;
+  margin-top: 15px;
+  margin-bottom: 0px;
+  border: 1px solid ${colors.darkerGreen};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const I = styled.i`
+  margin: 0px 7px;
 `;

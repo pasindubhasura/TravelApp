@@ -71,7 +71,8 @@ export default function AddDestinationForm() {
       cityError === "" &&
       districtError === "" &&
       provinceError === "" &&
-      descriptionError === ""
+      descriptionError === "" &&
+      imgError === ""
     ) {
       return true;
     }

@@ -51,12 +51,51 @@ export default function EditDestinationForm(props) {
   };
   const formHandler = async (e) => {
     e.preventDefault();
-    const response = await axios.post(
-      "http://localhost:5001/destinations/update",
-      { id, district, province, destination, city, description, image: img }
-    );
-    if (response.data.success) window.location = "/destinations";
-    if (response.data.error) alert(response.data.error);
+    if (validation()) {
+      const response = await axios.post(
+        "http://localhost:5001/destinations/update",
+        { id, district, province, destination, city, description, image: img }
+      );
+      if (response.data.success) window.location = "/destinations";
+      if (response.data.error) alert(response.data.error);
+    }
+  };
+
+  const validation = () => {
+    setdestinationError("");
+    setcityError("");
+    setdistrictError("");
+    setprovinceError("");
+    setdescriptionError("");
+    setimgError("");
+
+    if (destination === "") {
+      setdestinationError("Destination can't be empty!");
+    }
+    if (city === "") {
+      setcityError("City can't be empty!");
+    }
+    if (district === "none") {
+      setdistrictError("District has to be selected!");
+    }
+    if (province === "none") {
+      setprovinceError("Province has to be selected!");
+    }
+    if (description === "") {
+      setdescriptionError("Description can't be empty!");
+    }
+    if (img === defaultImage) {
+      setimgError("Add an Image");
+    } else if (
+      destinationError === "" &&
+      cityError === "" &&
+      districtError === "" &&
+      provinceError === "" &&
+      descriptionError === "" &&
+      imgError === ""
+    ) {
+      return true;
+    }
   };
 
   const imageHandler = (evt) => {
@@ -93,18 +132,33 @@ export default function EditDestinationForm(props) {
       <H2>Edit Destination Details</H2>
       <FormGrid>
         <Column>
+          {destinationError.length > 0 ? (
+            <Span>{destinationError}</Span>
+          ) : (
+            <Span style={{ visibility: "hidden" }}></Span>
+          )}
           <TextInput
             placeholder="Destination"
             type="text"
             value={destination}
             onChange={(e) => setdestination(e.target.value)}
           />
+          {cityError.length > 0 ? (
+            <Span>{cityError}</Span>
+          ) : (
+            <Span style={{ visibility: "hidden" }}></Span>
+          )}
           <TextInput
             placeholder="City"
             type="text"
             onChange={(e) => setcity(e.target.value)}
             value={city}
           />
+          {districtError.length > 0 ? (
+            <Span>{districtError}</Span>
+          ) : (
+            <Span style={{ visibility: "hidden" }}></Span>
+          )}
           <Dropdown
             onChange={(e) => setdistrict(e.target.value)}
             value={district}
@@ -120,6 +174,11 @@ export default function EditDestinationForm(props) {
               );
             })}
           </Dropdown>
+          {provinceError.length > 0 ? (
+            <Span>{provinceError}</Span>
+          ) : (
+            <Span style={{ visibility: "hidden" }}></Span>
+          )}
           <Dropdown
             onChange={(e) => setprovince(e.target.value)}
             value={province}
@@ -135,6 +194,11 @@ export default function EditDestinationForm(props) {
               );
             })}
           </Dropdown>
+          {descriptionError.length > 0 ? (
+            <Span>{descriptionError}</Span>
+          ) : (
+            <Span style={{ visibility: "hidden" }}></Span>
+          )}
           <TextInputBox
             placeholder="Description"
             rows={8}

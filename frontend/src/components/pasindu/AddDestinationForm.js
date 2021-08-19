@@ -63,10 +63,9 @@ export default function AddDestinationForm() {
     if (description === "") {
       setdescriptionError("Description can't be empty!");
     }
-    // if (img === defaultImage) {
-    //   setimgError("Add an Image");
-    // }
-    else if (
+    if (img === defaultImage) {
+      setimgError("Add an Image");
+    } else if (
       destinationError === "" &&
       cityError === "" &&
       districtError === "" &&

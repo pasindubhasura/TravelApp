@@ -53,11 +53,41 @@ export default function EditDestinationForm(props) {
     e.preventDefault();
     const response = await axios.post(
       "http://localhost:5001/destinations/update",
-      { id, district, province, destination, city, description }
+      { id, district, province, destination, city, description, image: img }
     );
     if (response.data.success) window.location = "/destinations";
     if (response.data.error) alert(response.data.error);
   };
+
+  const imageHandler = (evt) => {
+    setisLoading(true);
+    var f = evt.target.files[0]; // FileList object
+    var reader = new FileReader();
+    // Closure to capture the file information.
+    reader.onload = (function (theFile) {
+      return async function (e) {
+        var binaryData = e.target.result;
+        //Converting Binary Data to base 64
+        var base64String = window.btoa(binaryData);
+        //showing file converted to base64
+        const res = await axios.post(
+          "http://localhost:5001/destinations/upload",
+          {
+            path: base64String,
+          }
+        );
+        setisLoading(false);
+        setImg(res.data.imgUrl);
+      };
+    })(f);
+    // // Read in the image file as a data URL.
+    reader.readAsBinaryString(f);
+  };
+
+  const uploadButtonClickHandler = () => {
+    document.getElementById("fileInput").click();
+  };
+
   return (
     <MainDiv>
       <H2>Edit Destination Details</H2>
@@ -211,7 +241,8 @@ const TextInputBox = styled.textarea`
   border-radius: 5px;
 `;
 const Image = styled.img`
-  width: 90%;
+  width: 100%;
+  height: 100%;
 `;
 const Center = Styled.div`
 display:flex;
@@ -276,7 +307,7 @@ const ImageContainner = styled.div`
   height: 300px;
   margin-top: 15px;
   margin-bottom: 0px;
-  border: 1px solid ${colors.darkerGreen};
+  border: 3px solid ${colors.darkerGreen};
   display: flex;
   justify-content: center;
   align-items: center;

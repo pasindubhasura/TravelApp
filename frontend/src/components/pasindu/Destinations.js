@@ -4,6 +4,7 @@ import axios from "axios";
 import { colors } from "./data";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
+import Logo from "../../images/Logo.png";
 
 export default function Destinations(props) {
   let [destinations, setdestinations] = useState([]);
@@ -59,18 +60,18 @@ export default function Destinations(props) {
     const doc = new jsPDF({ orientation: "portrait" });
     var time = new Date().toLocaleString();
     doc.setFontSize(27);
-    doc.text(`Destination Details Report`, 105, 13, null, null, "center");
+    doc.text(`Destination Details Report`, 105, 35, null, null, "center");
     doc.setFontSize(10);
-    doc.text(`(Generated on ${time})`, 105, 17, null, null, "center");
+    doc.text(`(Generated on ${time})`, 105, 39, null, null, "center");
     doc.setFontSize(14);
     // doc.text("Thilina Hardware", 105, 20, null, null, "center");
     // doc.text("No 55, Main Road, Horana", 105, 25, null, null, "center");
-    //doc.addImage(img, "JPEG",0,20);
+    doc.addImage(Logo, "JPEG", 90, 0, 25, 25);
     doc.autoTable({
       theme: "grid",
       styles: { halign: "center" },
       headStyles: { fillColor: colors.darkerGreen },
-      startY: 22,
+      startY: 44,
       head: [
         ["No", "Destiation", "City", "District", "Province", "Description"],
       ],
@@ -83,6 +84,7 @@ export default function Destinations(props) {
   return (
     <MainDiv>
       <H2>Destination</H2>
+      <img src={Logo} style={{ height: "100px", width: "100px" }} />
       <Row>
         <ButtonSection>
           <Button

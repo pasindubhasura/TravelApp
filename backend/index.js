@@ -6,11 +6,14 @@ const cors = require("cors");
 //routes
 const DestinationsRouter = require("./routes/destinations");
 const travelVehicleRouter = require("./routes/travelVehicles");
+const guideRoute = require("./routes/guides");
+const AccomdationRouter = require("./routes/Accommodations");
+const RoomsRouter = require("./routes/Rooms");
 
 //creating express app
 const app = express();
 require("dotenv").config();
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
 app.use(cors());
 //configuring dotenv variables
 const PORT = process.env.PORT || 5000;
@@ -37,3 +40,6 @@ app.listen(PORT, async () => {
 //routes
 app.use("/destinations", DestinationsRouter);
 app.use("/travelVehicle", travelVehicleRouter);
+app.use(guideRoute);
+app.use(AccomdationRouter);
+app.use(RoomsRouter);

@@ -5,7 +5,7 @@ const Accommodation = require("../models/accommodation");
 
 /*******************     Insert data to database     ******************/
 
-http://localhost:8070/accommodation/add
+http://localhost:5000/accommodation/add
 
 router.post(`/accommodation/add`, (req, res) => {
 
@@ -27,7 +27,7 @@ router.post(`/accommodation/add`, (req, res) => {
 
 /************************     Retreive Data     ***********************/
 
-http://localhost:8070/accommodation/
+http://localhost:5000/accommodation/
 
 router.get('/accommodation/', (req, res) => {
 
@@ -51,7 +51,7 @@ router.get('/accommodation/', (req, res) => {
 
 /************************      Update Data     ***********************/
 
-http://localhost:8070/accommodation/update/ _id
+http://localhost:5000/accommodation/update/ _id
 
 router.put('/accommodation/update/:id', (req, res) => {
 
@@ -80,7 +80,7 @@ router.put('/accommodation/update/:id', (req, res) => {
 
 /*********************     Delete Data     **********************/
 
-http://localhost:8070/accommodation/delete/_id
+http://localhost:5000/accommodation/delete/_id
 
 router.delete('/accommodation/delete/:id', (req, res) => {
 

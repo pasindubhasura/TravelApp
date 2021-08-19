@@ -3,8 +3,10 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 import './styles.css'
 import {toast} from 'react-toastify';
-// import {jsPDF} from 'jspdf'
-// import 'jspdf-autotable'
+import {jsPDF} from 'jspdf'
+import 'jspdf-autotable'
+import Logo from "../../images/Logo.png";
+
 // import './estyle.css';
 
 
@@ -19,31 +21,7 @@ constructor(props){
 
 //export PDF.
 
-// exportPDF = () => {
-//   const unit = "pt";
-//   const size = "A3"; // Use A1, A2, A3 or A4
-//   const orientation = "portrait"; // portrait or landscape
-
-//   const marginLeft = 40;
-//   const doc = new jsPDF(orientation, unit, size);
-
-//   doc.setFontSize(15);
-
-//   const title = "Guide Details";
-//   const headers = [['Name','Email','Address', 'MobileNo', 'Designation','date' ,'Salary(LKR)']];
-
-//   const data = this.state.guide.map(elt=> [elt.name, elt.email,elt.address,elt.mobileNo,elt.designation,elt.date,elt.salary ]);
-
-//   let content = {
-//     startY: 50,
-//     head: headers,
-//     body: data
-//   };
-
-//   doc.text(title, marginLeft, 40);
-//   doc.autoTable(content);
-//   doc.save("Employee.pdf")
-// }
+ 
 
 
 componentDidMount(){
@@ -62,6 +40,7 @@ retrieveGuide(){
        
     });
 }
+
 
 onDelete = (id) => {
   axios.delete(`http://localhost:5001/guide/delete/${id}`).then((res) => {
@@ -97,6 +76,52 @@ handleSearchArea=(e)=>{
   });
 }
 
+
+exportPDF = () => {
+ 
+
+  // let bodyData = [];
+  // let length = guide.length;
+  // let x = 1;
+  // console.log(guide);
+  const data = this.state.guide.map(dlt=> [dlt.registrationNo,dlt.name  ,dlt.address,dlt.email,dlt.phoneNo,dlt.language,dlt.availability])
+  // for (let i = 0; i < length; i++) {
+  //   bodyData.push([
+  //     x++,
+  //     guide[i].registrationNo,
+  //     guide[i].name,
+  //     guide[i].address,
+  //     guide[i].email,
+  //     guide[i].phoneNo,
+  //     guide[i].language,
+  //     guide[i].availability,
+  //   ]);
+  // } 
+  // //save json data to bodydata in order to print in the pdf table
+
+  const doc = new jsPDF({ orientation: "portrait" });
+  var time = new Date().toLocaleString();
+  doc.setFontSize(27);
+  doc.text(`Guide Details Report`, 105, 35, null, null, "center");
+  doc.setFontSize(10);
+  doc.text(`(Generated on ${time})`, 105, 39, null, null, "center");
+  doc.setFontSize(14);
+  // doc.text("Thilina Hardware", 105, 20, null, null, "center");
+  // doc.text("No 55, Main Road, Horana", 105, 25, null, null, "center");
+  doc.addImage(Logo, "JPEG", 90, 0, 25, 25);
+  doc.autoTable({
+    theme: "grid",
+    styles: { halign: "center" },
+    headStyles: { fillColor:"#38B000" },
+    startY: 44,
+    head: [
+      ["RNo", "Name", "Address	", "Email", "PhoneNo", "Languages" ,"Availability"],
+    ],
+    body: data,
+  });
+  doc.save("Guides.pdf");
+ }
+
   render() {
     return (
       <div className="container" >
@@ -123,7 +148,7 @@ handleSearchArea=(e)=>{
           <div className="col-lg-9 mt-2 mb-2">
            {/* add button  */}
            <Link to="/guide_add" className="btn btn-warning"><i className="fas fa-user-plus"></i>&nbsp;Add Guide</Link>&nbsp;
-            <Link onClick={()=>this.exportPDF()} to="#" className="btn btn-success"><i class="fas fa-download"></i>&nbsp;Download Report</Link>
+          <Link onClick={()=>this.exportPDF()} to="#" className="btn btn-success"><i class="fas fa-download"></i>&nbsp;Download Report</Link>
            </div>
         </div>
 

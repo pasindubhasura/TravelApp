@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import defaultImage from "../../images/defaultImage.jpg";
 
 const invoiceRegx = RegExp(/^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/gm);
 const formValid = formErrors =>{
@@ -255,7 +256,7 @@ export default class AddGuide extends Component {
                         </form>
                     </div>
                     <div className="col-6">
-                        {/* <img className="add_img" src="../images/E3.png" /> */}
+                        <img className="add_img" src={defaultImage} />
                     </div>
                 </div>
             </div>

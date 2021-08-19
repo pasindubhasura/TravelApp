@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import './styles.css'
+import {toast} from 'react-toastify';
 // import {jsPDF} from 'jspdf'
 // import 'jspdf-autotable'
 // import './estyle.css';
@@ -64,17 +65,21 @@ retrieveGuide(){
 
 onDelete = (id) => {
   axios.delete(`http://localhost:5001/guide/delete/${id}`).then((res) => {
-    alert("Deleted Successfully");
+    toast("Deleted Successfully", {
+      type: toast.TYPE.ERROR,
+      autoClose: 4000
+  });
     this.retrieveGuide();
   })
 }
 
 filterData(guide,searchKey){
   const result=guide.filter((guide)=>
+  guide.registrationNo.toLowerCase().includes(searchKey)||
   guide.name.toLowerCase().includes(searchKey)||
-  guide.email.toLowerCase().includes(searchKey)||
   guide.address.toLowerCase().includes(searchKey)||
-  guide.designation.toLowerCase().includes(searchKey)
+  guide.language.toLowerCase().includes(searchKey)||
+  guide.availability.toLowerCase().includes(searchKey)
 
   )
   this.setState({guide:result})
@@ -83,10 +88,11 @@ filterData(guide,searchKey){
 
 
 handleSearchArea=(e)=>{
+  // console.log(e.currentTarget.value);
   const searchKey=e.currentTarget.value;
-  axios.get("http://localhost:5001/guides").then(res =>{
+  axios.get(`http://localhost:5001/guides`).then(res=>{
     if(res.data.success){
-      this.filterData(res.data.existingEmployee,searchKey)
+      this.filterData(res.data.existingGuide,searchKey)
     }
   });
 }
@@ -111,6 +117,18 @@ handleSearchArea=(e)=>{
         </div> 
             <div className="py-4">
             <h1>Guides</h1>
+            
+
+        <div className="row">
+          <div className="col-lg-9 mt-2 mb-2">
+           {/* add button  */}
+           <Link to="/guide_add" className="btn btn-warning"><i className="fas fa-user-plus"></i>&nbsp;Add Guide</Link>&nbsp;
+            <Link onClick={()=>this.exportPDF()} to="#" className="btn btn-success"><i class="fas fa-download"></i>&nbsp;Download Report</Link>
+           </div>
+        </div>
+
+
+
             <table class=" table table-striped borde" >
                 <thead class="thead-dark">
                     <tr>
@@ -147,7 +165,7 @@ handleSearchArea=(e)=>{
                           
                           <td>
                                
-                            <Link  className="btn btn-outline-primary" to={`/guide_update/${guide._id}`}>
+                            <Link className="btn btn-outline-warning" to={`/guide_update/${guide._id}`}>
                               <i className="fas fa-edit"></i> &nbsp;Update
                             
                             </Link>
@@ -160,8 +178,7 @@ handleSearchArea=(e)=>{
 
                 </tbody>
                 </table>
-                <Link to="/guide_add" className="btn btn-warning"><i className="fas fa-user-plus"></i>&nbsp;Add Guide</Link>&nbsp;
-                {/* <Link onClick={()=>this.exportPDF()} to="#" className="btn btn-success"><i class="fas fa-download"></i>&nbsp;Download Report</Link> */}
+               
                 
                 
  

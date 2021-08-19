@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-let vehicle = require("../models/travelVehicle");
+let Vehicle = require("../models/travelVehicle");
 
 //Add Vehicles
 router.post("/travelVehicle/add", (req, res) => {

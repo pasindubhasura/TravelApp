@@ -29,3 +29,16 @@ router.route("/travelVehicle/add").post((req, res) => {
       console.log(err);
     });
 });
+
+//get details
+router.route("/travelVehicle/").get((req, rea) => {
+  //execute body by calling model
+  vehicle
+    .find()
+    .then((Vehicle) => {
+      res.json(Vehicle);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});

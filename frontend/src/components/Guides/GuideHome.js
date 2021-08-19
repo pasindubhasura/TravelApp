@@ -2,8 +2,11 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import './styles.css'
-// import {jsPDF} from 'jspdf'
-// import 'jspdf-autotable'
+import {toast} from 'react-toastify';
+import {jsPDF} from 'jspdf'
+import 'jspdf-autotable'
+import Logo from "../../images/Logo.png";
+
 // import './estyle.css';
 
 
@@ -18,31 +21,7 @@ constructor(props){
 
 //export PDF.
 
-// exportPDF = () => {
-//   const unit = "pt";
-//   const size = "A3"; // Use A1, A2, A3 or A4
-//   const orientation = "portrait"; // portrait or landscape
-
-//   const marginLeft = 40;
-//   const doc = new jsPDF(orientation, unit, size);
-
-//   doc.setFontSize(15);
-
-//   const title = "Guide Details";
-//   const headers = [['Name','Email','Address', 'MobileNo', 'Designation','date' ,'Salary(LKR)']];
-
-//   const data = this.state.guide.map(elt=> [elt.name, elt.email,elt.address,elt.mobileNo,elt.designation,elt.date,elt.salary ]);
-
-//   let content = {
-//     startY: 50,
-//     head: headers,
-//     body: data
-//   };
-
-//   doc.text(title, marginLeft, 40);
-//   doc.autoTable(content);
-//   doc.save("Employee.pdf")
-// }
+ 
 
 
 componentDidMount(){
@@ -62,19 +41,24 @@ retrieveGuide(){
     });
 }
 
+
 onDelete = (id) => {
   axios.delete(`http://localhost:5001/guide/delete/${id}`).then((res) => {
-    alert("Deleted Successfully");
+    toast("Deleted Successfully", {
+      type: toast.TYPE.ERROR,
+      autoClose: 4000
+  });
     this.retrieveGuide();
   })
 }
 
 filterData(guide,searchKey){
   const result=guide.filter((guide)=>
+  guide.registrationNo.toLowerCase().includes(searchKey)||
   guide.name.toLowerCase().includes(searchKey)||
-  guide.email.toLowerCase().includes(searchKey)||
   guide.address.toLowerCase().includes(searchKey)||
-  guide.designation.toLowerCase().includes(searchKey)
+  guide.language.toLowerCase().includes(searchKey)||
+  guide.availability.toLowerCase().includes(searchKey)
 
   )
   this.setState({guide:result})
@@ -83,13 +67,60 @@ filterData(guide,searchKey){
 
 
 handleSearchArea=(e)=>{
+  // console.log(e.currentTarget.value);
   const searchKey=e.currentTarget.value;
-  axios.get("http://localhost:5001/guides").then(res =>{
+  axios.get(`http://localhost:5001/guides`).then(res=>{
     if(res.data.success){
-      this.filterData(res.data.existingEmployee,searchKey)
+      this.filterData(res.data.existingGuide,searchKey)
     }
   });
 }
+
+
+exportPDF = () => {
+ 
+
+  // let bodyData = [];
+  // let length = guide.length;
+  // let x = 1;
+  // console.log(guide);
+  const data = this.state.guide.map(dlt=> [dlt.registrationNo,dlt.name  ,dlt.address,dlt.email,dlt.phoneNo,dlt.language,dlt.availability])
+  // for (let i = 0; i < length; i++) {
+  //   bodyData.push([
+  //     x++,
+  //     guide[i].registrationNo,
+  //     guide[i].name,
+  //     guide[i].address,
+  //     guide[i].email,
+  //     guide[i].phoneNo,
+  //     guide[i].language,
+  //     guide[i].availability,
+  //   ]);
+  // } 
+  // //save json data to bodydata in order to print in the pdf table
+
+  const doc = new jsPDF({ orientation: "portrait" });
+  var time = new Date().toLocaleString();
+  doc.setFontSize(27);
+  doc.text(`Guide Details Report`, 105, 35, null, null, "center");
+  doc.setFontSize(10);
+  doc.text(`(Generated on ${time})`, 105, 39, null, null, "center");
+  doc.setFontSize(14);
+  // doc.text("Thilina Hardware", 105, 20, null, null, "center");
+  // doc.text("No 55, Main Road, Horana", 105, 25, null, null, "center");
+  doc.addImage(Logo, "JPEG", 90, 0, 25, 25);
+  doc.autoTable({
+    theme: "grid",
+    styles: { halign: "center" },
+    headStyles: { fillColor:"#38B000" },
+    startY: 44,
+    head: [
+      ["RNo", "Name", "Address	", "Email", "PhoneNo", "Languages" ,"Availability"],
+    ],
+    body: data,
+  });
+  doc.save("Guides.pdf");
+ }
 
   render() {
     return (
@@ -111,6 +142,18 @@ handleSearchArea=(e)=>{
         </div> 
             <div className="py-4">
             <h1>Guides</h1>
+            
+
+        <div className="row">
+          <div className="col-lg-9 mt-2 mb-2">
+           {/* add button  */}
+           <Link to="/guide_add" className="btn btn-warning"><i className="fas fa-user-plus"></i>&nbsp;Add Guide</Link>&nbsp;
+          <Link onClick={()=>this.exportPDF()} to="#" className="btn btn-success"><i class="fas fa-download"></i>&nbsp;Download Report</Link>
+           </div>
+        </div>
+
+
+
             <table class=" table table-striped borde" >
                 <thead class="thead-dark">
                     <tr>
@@ -147,7 +190,7 @@ handleSearchArea=(e)=>{
                           
                           <td>
                                
-                            <Link  className="btn btn-outline-primary" to={`/guide_update/${guide._id}`}>
+                            <Link className="btn btn-outline-warning" to={`/guide_update/${guide._id}`}>
                               <i className="fas fa-edit"></i> &nbsp;Update
                             
                             </Link>
@@ -160,8 +203,7 @@ handleSearchArea=(e)=>{
 
                 </tbody>
                 </table>
-                <Link to="/guide_add" className="btn btn-warning"><i className="fas fa-user-plus"></i>&nbsp;Add Guide</Link>&nbsp;
-                {/* <Link onClick={()=>this.exportPDF()} to="#" className="btn btn-success"><i class="fas fa-download"></i>&nbsp;Download Report</Link> */}
+               
                 
                 
  

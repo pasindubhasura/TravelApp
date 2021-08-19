@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import GuideHome from "./components/Guides/GuideHome";
 import AddGuide from "./components/Guides/AddGuide";
 import UpdateGuide from "./components/Guides/UpdateGuide";
+import GetindividualGuide from "./components/Guides/GetindividualGuide";
 
 //travelDestinations
 import Destinations from "./components/pasindu/Destinations";
@@ -19,6 +20,7 @@ import EditDestinationForm from "./components/pasindu/EditDestinationForm";
 
 export default function App() {
   return (
+
     <div className="container">
       <ToastContainer />
       <GlobalStyle />
@@ -27,8 +29,10 @@ export default function App() {
         <Route path="/get_guide" component={GuideHome} exact></Route>
         <Route path="/guide_add" component={AddGuide} exact></Route>
         <Route path="/guide_update/:id" component={UpdateGuide} exact></Route>
+        <Route path="/guide/:id" component = {GetindividualGuide} exact></Route>
+        
+        {/*Vehicle*/}
         <Route path="/viewVehicle" exact component={viewPageVehicle} />
-        {/* <Route path="/guide/:id" component = {GuideHome} exact></Route> */}
 
         {/* travelDestinations */}
         <Route exact component={Destinations} path={"/destinations"} />
@@ -42,6 +46,7 @@ export default function App() {
           component={EditDestinationForm}
           path={"/destinations/edit"}
         />
+
       </Router>
     </div>
   );

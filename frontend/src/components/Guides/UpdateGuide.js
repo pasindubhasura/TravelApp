@@ -1,17 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import axios from 'axios';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const invoiceRegx = RegExp(/^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/gm);
-const formValid = formErrors =>{
-    let valid = true;
-    Object.values(formErrors).forEach(val => {val.length > 0 && (valid = false);
-    });
-    return valid;
-};
 
-export default class AddGuide extends Component {
+export default class UpdateGuide extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -22,45 +16,12 @@ export default class AddGuide extends Component {
             phoneNo: Number,
             language: "",
             availability:"",
-            
-
-            formErrors:{
-                phoneNo:Number,
-                name:"",
-                email:""
-                
-            } 
 
         }
     }
 
     handleInputChange = (e) => {
-        // validaons
         const { name, value } = e.target;
-        let formErrors = this.state.formErrors;
-        switch(name){
-            case "name":
-            formErrors.name=
-            value.length < 5
-            ?"Minimum charchter must be 5"
-            :"";
-            break;
-            case "email":
-            formErrors.email = invoiceRegx.test(value)
-            ? ""
-            : "Didn't match pattern";
-            break;
-            case "phoneNo":
-            formErrors.phoneNo =
-            value.length > 10 || value.length > 10
-            ? "Must be 10 digits"
-            :"";
-            break;
-            default:
-            break;
-        }
-        this.setState({formErrors,[name]: value},()=> console.log(this.state));
-
         this.setState({
             ...this.state,
             [name]: value
@@ -68,13 +29,10 @@ export default class AddGuide extends Component {
     };
 
     onSubmit = (e) => {
+
         e.preventDefault();
-
-        if(formValid(this.state.formErrors)){
-           
-
+        const id = this.props.match.params.id;
         const {registrationNo,name, address,email, phoneNo, language, availability } = this.state;
-
         const data = {
             registrationNo:registrationNo,
             name: name,
@@ -83,12 +41,11 @@ export default class AddGuide extends Component {
             phoneNo: phoneNo,
             language: language,
             availability: availability,
-           
         }
         console.log(data)
-        axios.post("http://localhost:5001/guide/add", data).then((res) => {
+        axios.put(`http://localhost:5001/guide/update/${id}`, data).then((res) => {
             if (res.data.success) {
-                toast(`New Guide Added`, {
+                toast(`Employee Updated`, {
                     type: toast.TYPE.SUCCESS,
                     autoClose: 4000
                 });
@@ -101,21 +58,29 @@ export default class AddGuide extends Component {
                         phoneNo: Number,
                         language: "",
                         availability:"",
-                        
                     }
                 )
             };
         });
-    }
-    else{
-        toast(`Your Inserting blank! `, {
-            type: toast.TYPE.ERROR,
-            autoClose: 4000
-        });
-    
-    }
     };
 
+    componentDidMount(){
+        const id = this.props.match.params.id;
+        axios.get(`http://localhost:5001/guide/${id}`).then((res)=>{
+            if(res.data.success){
+                this.setState({
+                    registrationNo: res.data.guide.registrationNo,
+                    name: res.data.guide.name,
+                    address: res.data.guide.address,
+                    email: res.data.guide.email,
+                    phoneNo: res.data.guide.phoneNo,
+                    language: res.data.guide.language,
+                    availability: res.data.guide.availability,
+                });
+                console.log(this.state.guide);
+            }
+        })
+    }
     render() {
         const {formErrors}= this.state;
 
@@ -127,7 +92,7 @@ export default class AddGuide extends Component {
                     <div className="col-6 shadowBox" >
                         
                         <center>
-                            <h1 className="h3 mb-3 font-weight-normal">Add New Guide</h1>
+                            <h1 className="h3 mb-3 font-weight-normal head-line">Upadete Guide</h1>
                         </center>
 
                     <form className="needs-validation " noValidate >
@@ -158,9 +123,9 @@ export default class AddGuide extends Component {
                                     value={this.state.name}
                                     onChange={this.handleInputChange} />
 
-                                {formErrors.name.length > 5  &&(
+                                {/* {formErrors.name.length > 5  &&(
                                 <span style={{color:'red'}} className="errorMessage">{formErrors.name}</span>
-                            )}
+                            )} */}
 
                             </div>
                             
@@ -180,14 +145,14 @@ export default class AddGuide extends Component {
                             <div className="form-group" style={{ marginBottom: '15px' }}>
                                 <label style={{ marginBottom: '5px' }}>Email</label>
                                 <input type="email"
-                                    className={formErrors.email.length > 0 ? "error" : "form-control"}
+                                    className={"form-control"}
                                     name="email"
                                     placeholder="Enter email"
                                     value={this.state.email}
                                     onChange={this.handleInputChange} />
-                                     {formErrors.email.length > 0 && (
+                                     {/* {formErrors.email.length > 0 && (
                                     <span style={{ color: 'red',fontWeight:'bold' }} className="errorMessage">{formErrors.email}</span>
-                                )}
+                                )} */}
                             </div>
 
                          {/* Phone */}
@@ -200,21 +165,28 @@ export default class AddGuide extends Component {
                                     value={this.state.phoneNo}
                                     onChange={this.handleInputChange} />
 
-                                {formErrors.phoneNo.length > 10 &&(
+                                {/* {formErrors.phoneNo.length > 10 &&(
                                 <span style={{color:'red'}} className="errorMessage">{formErrors.phoneNo}</span>
-                                 )}
+                                 )} */}
 
                             </div>
                         
-                        {/* Language */}
-                            <div className="form-group" style={{ marginBottom: '15px' }}>
+                       {/* Language */}
+                       <div className="form-group" style={{ marginBottom: '15px' }}>
                                 <label style={{ marginBottom: '5px' }}>Language</label>
-                                <input type="text"
+                                <select id="language" className="form-control" name="language" onChange={this.handleInputChange} value={this.state.language} required>  
+                                <option selected>Choose Language</option>
+                                <option value="English">English</option>
+                                <option value="Tamil,English">Tamil,English</option>
+                                <option value="German,English">German,English </option>
+                                <option value="French,English">French,English </option>
+                            </select> 
+                                {/* <input type="text"
                                     className="form-control"
                                     name="language"
                                     placeholder="Enter Language"
                                     value={this.state.language}
-                                    onChange={this.handleInputChange} />
+                                    onChange={this.handleInputChange} /> */}
                             </div>
                         
                 
@@ -222,24 +194,28 @@ export default class AddGuide extends Component {
                         {/* availability */}
                             <div className="form-group" style={{ marginBottom: '15px' }}>
                                 <label style={{ marginBottom: '5px' }}>Availability</label>
-                                <input type="text"
+                                <select id="availability" className="form-control" name="availability" onChange={this.handleInputChange} value={this.state.availability} required>  
+                                <option selected>Choose Availability</option>
+                                <option value="Available">Available</option>
+                                <option value="Unavailable">Unavailable</option>
+                                </select> 
+                                
+                                {/* <input type="text"
                                     className="form-control"
                                     name="availability"
                                     placeholder="Enter Availability"
                                     value={this.state.availability}
-                                    onChange={this.handleInputChange} />
+                                    onChange={this.handleInputChange} /> */}
                             </div>
-
                     
-                            <center>
-                                <div class="d-grid gap-2 col-6 mx-auto  ">
-                                    <button type="submit" className="btn btn-primary sub_btn" onClick={this.onSubmit}><i class="far fa-save"></i>&nbsp;Add</button>
-                                    
+                           
+                                <div>
+                                <button href="/guide_add" type="submit"  className="btn btn-outline-success sub_btn2"><i class="far fa-times-circle"></i>&nbsp;Reset</button>
+                                <button type="submit" className="btn btn-primary sub_btn" onClick={this.onSubmit}><i class="far fa-save"></i>&nbsp;Add</button>
+                            
                                 </div>
-                                <div class="d-grid gap-2 col-6 mx-auto  ">
-                                    <button href="/guide_add" type="submit" className="btn btn-primary sub_btn " ><i class="far fa-times-circle"></i>&nbsp;Reset</button>
-                                </div>
-                            </center>
+                                
+                           
                         </form>
                     </div>
                     <div className="col-6">
@@ -250,4 +226,4 @@ export default class AddGuide extends Component {
 
         );
     };
-};
+}

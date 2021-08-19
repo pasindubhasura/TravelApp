@@ -27,18 +27,20 @@ export default function AddDestinationForm() {
     setprovince("none");
     setdestination("");
     setdescription("");
+    setImg(defaultImage);
   };
   const formHandler = async (e) => {
     e.preventDefault();
-    validation();
-    // const response = await axios.post(
-    //   "http://localhost:5001/destinations/add",
-    //   { district, province, destination, city, description }
-    // );
-    // if (response.data.success) window.location = "/destinations";
-    // if (response.data.error) alert(response.data.error);
+    if (validation()) {
+      const response = await axios.post(
+        "http://localhost:5001/destinations/add",
+        { district, province, destination, city, description, image: img }
+      );
+      if (response.data.success) window.location = "/destinations";
+      if (response.data.error) alert(response.data.error);
+    }
   };
-  const validation = async () => {
+  const validation = () => {
     setdestinationError("");
     setcityError("");
     setdistrictError("");
@@ -61,8 +63,17 @@ export default function AddDestinationForm() {
     if (description === "") {
       setdescriptionError("Description can't be empty!");
     }
-    if (img === defaultImage) {
-      setimgError("Add an Image");
+    // if (img === defaultImage) {
+    //   setimgError("Add an Image");
+    // }
+    else if (
+      destinationError === "" &&
+      cityError === "" &&
+      districtError === "" &&
+      provinceError === "" &&
+      descriptionError === ""
+    ) {
+      return true;
     }
   };
   const imageHandler = (evt) => {
@@ -89,9 +100,11 @@ export default function AddDestinationForm() {
     // // Read in the image file as a data URL.
     reader.readAsBinaryString(f);
   };
+
   const uploadButtonClickHandler = () => {
     document.getElementById("fileInput").click();
   };
+
   return (
     <MainDiv>
       <H2>Add Destination Details</H2>

@@ -4,10 +4,11 @@ import axios from "axios";
 import styled from "styled-components";
 import defaultImage from "../../images/defaultImage.jpg";
 import { districts, provinces, colors } from "./data";
-import Schema from "./validation";
+import spinner from "../../images/spinner.gif";
 
 export default function AddDestinationForm() {
   const [img, setImg] = useState(defaultImage);
+  const [isLoading, setisLoading] = useState(false);
   const [district, setdistrict] = useState("none");
   const [province, setprovince] = useState("none");
   const [destination, setdestination] = useState("");
@@ -18,6 +19,7 @@ export default function AddDestinationForm() {
   const [districtError, setdistrictError] = useState("");
   const [provinceError, setprovinceError] = useState("");
   const [descriptionError, setdescriptionError] = useState("");
+  const [imgError, setimgError] = useState("");
 
   const clear = () => {
     setcity("");
@@ -37,20 +39,13 @@ export default function AddDestinationForm() {
     // if (response.data.error) alert(response.data.error);
   };
   const validation = async () => {
-    // try {
-    //   await Schema.validateAsync(
-    //     {
-    //       destination,
-    //       city,
-    //       description,
-    //     },
-    //     { abortEarly: false }
-    //   );
-    // } catch (error) {
-    //   const x = error.toString().split(".");
-    //   console.log(x);
-    //   // console.log(errors);
-    // }
+    setdestinationError("");
+    setcityError("");
+    setdistrictError("");
+    setprovinceError("");
+    setdescriptionError("");
+    setimgError("");
+
     if (destination === "") {
       setdestinationError("Destination can't be empty!");
     }
@@ -66,8 +61,37 @@ export default function AddDestinationForm() {
     if (description === "") {
       setdescriptionError("Description can't be empty!");
     }
+    if (img === defaultImage) {
+      setimgError("Add an Image");
+    }
   };
-
+  const imageHandler = (evt) => {
+    setisLoading(true);
+    var f = evt.target.files[0]; // FileList object
+    var reader = new FileReader();
+    // Closure to capture the file information.
+    reader.onload = (function (theFile) {
+      return async function (e) {
+        var binaryData = e.target.result;
+        //Converting Binary Data to base 64
+        var base64String = window.btoa(binaryData);
+        //showing file converted to base64
+        const res = await axios.post(
+          "http://localhost:5001/destinations/upload",
+          {
+            path: base64String,
+          }
+        );
+        setisLoading(false);
+        setImg(res.data.imgUrl);
+      };
+    })(f);
+    // // Read in the image file as a data URL.
+    reader.readAsBinaryString(f);
+  };
+  const uploadButtonClickHandler = () => {
+    document.getElementById("fileInput").click();
+  };
   return (
     <MainDiv>
       <H2>Add Destination Details</H2>
@@ -156,7 +180,7 @@ export default function AddDestinationForm() {
           </Button>
           <ButtonSecondary
             color={colors.darkerGreen}
-            type="button"
+            type="submit"
             onClick={(e) => formHandler(e)}
           >
             Add Destination
@@ -164,10 +188,28 @@ export default function AddDestinationForm() {
         </Column>
         <Column>
           <Center>
-            <Image src={img} />
-            <UploadButton color={colors.darkerGreen}>
-              <FileInput type="file" />
-              Upload Image
+            <ImageContainner>
+              {isLoading ? <Spinner src={spinner} /> : <Image src={img} />}
+            </ImageContainner>
+            {imgError.length > 0 ? (
+              <Span style={{ marginLeft: "15px", width: "90%" }}>
+                {imgError}
+              </Span>
+            ) : (
+              <Span style={{ visibility: "hidden" }}></Span>
+            )}
+            <FileInput
+              type="file"
+              onChange={imageHandler}
+              id="fileInput"
+              required
+            />
+            <UploadButton
+              color={colors.darkerGreen}
+              type="button"
+              onClick={uploadButtonClickHandler}
+            >
+              <I className="fas fa-images"></I>Upload Image
             </UploadButton>
           </Center>
         </Column>
@@ -237,7 +279,24 @@ const TextInputBox = styled.textarea`
   border-radius: 5px;
 `;
 const Image = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+const Spinner = styled.img`
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+`;
+const ImageContainner = styled.div`
   width: 90%;
+  height: 300px;
+  margin-top: 15px;
+  margin-bottom: 0px;
+  border: 1px solid ${colors.darkerGreen};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 const Center = Styled.div`
 display:flex;
@@ -247,7 +306,9 @@ align-items:center;
 `;
 
 const FileInput = styled.input`
-  display: none;
+  opacity: 0;
+  margin: 0px;
+  padding: 0px;
 `;
 const UploadButton = styled.button`
   border: 1px solid ${(props) => props.color};
@@ -255,8 +316,9 @@ const UploadButton = styled.button`
   border-radius: 5px;
   font-weight: bold;
   padding: 8px 14px;
+  width: 90%;
   background-color: ${(props) => props.color};
-  margin: 10px 0px;
+  margin: 0px;
   color: white;
   &:hover {
     filter: brightness(85%);
@@ -283,4 +345,7 @@ const Dropdown = styled.select`
   margin-bottom: 20px;
   border-radius: 5px;
   border-style: solid;
+`;
+const I = styled.i`
+  margin: 0px 7px;
 `;

@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import GuideHome from "./components/Guides/GuideHome";
 import AddGuide from "./components/Guides/AddGuide";
 import UpdateGuide from "./components/Guides/UpdateGuide";
+import GetindividualGuide from "./components/Guides/GetindividualGuide";
 
 export default function App() {
   return (
@@ -20,8 +21,10 @@ export default function App() {
           <Route path="/get_guide" component = {GuideHome} exact></Route>
           <Route path="/guide_add" component = {AddGuide} exact></Route>
           <Route path="/guide_update/:id" component = {UpdateGuide} exact></Route>
+          <Route path="/guide/:id" component = {GetindividualGuide} exact></Route>
+          
+          {/*Vehicle*/}
           <Route path="/viewVehicle" exact component={viewPageVehicle} />
-          {/* <Route path="/guide/:id" component = {GuideHome} exact></Route> */}
       </Router>
       </div>
   );

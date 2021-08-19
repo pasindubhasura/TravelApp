@@ -13,7 +13,11 @@ export default function AddDestinationForm() {
   const [destination, setdestination] = useState("");
   const [city, setcity] = useState("");
   const [description, setdescription] = useState("");
-  const [errors, seterrors] = useState("");
+  const [destinationError, setdestinationError] = useState("");
+  const [cityError, setcityError] = useState("");
+  const [districtError, setdistrictError] = useState("");
+  const [provinceError, setprovinceError] = useState("");
+  const [descriptionError, setdescriptionError] = useState("");
 
   const clear = () => {
     setcity("");
@@ -47,28 +51,55 @@ export default function AddDestinationForm() {
     //   console.log(x);
     //   // console.log(errors);
     // }
+    if (destination === "") {
+      setdestinationError("Destination can't be empty!");
+    }
+    if (city === "") {
+      setcityError("City can't be empty!");
+    }
+    if (district === "none") {
+      setdistrictError("District has to be selected!");
+    }
+    if (province === "none") {
+      setprovinceError("Province has to be selected!");
+    }
+    if (description === "") {
+      setdescriptionError("Description can't be empty!");
+    }
   };
-  if (destination.trim() === "") {
-    seterrors("Destination can't be empty!");
-  }
+
   return (
     <MainDiv>
       <H2>Add Destination Details</H2>
       <FormGrid>
         <Column>
+          {destinationError.length > 0 ? (
+            <Span>{destinationError}</Span>
+          ) : (
+            <Span style={{ visibility: "hidden" }}></Span>
+          )}
           <TextInput
             placeholder="Destination"
             type="text"
             value={destination}
             onChange={(e) => setdestination(e.target.value)}
           />
-          <span>{errors.length > 0 ? errors : null}</span>
+          {cityError.length > 0 ? (
+            <Span>{cityError}</Span>
+          ) : (
+            <Span style={{ visibility: "hidden" }}></Span>
+          )}
           <TextInput
             placeholder="City"
             type="text"
             onChange={(e) => setcity(e.target.value)}
             value={city}
           />
+          {districtError.length > 0 ? (
+            <Span>{districtError}</Span>
+          ) : (
+            <Span style={{ visibility: "hidden" }}></Span>
+          )}
           <Dropdown
             onChange={(e) => setdistrict(e.target.value)}
             value={district}
@@ -84,6 +115,11 @@ export default function AddDestinationForm() {
               );
             })}
           </Dropdown>
+          {provinceError.length > 0 ? (
+            <Span>{provinceError}</Span>
+          ) : (
+            <Span style={{ visibility: "hidden" }}></Span>
+          )}
           <Dropdown
             onChange={(e) => setprovince(e.target.value)}
             value={province}
@@ -99,6 +135,11 @@ export default function AddDestinationForm() {
               );
             })}
           </Dropdown>
+          {descriptionError.length > 0 ? (
+            <Span>{descriptionError}</Span>
+          ) : (
+            <Span style={{ visibility: "hidden" }}></Span>
+          )}
           <TextInputBox
             placeholder="Description"
             rows={8}
@@ -175,10 +216,19 @@ const TextInput = styled.input`
   width: 100%;
   padding-left: 5px;
   height: 40px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   border-radius: 5px;
   border: 1px solid;
 `;
+
+const Span = styled.p`
+  width: 100%;
+  margin: 15px 0px 0px 0px;
+  color: red;
+  font-weight: bold;
+  font-size: 14px;
+`;
+
 const TextInputBox = styled.textarea`
   width: 100%;
   padding: 5px;

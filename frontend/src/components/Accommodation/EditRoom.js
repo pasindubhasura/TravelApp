@@ -22,12 +22,54 @@ export default class EditRoom extends Component {
     }
 
     retrieveRooms(){
-        axios.get(`http://localhost:8070/room/`).then(res => {
+        axios.get(`http://localhost:5001/room/`).then(res => {
             if(res.data.success){
                 this.setState({
                     rooms:res.data.existingRooms
                 });
                 console.log(this.state.rooms);
+            }
+        });
+    }    
+
+    //delete function with confirmation
+    onDelete=(id)=>{
+        swl({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this file!",
+            icon: "warning",
+            buttons: ["Cancel","Delete"],
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                axios.delete(`http://localhost:5001/room/delete/${id}`).then((res) => {
+
+                    swl('Room successfully Deleted',{
+                      icon: "success",
+                    });
+                    this.retrieveRooms();
+                })                
+            }
+          });
+    }
+    
+    //define search options
+    filterData(rooms,searchKey){
+        const result=rooms.filter((room)=>            
+            room.accName.toLowerCase().includes(searchKey)||
+            room.airCondition.toLowerCase().includes(searchKey)||
+            room.availability.toLowerCase().includes(searchKey)            
+        )
+        this.setState({rooms:result});
+    }
+
+    //search room function
+    handleSearchArea=(e)=>{
+        const searchKey=e.currentTarget.value.toLowerCase();
+        axios.get('http://localhost:5001/room/').then(res => {
+            if(res.data.success){
+                this.filterData(res.data.existingRooms,searchKey);
             }
         });
     }    

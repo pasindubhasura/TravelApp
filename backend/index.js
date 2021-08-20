@@ -18,7 +18,6 @@ app.use(cors());
 //configuring dotenv variables
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
-
 //creating express server
 app.listen(PORT, async () => {
   //mongoDB connection

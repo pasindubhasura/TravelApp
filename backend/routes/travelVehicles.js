@@ -1,45 +1,40 @@
 const express = require("express");
 const router = express.Router();
 let Vehicle = require("../models/travelVehicle");
+//const imgbbUploader = require("imgbb-uploader");
 
 //Add Vehicles
 router.post("/add", (req, res) => {
-  let newVehicle = new Vehicle(req.body);
   console.log("in post");
+  let newVehicle = new Vehicle(req.body);
 
   //javascript promise = then
-  newVehicle.save((err) => {
-    if (err) {
-      return res.status(400).json({
-        error: err,
-      });
-    }
-    return res.status(200).json({
-      success: "Vehicle Created Successfully !",
-    });
-  });
-});
-
-//get details
-router.get("/travelVehicle/").get((req, rea) => {
-  //execute body by calling model
-  vehicle
-    .find()
-    .then((Vehicle) => {
-      res.json(Vehicle);
+  newVehicle
+    .save()
+    .then((res) => {
+      console.log("Successfully Created!");
     })
     .catch((err) => {
       console.log(err);
     });
 });
 
+//get all details
+router.get("/", async (req, res) => {
+  try {
+    const vehicles = await Vehicle.find();
+    res.json({ vehicles });
+  } catch (error) {
+    res.json({ error });
+  }
+});
+
 //update
-router.route("/travelVehicle/update/:vehicleId").put(async (req, res) => {
+router.put("/update/:vehicleId", async (req, res) => {
   let vId = req.params.vehicleId;
   //const name = req.body.name; mehema gannath puluwan
   //b structure karanna puluwan ekaparinma eka peliyen
   const {
-    vehicleId,
     vehicleType,
     vehicleLocation,
     vehiclePricePerkm,
@@ -89,10 +84,9 @@ router.route("/travelVehicle/delete/:vehicleId").delete(async (req, res) => {
 });
 
 //eka user kenekge witharak data gannawa
-router.route("/travelVehicle/get/:vehicleId").get(async (req, res) => {
-  let vId = req.params.vehicleId;
-  const reqC = await vehicle
-    .findById(vId)
+router.get("/get/:vehicleId", async (req, res) => {
+  const vId = req.params.vehicleId;
+  const reqC = await Vehicle.findById(vId)
     .then((Vehicle) => {
       res.status(200).send({ status: "Request Fetched", Vehicle });
     })

@@ -31,51 +31,51 @@ export default function AddDestinationForm() {
   };
   const formHandler = async (e) => {
     e.preventDefault();
-    if (validation()) {
-      const response = await axios.post(
-        "http://localhost:5001/destinations/add",
-        { district, province, destination, city, description, image: img }
-      );
-      if (response.data.success) window.location = "/destinations";
-      if (response.data.error) alert(response.data.error);
+    const response = await axios.post(
+      "http://localhost:5001/destinations/add",
+      { district, province, destination, city, description, image: img }
+    );
+    if (response.data.success) window.location = "/destinations";
+    if (response.data.error) {
+      console.log(response.data.error);
     }
   };
-  const validation = () => {
-    setdestinationError("");
-    setcityError("");
-    setdistrictError("");
-    setprovinceError("");
-    setdescriptionError("");
-    setimgError("");
+  // const validation = () => {
+  //   setdestinationError("");
+  //   setcityError("");
+  //   setdistrictError("");
+  //   setprovinceError("");
+  //   setdescriptionError("");
+  //   setimgError("");
 
-    if (destination === "") {
-      setdestinationError("Destination can't be empty!");
-    }
-    if (city === "") {
-      setcityError("City can't be empty!");
-    }
-    if (district === "none") {
-      setdistrictError("District has to be selected!");
-    }
-    if (province === "none") {
-      setprovinceError("Province has to be selected!");
-    }
-    if (description === "") {
-      setdescriptionError("Description can't be empty!");
-    }
-    if (img === defaultImage) {
-      setimgError("Add an Image");
-    } else if (
-      destinationError === "" &&
-      cityError === "" &&
-      districtError === "" &&
-      provinceError === "" &&
-      descriptionError === "" &&
-      imgError === ""
-    ) {
-      return true;
-    }
-  };
+  //   if (destination === "") {
+  //     setdestinationError("Destination can't be empty!");
+  //   }
+  //   if (city === "") {
+  //     setcityError("City can't be empty!");
+  //   }
+  //   if (district === "none") {
+  //     setdistrictError("District has to be selected!");
+  //   }
+  //   if (province === "none") {
+  //     setprovinceError("Province has to be selected!");
+  //   }
+  //   if (description === "") {
+  //     setdescriptionError("Description can't be empty!");
+  //   }
+  //   if (img === defaultImage) {
+  //     setimgError("Add an Image");
+  //   } else if (
+  //     destinationError === "" &&
+  //     cityError === "" &&
+  //     districtError === "" &&
+  //     provinceError === "" &&
+  //     descriptionError === "" &&
+  //     imgError === ""
+  //   ) {
+  //     return true;
+  //   }
+  // };
   const imageHandler = (evt) => {
     setisLoading(true);
     var f = evt.target.files[0]; // FileList object
@@ -108,7 +108,7 @@ export default function AddDestinationForm() {
   return (
     <MainDiv>
       <H2>Add Destination Details</H2>
-      <FormGrid>
+      <FormGrid onSubmit={formHandler}>
         <Column>
           {destinationError.length > 0 ? (
             <Span>{destinationError}</Span>
@@ -191,11 +191,7 @@ export default function AddDestinationForm() {
           >
             Clear
           </Button>
-          <ButtonSecondary
-            color={colors.darkerGreen}
-            type="submit"
-            onClick={(e) => formHandler(e)}
-          >
+          <ButtonSecondary color={colors.darkerGreen} type="submit">
             Add Destination
           </ButtonSecondary>
         </Column>
@@ -211,12 +207,7 @@ export default function AddDestinationForm() {
             ) : (
               <Span style={{ visibility: "hidden" }}></Span>
             )}
-            <FileInput
-              type="file"
-              onChange={imageHandler}
-              id="fileInput"
-              required
-            />
+            <FileInput type="file" onChange={imageHandler} id="fileInput" />
             <UploadButton
               color={colors.darkerGreen}
               type="button"

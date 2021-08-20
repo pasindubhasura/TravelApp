@@ -24,7 +24,7 @@ export default function EditDestinationForm(props) {
 
   useEffect(() => {
     fetchData();
-  }, id);
+  }, [id]);
 
   const fetchData = async () => {
     const response = await axios.get(
@@ -51,17 +51,22 @@ export default function EditDestinationForm(props) {
   };
   const formHandler = async (e) => {
     e.preventDefault();
-    if (validation()) {
+
+    if (await validation()) {
+      console.log("validated in formhandler");
       const response = await axios.post(
         "http://localhost:5001/destinations/update",
         { id, district, province, destination, city, description, image: img }
       );
       if (response.data.success) window.location = "/destinations";
-      if (response.data.error) alert(response.data.error);
+      if (response.data.error) {
+        // alert(response.data.error[0]);
+        console.log(response.data.error);
+      }
     }
   };
 
-  const validation = () => {
+  const validation = async () => {
     setdestinationError("");
     setcityError("");
     setdistrictError("");
@@ -91,9 +96,10 @@ export default function EditDestinationForm(props) {
       cityError === "" &&
       districtError === "" &&
       provinceError === "" &&
-      descriptionError === "" &&
+      descriptionError == "" &&
       imgError === ""
     ) {
+      console.log("true");
       return true;
     }
   };
@@ -216,7 +222,7 @@ export default function EditDestinationForm(props) {
           <ButtonSecondary
             color={colors.darkerGreen}
             type="button"
-            onClick={(e) => formHandler(e)}
+            onClick={formHandler}
           >
             Edit Destination
           </ButtonSecondary>

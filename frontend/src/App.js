@@ -26,7 +26,7 @@ import EditDestinationForm from "./components/pasindu/EditDestinationForm";
 import AccommodationHome from "./components/Accommodation/AccommodationHome";
 import Accommodation from "./components/Accommodation/Accommodation";
 import AddAccommodation from "./components/Accommodation/AddAccommodation";
-
+import EditAccommodation from "./components/Accommodation/EditAccommodation";
 
 
 
@@ -67,6 +67,7 @@ export default function App() {
         <Route path="/Accommodation_Home/" component={AccommodationHome} exact></Route>
         <Route path="/Accommodation_Home/Accommodation/" component={Accommodation} exact></Route>
         <Route path="/Accommodation_Home/Accommodation/add" component={AddAccommodation} exact></Route>
+        <Route path="/Accommodation_Home/Accommodation/edit/:id" component={EditAccommodation} exact></Route>
 
         {/* Accommodation end */}
 

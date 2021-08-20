@@ -35,8 +35,28 @@ export default class Accommodation extends Component {
         });
     }    
 
+    //delete function with confirmation
+    onDelete=(id)=>{
+        swl({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this file!",
+            icon: "warning",
+            buttons: ["Cancel","Delete"],
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                axios.delete(`http://localhost:8070/accommodation/delete/${id}`).then((res) => {
 
-    
+                    swl('Accommdation successfully Deleted',{
+                      icon: "success",
+                    });
+                    this.retrieveAccommodations();
+                })                
+            }
+          });
+    }
+
     render() {
         return (
             <div>

@@ -5,6 +5,17 @@ import 'react-toastify/dist/ReactToastify.css';
 import './AccStyles.css';
 
 
+const formValid = ({ formErrors, ...rest }) => {
+    let valid = true;
+    Object.values(formErrors).forEach(val => {
+        val.length > 0 && (valid = false);
+    });
+    Object.values(rest).forEach(val => {
+        val === null && (valid = false);
+    });
+    return valid;
+};
+
 export default class AddAccommodation extends Component {
     
     constructor(props) {
@@ -96,6 +107,7 @@ export default class AddAccommodation extends Component {
 
 
     render() {
+        const { formErrors } = this.state; 
         return (
             <div className="container containerTop">
                 <div className="row">

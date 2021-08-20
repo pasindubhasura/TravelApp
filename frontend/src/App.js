@@ -29,7 +29,7 @@ import AddAccommodation from "./components/Accommodation/AddAccommodation";
 import EditAccommodation from "./components/Accommodation/EditAccommodation";
 import Rooms from "./components/Accommodation/Rooms";
 import AddRoom from "./components/Accommodation/AddRoom";
-
+import EditRoom from "./components/Accommodation/EditRoom";
 
 export default function App() {
   return (
@@ -70,6 +70,7 @@ export default function App() {
         <Route path="/Accommodation_Home/Accommodation/edit/:id" component={EditAccommodation} exact></Route>
         <Route path="/Accommodation_Home/Rooms/" component={Rooms} exact></Route>
         <Route path="/Accommodation_Home/Rooms/add" component={AddRoom} exact></Route>
+        <Route path="/Accommodation_Home/Rooms/edit/:id" component={EditRoom} exact></Route>
 
         {/* Accommodation end */}
 

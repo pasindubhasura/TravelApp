@@ -7,7 +7,7 @@ import { SidebarData } from "./SidebarData";
 import SubMenu from "./SubMenu";
 import { IconContext } from "react-icons/lib";
 import {BiUserCircle} from "react-icons/bi"
-// import logo from "../../images/logo.png";
+import logo from "../../images/logo3.png";
 
 const Nav = styled.div`
 // margin-top : 0px;
@@ -68,7 +68,10 @@ return (
 				
 				}}
 		>
-	Travel forset 🗺️
+	Travel forset 
+	<img className="add_img" src={logo} style={{ 
+				maxWidth:"120px"
+				}} />
 		</h1>
 
 		<a href="/SignIn" style={{

@@ -6,6 +6,7 @@ import * as RiIcons from "react-icons/ri";
 import *as IconName  from "react-icons/ai";
 import *as GoIcon  from "react-icons/go";
 import *as MdIcon  from "react-icons/md";
+import logo from "../../images/logo2.png";
 export const SidebarData = [
 {
 	title: "Home",
@@ -31,7 +32,7 @@ export const SidebarData = [
 {
 	title: "Destination Managemet",
 	path: "/destinations",
-	icon: <IconName.AiOutlineDatabase />,
+	icon: <FaIcons.FaMapMarkedAlt />,
 },
 
 {
@@ -43,11 +44,12 @@ export const SidebarData = [
 {
 	title: "Vehicle Managemet",
 	path: "/viewVehicle",
-	icon: <IconName.AiOutlineDollar/>,
+	icon: <IconName.AiFillCar/>,
 },
 {
 	title: "Accommodation Managemet",
 	path: "/ManageDelivery",
-	icon: <FaIcons.FaBiking />,
-}
+	icon: <FaIcons.FaHotel />,
+},
+
 ];

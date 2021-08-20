@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import defaultImage from "../../images/vector.jpg";
 
 
 export default class UpdateGuide extends Component {
@@ -211,15 +212,16 @@ export default class UpdateGuide extends Component {
                            
                                 <div>
                                 <button href="/guide_add" type="submit"  className="btn btn-outline-success sub_btn2"><i class="far fa-times-circle"></i>&nbsp;Reset</button>
-                                <button type="submit" className="btn btn-primary sub_btn" onClick={this.onSubmit}><i class="far fa-save"></i>&nbsp;Add</button>
+                                <button type="submit" className="btn btn-primary sub_btn" onClick={this.onSubmit}><i class="far fa-save"></i>&nbsp;Update</button>
                             
                                 </div>
                                 
                            
                         </form>
                     </div>
-                    <div className="col-6">
-                        {/* <img className="add_img" src="../images/E3.png" /> */}
+                    <div className="col-6 add-image ">
+                        <img className="add_img" src={defaultImage} />
+                        <button type="submit" className="btn btn-primary sub_btn3" onClick={this.onSubmit}><i class="far fa-save"></i>&nbsp;Add</button>
                     </div>
                 </div>
             </div>

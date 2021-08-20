@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import defaultImage from "../../images/defaultImage.jpg";
+import defaultImage from "../../images/vector.jpg";
 
 const invoiceRegx = RegExp(/^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/gm);
 const formValid = formErrors =>{
@@ -128,7 +128,7 @@ export default class AddGuide extends Component {
                     <div className="col-6 shadowBox" >
                         
                         <center>
-                            <h1 className="h3 mb-3 font-weight-normal head-line">Add New Guide</h1>
+                            <h1 className="h3 mb-3 font-weight-normal head-line" style={{ fontWeight: '15px' }} >Add New Guide</h1>
                         </center>
 
                     <form className="needs-validation " noValidate >
@@ -255,9 +255,11 @@ export default class AddGuide extends Component {
                            
                         </form>
                     </div>
-                    <div className="col-6">
+                    <div className="col-6 add-image ">
                         <img className="add_img" src={defaultImage} />
+                        <button type="submit" className="btn btn-primary sub_btn3" onClick={this.onSubmit}><i class="far fa-save"></i>&nbsp;Add</button>
                     </div>
+                   
                 </div>
             </div>
 

@@ -177,3 +177,21 @@ table tr {
     opacity: 1;
     right: 0;
 }
+
+
+/* Add Accommodation */
+
+.acc-button {
+    width: 100px;
+}
+
+.form {
+    padding: 30px;
+}
+
+.accImage {
+    background-image: url("acc-img0.jpg");
+    background-size: cover;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}

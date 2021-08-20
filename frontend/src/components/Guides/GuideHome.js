@@ -80,35 +80,18 @@ handleSearchArea=(e)=>{
 exportPDF = () => {
  
 
-  // let bodyData = [];
-  // let length = guide.length;
-  // let x = 1;
-  // console.log(guide);
   const data = this.state.guide.map(dlt=> [dlt.registrationNo,dlt.name  ,dlt.address,dlt.email,dlt.phoneNo,dlt.language,dlt.availability])
-  // for (let i = 0; i < length; i++) {
-  //   bodyData.push([
-  //     x++,
-  //     guide[i].registrationNo,
-  //     guide[i].name,
-  //     guide[i].address,
-  //     guide[i].email,
-  //     guide[i].phoneNo,
-  //     guide[i].language,
-  //     guide[i].availability,
-  //   ]);
-  // } 
-  // //save json data to bodydata in order to print in the pdf table
+ 
 
-  const doc = new jsPDF({ orientation: "portrait" });
+  const doc = new jsPDF({ orientation: "landscape" });
   var time = new Date().toLocaleString();
   doc.setFontSize(27);
-  doc.text(`Guide Details Report`, 105, 35, null, null, "center");
+  doc.text(`Guide Details Report`, 150, 35, null, null, "center");
   doc.setFontSize(10);
-  doc.text(`(Generated on ${time})`, 105, 39, null, null, "center");
-  doc.setFontSize(14);
-  // doc.text("Thilina Hardware", 105, 20, null, null, "center");
-  // doc.text("No 55, Main Road, Horana", 105, 25, null, null, "center");
-  doc.addImage(Logo, "JPEG", 90, 0, 25, 25);
+  doc.text(`(Generated on ${time})`, 150, 41, null, null, "center");
+  doc.setFontSize(12);
+ 
+  doc.addImage(Logo, "JPEG", 142, 0, 25, 25);
   doc.autoTable({
     theme: "grid",
     styles: { halign: "center" },
@@ -119,24 +102,25 @@ exportPDF = () => {
     ],
     body: data,
   });
+  
   doc.save("Guides.pdf");
  }
 
   render() {
     return (
       <div className="container" >
-        <div className="row">
+        <div className="row search">
           <div className="col-lg-9 mt-2 mb-2">
 
             </div>
-            <div className="col-lg-3 mt-2 mb-2 ">
+            <div className="col-lg-3 mt-2 mb-2 " >
               <input
               className="form-control"
               type="search"
               placeholder="🔍 Search"
               name="searchQuery"
               onChange={this.handleSearchArea}></input>
-
+              
             </div>
 
         </div> 

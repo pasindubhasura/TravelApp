@@ -2,6 +2,9 @@ import { React, useEffect } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import GlobalStyle from "./globalStyles";
 import "bootstrap/dist/css/bootstrap.min.css";
+import NavBar from './components/NavBar/Sidebar';
+import Footer from './components/Footer/Footer';
+import './App.css';
 
 //travelVehicle
 import viewPageVehicle from "./components/ViewVehicles";
@@ -21,10 +24,12 @@ import EditDestinationForm from "./components/pasindu/EditDestinationForm";
 export default function App() {
   return (
 
-    <div className="container">
+    <div className="page-container">
+    <div className="container-wrap">
       <ToastContainer />
       <GlobalStyle />
       <Router>
+         <NavBar />
         {/*Guides*/}
         <Route path="/get_guide" component={GuideHome} exact></Route>
         <Route path="/guide_add" component={AddGuide} exact></Route>
@@ -46,8 +51,12 @@ export default function App() {
           component={EditDestinationForm}
           path={"/destinations/edit"}
         />
-
+        
+         
       </Router>
+      </div>
+      {/* footer */}
+      <Footer/>
     </div>
   );
 }

@@ -88,7 +88,7 @@ export default class AddRoom extends Component {
 
     //display accommdation
     retrieveAccommodations() {
-        axios.get('http://localhost:8070/accommodation/').then(res => {
+        axios.get('http://localhost:5001/accommodation/').then(res => {
             if (res.data.success) {
                 this.setState({
                     accommodations: res.data.existingAccommodations
@@ -112,7 +112,7 @@ export default class AddRoom extends Component {
                 description: description
             }
         //console.log(data)
-        axios.post("http://localhost:8070/room/add", data).then((res) => {
+        axios.post("http://localhost:5001/room/add", data).then((res) => {
             if (res.data.success) {
                 toast.success('Room no ' + this.state.roomNo + ' added Successful !');
                 this.setState(

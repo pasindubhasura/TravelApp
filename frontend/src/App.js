@@ -28,7 +28,7 @@ import Accommodation from "./components/Accommodation/Accommodation";
 import AddAccommodation from "./components/Accommodation/AddAccommodation";
 import EditAccommodation from "./components/Accommodation/EditAccommodation";
 import Rooms from "./components/Accommodation/Rooms";
-
+import AddRoom from "./components/Accommodation/AddRoom";
 
 
 export default function App() {
@@ -69,6 +69,7 @@ export default function App() {
         <Route path="/Accommodation_Home/Accommodation/add" component={AddAccommodation} exact></Route>
         <Route path="/Accommodation_Home/Accommodation/edit/:id" component={EditAccommodation} exact></Route>
         <Route path="/Accommodation_Home/Rooms/" component={Rooms} exact></Route>
+        <Route path="/Accommodation_Home/Rooms/add" component={AddRoom} exact></Route>
 
         {/* Accommodation end */}
 

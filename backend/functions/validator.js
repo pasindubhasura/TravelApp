@@ -6,21 +6,14 @@ exports.validate = (method) => {
       return [
         body("destination")
           .trim()
-          .isEmpty()
+          .isLength({ min: 1 })
           .withMessage("Destination can't be empty."),
-        body("city").trim().isEmpty().withMessage("City can't be empty."),
-        body("province")
+        body("city")
           .trim()
-          .equals("none")
-          .withMessage("A province should be selected."),
-        body("district")
-          .trim()
-          .equals("none")
-          .withMessage("A district should be selected."),
+          .isLength({ min: 1 })
+          .withMessage("City can't be empty."),
         body("description")
           .trim()
-          .isEmpty()
-          .withMessage("Description can't be empty.")
           .isLength({ min: 10, max: undefined })
           .withMessage("Description should at least have 10 characters."),
       ];
@@ -29,22 +22,15 @@ exports.validate = (method) => {
       return [
         body("destination")
           .trim()
-          .isEmpty()
+          .isLength({ min: 1 })
           .withMessage("Destination can't be empty."),
-        body("city").trim().isEmpty().withMessage("City can't be empty."),
-        body("province")
+        body("city")
           .trim()
-          .equals("none")
-          .withMessage("A province should be selected."),
-        body("district")
-          .trim()
-          .equals("none")
-          .withMessage("A district should be selected."),
+          .isLength({ min: 1 })
+          .withMessage("City can't be empty."),
         body("description")
           .trim()
-          .isEmpty()
-          .withMessage("Description can't be empty.")
-          .isLength({ min: 10 })
+          .isLength({ min: 10, max: undefined })
           .withMessage("Description should at least have 10 characters."),
       ];
     }

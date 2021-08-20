@@ -37,8 +37,7 @@ router.post("/add", validator.validate("addDestination"), async (req, res) => {
   destination.description = req.body.description;
   destination.image = req.body.image;
 
-  const errors = validationResult(req);
-  console.log(errors);
+  let errors = validationResult(req);
   if (!errors.isEmpty()) {
     res.json({ error: errors.array() });
     return;

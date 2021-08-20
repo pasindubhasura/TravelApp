@@ -61,6 +61,39 @@ export default class AddAccommodation extends Component {
         });
     };
 
+    onSubmit = (e) => {
+
+        e.preventDefault();
+        if (formValid(this.state)) {
+
+            const { accommodationType, name, noOfRomm, mobile } = this.state;
+            const data = {
+                accommodationType:accommodationType,
+                name:name,
+                noOfRomm:noOfRomm,
+                mobile:mobile
+            }
+        //console.log(data)
+        axios.post("http://localhost:8070/accommodation/add",data).then((res) => {
+            if (res.data.success) {
+                toast.success("New Accommodation Added");
+                this.setState(
+                    {
+                        accommodationType: "",
+                        name: "",
+                        noOfRomm: Number,
+                        mobile: Number
+                    }
+                )
+            } else {
+                toast.error("You have an Error in Inserting");
+            }
+        });
+    }
+    else
+        alert("Please Enter Details Correclty !");
+    };
+
 
     render() {
         return (

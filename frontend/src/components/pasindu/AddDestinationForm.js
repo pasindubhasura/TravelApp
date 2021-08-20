@@ -20,6 +20,7 @@ export default function AddDestinationForm() {
   const [provinceError, setprovinceError] = useState("");
   const [descriptionError, setdescriptionError] = useState("");
   const [imgError, setimgError] = useState("");
+  const [errors, seterrors] = useState([]);
 
   const clear = () => {
     setcity("");
@@ -30,14 +31,27 @@ export default function AddDestinationForm() {
     setImg(defaultImage);
   };
   const formHandler = async (e) => {
+    seterrors([]);
     e.preventDefault();
     const response = await axios.post(
       "http://localhost:5001/destinations/add",
       { district, province, destination, city, description, image: img }
     );
+    if (district === "none")
+      seterrors((oldArr) => [
+        ...oldArr,
+        { msg: "District should be selected" },
+      ]);
+    if (province === "none")
+      seterrors((oldArr) => [
+        ...oldArr,
+        { msg: "Province should be selected" },
+      ]);
     if (response.data.success) window.location = "/destinations";
     if (response.data.error) {
-      console.log(response.data.error);
+      response.data.error.map((item) => {
+        seterrors((oldArr) => [...oldArr, { msg: item.msg }]);
+      });
     }
   };
   // const validation = () => {
@@ -108,6 +122,11 @@ export default function AddDestinationForm() {
   return (
     <MainDiv>
       <H2>Add Destination Details</H2>
+      {errors.length > 0
+        ? errors.map((i, index) => {
+            return <Span key={index}>{errors[index].msg}</Span>;
+          })
+        : null}
       <FormGrid onSubmit={formHandler}>
         <Column>
           {destinationError.length > 0 ? (
@@ -269,7 +288,7 @@ const TextInput = styled.input`
 
 const Span = styled.p`
   width: 100%;
-  margin: 15px 0px 0px 0px;
+  margin: 15px 0px 0px 20px;
   color: red;
   font-weight: bold;
   font-size: 14px;

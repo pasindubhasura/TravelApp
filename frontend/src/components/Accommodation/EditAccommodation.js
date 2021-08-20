@@ -96,6 +96,21 @@ export default class EditAccommodation extends Component {
         alert("Please Enter Details Correclty !");
     };     
     
+    //retrive table data to form
+    componentDidMount() {
+        const id = this.props.match.params.id;
+        axios.get(`http://localhost:8070/accommodation/${id}`).then((res) => {
+            if (res.data.success) {
+                this.setState({
+                    accommodationType: res.data.accommodation.accommodationType,
+                    name: res.data.accommodation.name,
+                    noOfRomm: res.data.accommodation.noOfRomm,
+                    mobile: res.data.accommodation.mobile
+                });
+                console.log(this.state.accommodation);
+            }
+        })
+    }
 
     render() {
         return (

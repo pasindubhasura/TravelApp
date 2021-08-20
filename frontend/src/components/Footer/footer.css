@@ -1,0 +1,58 @@
+
+  .foo{
+
+    display: block;
+    position: sticky;
+  
+   
+  }
+  footer .copyright {
+    padding: 15px 0;
+    background: black;
+    margin-top: 20px;
+    font-size: 15px;
+  }
+  
+  footer .copyright span {
+    color: #0894d1;
+  }
+
+ 
+
+  .title{
+    color: rgb(125, 125, 151);
+  }
+  .icon{
+    color: chartreuse;
+  }
+
+  .social-media {
+   
+    margin-top: 15px; }
+
+    .social-media ul li {
+      display: inline-block; }
+
+    .social-media ul li i{
+      margin-left: 10px; }
+
+.social-media ul li a {
+      display: inline-block;
+      width: 45px;
+      height: 45px;
+      margin-left: 10px;
+      line-height: 45px;
+      border-radius: 60%;
+      font-size: 20px;
+      color: #b78c33;
+      border: 3px solid rgba(255, 255, 255, 0.3); }
+      
+.social-media ul li a:hover {
+  background: #b78c33;
+  color: #fff;
+  border-color: #b78c33; }
+
+  .copyright{
+    color: #b78c33;
+
+  }

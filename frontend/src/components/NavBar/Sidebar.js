@@ -7,7 +7,7 @@ import { SidebarData } from "./SidebarData";
 import SubMenu from "./SubMenu";
 import { IconContext } from "react-icons/lib";
 import {BiUserCircle} from "react-icons/bi"
-
+// import logo from "../../images/logo.png";
 
 const Nav = styled.div`
 // margin-top : 0px;
@@ -59,6 +59,7 @@ return (
 			<FaIcons.FaBars onClick={showSidebar} />
 			
 		</NavIcon>
+		
 		<h1
 			style={{ textAlign: "center",
 			marginLeft: "36%",

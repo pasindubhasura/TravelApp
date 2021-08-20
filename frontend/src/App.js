@@ -21,6 +21,10 @@ import Destinations from "./components/pasindu/Destinations";
 import AddDestinationForm from "./components/pasindu/AddDestinationForm";
 import EditDestinationForm from "./components/pasindu/EditDestinationForm";
 
+
+//Travel Accommodation
+import AccommodationHome from "./components/Accommodation/AccommodationHome";
+
 export default function App() {
   return (
 
@@ -51,6 +55,14 @@ export default function App() {
           component={EditDestinationForm}
           path={"/destinations/edit"}
         />
+
+        {/* Accommodation start*/}
+
+        <Route path="/Accommodation_Home/" component={AccommodationHome} exact></Route>
+
+        {/* Accommodation end */}
+
+
         
          
       </Router>

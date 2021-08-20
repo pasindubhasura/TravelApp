@@ -70,6 +70,22 @@ export default class AddRoom extends Component {
         });
     };
 
+    //calling the accommodation api
+    componentDidMount() {
+        this.retrieveAccommodations();
+    }    
+
+    //display accommdation
+    retrieveAccommodations() {
+        axios.get('http://localhost:8070/accommodation/').then(res => {
+            if (res.data.success) {
+                this.setState({
+                    accommodations: res.data.existingAccommodations
+                });
+                console.log(this.state.accommodations)
+            }
+        });
+    }    
 
     render() {
         return (

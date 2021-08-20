@@ -25,7 +25,7 @@ export default class Accommodation extends Component {
     
     //display accommdation
     retrieveAccommodations(){
-        axios.get('http://localhost:8070/accommodation/').then(res => {
+        axios.get('http://localhost:5001/accommodation/').then(res => {
             if(res.data.success){
                 this.setState({
                     accommodations:res.data.existingAccommodations
@@ -46,7 +46,7 @@ export default class Accommodation extends Component {
           })
           .then((willDelete) => {
             if (willDelete) {
-                axios.delete(`http://localhost:8070/accommodation/delete/${id}`).then((res) => {
+                axios.delete(`http://localhost:5001/accommodation/delete/${id}`).then((res) => {
 
                     swl('Accommdation successfully Deleted',{
                       icon: "success",
@@ -68,7 +68,7 @@ export default class Accommodation extends Component {
 
     handleSearchArea=(e)=>{
         const searchKey=e.currentTarget.value.toLowerCase();
-        axios.get('http://localhost:8070/accommodation/').then(res => {
+        axios.get('http://localhost:5001/accommodation/').then(res => {
             if(res.data.success){
                 this.filterData(res.data.existingAccommodations,searchKey)
             }

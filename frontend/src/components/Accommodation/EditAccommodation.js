@@ -86,7 +86,7 @@ export default class EditAccommodation extends Component {
                 mobile: mobile
             }
         //console.log(data)
-        axios.put(`http://localhost:8070/accommodation/update/${id}`, data).then((res) => {
+        axios.put(`http://localhost:5001/accommodation/update/${id}`, data).then((res) => {
             if (res.data.success) {
                 toast.success("Accommodation "+this.state.name+" Update Successfully !");
                 this.setState(
@@ -109,7 +109,7 @@ export default class EditAccommodation extends Component {
     //retrive table data to form
     componentDidMount() {
         const id = this.props.match.params.id;
-        axios.get(`http://localhost:8070/accommodation/${id}`).then((res) => {
+        axios.get(`http://localhost:5001/accommodation/${id}`).then((res) => {
             if (res.data.success) {
                 this.setState({
                     accommodationType: res.data.accommodation.accommodationType,

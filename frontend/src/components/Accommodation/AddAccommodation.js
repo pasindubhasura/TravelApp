@@ -85,7 +85,7 @@ export default class AddAccommodation extends Component {
                 mobile:mobile
             }
         //console.log(data)
-        axios.post("http://localhost:8070/accommodation/add",data).then((res) => {
+        axios.post("http://localhost:5001/accommodation/add",data).then((res) => {
             if (res.data.success) {
                 toast.success("Accommodation "+ this.state.name +" Added");
                 this.setState(

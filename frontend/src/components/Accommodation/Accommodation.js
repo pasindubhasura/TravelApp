@@ -57,6 +57,25 @@ export default class Accommodation extends Component {
           });
     }
 
+    //search  accommdation function
+    filterData(accommodations,searchKey){
+        const result=accommodations.filter((accommodation)=>
+            accommodation.accommodationType.toLowerCase().includes(searchKey)||
+            accommodation.name.toLowerCase().includes(searchKey)
+        )
+        this.setState({accommodations:result});
+    }
+
+    handleSearchArea=(e)=>{
+        const searchKey=e.currentTarget.value.toLowerCase();
+        axios.get('http://localhost:8070/accommodation/').then(res => {
+            if(res.data.success){
+                this.filterData(res.data.existingAccommodations,searchKey)
+            }
+        });
+    }
+
+
     render() {
         return (
             <div>

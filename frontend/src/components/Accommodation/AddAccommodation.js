@@ -87,7 +87,7 @@ export default class AddAccommodation extends Component {
         //console.log(data)
         axios.post("http://localhost:8070/accommodation/add",data).then((res) => {
             if (res.data.success) {
-                toast.success("New Accommodation Added");
+                toast.success("Accommodation "+ this.state.name +" Added");
                 this.setState(
                     {
                         accommodationType: "",

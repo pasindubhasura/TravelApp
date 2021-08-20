@@ -25,7 +25,7 @@ import EditDestinationForm from "./components/pasindu/EditDestinationForm";
 //Travel Accommodation
 import AccommodationHome from "./components/Accommodation/AccommodationHome";
 import Accommodation from "./components/Accommodation/Accommodation";
-
+import AddAccommodation from "./components/Accommodation/AddAccommodation";
 
 
 
@@ -66,6 +66,7 @@ export default function App() {
 
         <Route path="/Accommodation_Home/" component={AccommodationHome} exact></Route>
         <Route path="/Accommodation_Home/Accommodation/" component={Accommodation} exact></Route>
+        <Route path="/Accommodation_Home/Accommodation/add" component={AddAccommodation} exact></Route>
 
         {/* Accommodation end */}
 

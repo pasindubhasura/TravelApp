@@ -195,3 +195,32 @@ table tr {
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
 }
+
+
+/* Edit Accommodation */
+
+.accEditImage {
+    background-image: url("acc-img1.jpg");
+    background-size: cover;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+/* Add Room */
+
+.radio {
+    margin-top: 10px;
+}
+
+.radio label {
+    margin-top: 5px;
+}
+
+.accRoomImage img {
+    border-radius: 20px;
+    max-width: 500px;
+    max-height: 500px;
+    margin-top: 100px;
+    /* border: 2px solid #00FFFF; */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.12);
+}

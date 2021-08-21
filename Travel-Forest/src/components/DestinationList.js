@@ -18,14 +18,6 @@ export default function DestinationList() {
       return i.destination.toLowerCase().match(searchInput.toLowerCase());
     });
   }
-  // const searchHandler = () => {
-  //   console.log("clicked " + searchInput);
-  //   if (searchInput.length > 0) {
-  //     destinations = destinations.filter((i) => {
-  //       return i.destination.toLowerCase().match(searchInput.toLowerCase());
-  //     });
-  //   }
-  // };
   return (
     <Div>
       <Coulmn>

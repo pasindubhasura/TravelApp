@@ -47,8 +47,8 @@ export const SidebarData = [
 	icon: <IconName.AiFillCar/>,
 },
 {
-	title: "Accommodation Managemet",
-	path: "/ManageDelivery",
+	title: "Accommodation",
+	path: "/Accommodation_Home/",
 	icon: <FaIcons.FaHotel />,
 },
 

@@ -4,6 +4,9 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import ReactTooltip from 'react-tooltip';
 import swl from 'sweetalert'
+import {jsPDF} from 'jspdf'
+import 'jspdf-autotable'
+import Logo from "../../images/Logo.png";
 import './AccStyles.css';
 
 
@@ -78,6 +81,37 @@ export default class Rooms extends Component {
         });
     }
 
+    //export PDF.
+    exportPDF = () => {
+ 
+
+        const data = this.state.rooms.map(dlt=> [dlt.accName, dlt.roomNo, dlt.noOfBeds, dlt.airCondition, dlt.price, dlt.description, dlt.availability])       
+      
+        const doc = new jsPDF({ orientation: "landscape" });
+        var time = new Date().toLocaleString();
+        doc.setFontSize(27);
+        doc.text(`Travel Accommodation Details Report`, 150, 35, null, null, "center");
+        doc.setFontSize(10);
+        doc.text(`(Generated on ${time})`, 150, 41, null, null, "center");
+        doc.setFontSize(12);
+       
+        doc.addImage(Logo, "JPEG", 142, 0, 25, 25); 
+        doc.autoTable({
+          theme: "grid",
+          styles: { halign: "center" },
+          headStyles: { fillColor:"#38B000" },
+          startY: 44,
+          head: [
+            ["Acc_name", "RoomNo", "No of Bed", "Air Condition", "Price", "Description" ,"Availability"],
+          ],
+          body: data,
+        });
+        
+        doc.save("Accommodation_Report.pdf");
+       }
+
+
+
     render() {
         return (
             <div className="container containerTop">
@@ -101,7 +135,7 @@ export default class Rooms extends Component {
                                 <a href="/Accommodation_Home/Rooms/add" type="button" class="button" ><span><i class="fal fa-plus-circle"></i>&nbsp;&nbsp;Add Rooms</span></a><br /><br />
                             </div>
                             <div className="col-4 buttons">
-                                <a href="#" type="button" class="button2" ><span><i class="fas fa-download"></i>&nbsp;&nbsp;Download Report</span></a><br /><br />
+                                <a href="#" type="button" class="button2" onClick={()=>this.exportPDF()} ><span><i class="fas fa-download"></i>&nbsp;&nbsp;Download Report</span></a><br /><br />
                             </div>
                             <div className="col-2">                                                                
                             </div>

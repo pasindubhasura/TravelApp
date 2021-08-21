@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
 import axios from "axios";
-import { colors } from "./data";
 export default function DestinationList() {
   let [destinations, setdestinations] = useState([]);
   let [searchInput, setsearchInput] = useState("");
@@ -34,9 +33,6 @@ export default function DestinationList() {
             onChange={(e) => setsearchInput(e.target.value)}
             placeholder="Search destinations here..."
           />
-          {/* <Button color={colors.darkerGreen} type="submit">
-            Search
-          </Button> */}
         </Row>
       </Coulmn>
       {destinations.map((item, index) => {

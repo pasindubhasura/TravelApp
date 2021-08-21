@@ -1,0 +1,277 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap');
+
+
+.containerTop {
+    margin-top: 60px;
+    padding-bottom: 50px;
+}
+
+.link a {
+    text-decoration: none;
+    color: rgb(37, 37, 37);
+}
+
+.link a:hover {
+    color: rgb(0, 202, 101);
+}
+
+.link p {
+    color: rgb(37, 37, 37);
+}
+
+.hr {
+    background-color: #2f9101e7;
+    padding-top: 5px;
+    margin-bottom: 30px;
+}
+/* #2e86c1 */
+h1, h2, h3 {
+    font-family: 'Open Sans', sans-serif;
+    color: #38B000;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+
+.shadowBox {
+    margin-top: 40px;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #fff;
+    opacity: 0.9;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+.shadowBoxForm {
+    margin-top: 40px;
+    border-radius: 10px;
+    background-color: #fff;
+    opacity: 0.9;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Accommodation Home */
+
+.caption {
+    margin-top: 60px;
+}
+
+.card {
+    border-radius: 20px;
+    background-color: #fff;
+    opacity: 0.9;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+.card .card-img-top {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.479), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+.card-section {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.card .card-title {
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+.card .card-text {
+    margin-top: 20px;
+}
+
+.card .button {
+    background-color: #fff;
+    outline: none;
+    border: 1px solid #38B000;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 10px;
+    color: #000;
+}
+
+/* #2e86c1 */
+
+.card .button:hover {
+    background-color: #38B000;
+    color: #ffff;
+}
+
+/* Accommodations */
+
+.search {
+    margin-top: 10px;
+    border-radius: 20px;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.search input {
+    height: 45px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    text-indent: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.12);
+}
+
+.search .fa-search {
+    position: absolute;
+    top: 15px;
+    left: 25px
+}
+
+
+table tr {
+    text-align: center;
+    justify-content: center;
+}
+
+.table-green tr{
+    background-color: #38B000;
+    color: #fff;
+}
+
+
+.buttons {
+    margin-top: 20px;
+}
+
+.button {
+    border-radius: 20px;
+    background-color: #52B788;
+    color: #fff;
+    text-align: center;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    font-size: 18px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.button:hover {
+    color: #fff;
+    background-color: #40916C;
+}
+
+.button:hover span {
+    padding-right: 25px;
+}
+
+.button:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+.button2 {
+    border-radius: 20px;
+    
+    border: 2px solid #52B788;
+    color: #52B788;
+    text-align: center;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    font-size: 18px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.button2 span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.button2 span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.button2:hover {
+    color: #fff;
+    background-color: #40916C;
+}
+
+.button2:hover span {
+    padding-right: 25px;
+}
+
+.button2:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+/* Add Accommodation */
+
+.acc-button {
+    width: 100px;
+}
+
+.form {
+    padding: 30px;
+}
+
+.accImage {
+    background-image: url("acc-img0.jpg");
+    background-size: cover;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+
+/* Edit Accommodation */
+
+.accEditImage {
+    background-image: url("acc-img1.jpg");
+    background-size: cover;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+/* Add Room */
+
+.radio {
+    margin-top: 10px;
+}
+
+.radio label {
+    margin-top: 5px;
+}
+
+.accRoomImage img {
+    border-radius: 20px;
+    width: 500px;
+    height: 350px;
+    margin-top: 100px;
+    /* border: 2px solid #00FFFF; */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.12);
+}

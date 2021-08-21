@@ -70,7 +70,8 @@ return (
 		>
 	Travel forset 
 	<img className="add_img" src={logo} style={{ 
-				maxWidth:"120px"
+				maxWidth:"120px",
+				marginBottom: "20px"
 				}} />
 		</h1>
 

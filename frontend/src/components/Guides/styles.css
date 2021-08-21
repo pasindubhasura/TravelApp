@@ -73,6 +73,123 @@ h1{
    
 }
 
+/* home */
+.button_add {
+    border-radius: 20px;
+    background-color: #38B000;
+    color: #fff;
+    text-align: center;
+    padding-left: 2px;
+    padding-top: 7px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    font-size: 18px;
+    width: 180px;
+    transition: all 0.5s;
+    cursor: pointer;
+    
+}
+.button_add span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.button_add span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.button_add:hover {
+    color: #fff;
+    background-color: #40916C;
+}
+
+.button_add:hover span {
+    padding-right: 25px;
+}
+
+.button_add:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+
+
+
+
+.button_pdf {
+    border-radius: 20px;
+    border: 2px solid #52B788;
+    color: #52B788;
+    text-align: center;
+    padding-left: 20px;
+    padding-top: 6px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    font-size: 18px;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.button_pdf span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.button_pdf span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.button_pdf:hover {
+    color: #fff;
+    background-color: #40916C;
+}
+
+.button_pdf:hover span {
+    padding-right: 25px;
+}
+
+.button_pdf:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+
+.search_home{
+    margin-top: 10px;
+    margin-left: 115px;
+}
+
+.t_sbox{
+    width: 1200px;
+}
+.tiew{
+    margin-bottom: 10px;
+}
+
+
+.guideImage img {
+    border-radius: 20px;
+    width: 540px;
+    height: 390px;
+    margin-top: 100px;
+    /* border: 2px solid #00FFFF; */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.12);
+}
+
 /* .order_img{
     width: 600px;
     height: 450px;

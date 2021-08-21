@@ -31,7 +31,8 @@ router.get("/getOne/:id", async (req, res) => {
 });
 
 //add vehicle record
-router.post("/add", validator.validate("addvVhicle"), async (req, res) => {
+//router.post("/add", validator.validate("addVehicle"), async (req, res) => {
+router.post("/add", async (req, res) => {
   const vehicle = await new Vehicle();
   vehicle.vehicleType = req.body.vehicleType;
   vehicle.vehicleLocation = req.body.vehicleLocation;
@@ -55,7 +56,8 @@ router.post("/add", validator.validate("addvVhicle"), async (req, res) => {
 });
 
 //update vehicle record
-router.post("/update", validator.validate("editVehicle"), async (req, res) => {
+//router.post("/update", validator.validate("editVehicle"), async (req, res) => {
+router.post("/update", async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.json({ error: errors.array() });

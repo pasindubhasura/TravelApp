@@ -4,6 +4,9 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import ReactTooltip from 'react-tooltip';
 import swl from 'sweetalert'
+import {jsPDF} from 'jspdf'
+import 'jspdf-autotable'
+import Logo from "../../images/Logo.png";
 import './AccStyles.css';
 
 
@@ -75,6 +78,35 @@ export default class Accommodation extends Component {
         });
     }
 
+    //export PDF.
+    exportPDF = () => {
+ 
+
+        const data = this.state.accommodations.map(dlt=> [dlt.accommodationType, dlt.name, dlt.noOfRomm, dlt.mobile])       
+      
+        const doc = new jsPDF({ orientation: "landscape" });
+        var time = new Date().toLocaleString();
+        doc.setFontSize(27);
+        doc.text(`Travel Rooms Details Report`, 150, 35, null, null, "center");
+        doc.setFontSize(10);
+        doc.text(`(Generated on ${time})`, 150, 41, null, null, "center");
+        doc.setFontSize(12);
+       
+        doc.addImage(Logo, "JPEG", 142, 0, 25, 25); 
+        doc.autoTable({
+          theme: "grid",
+          styles: { halign: "center" },
+          headStyles: { fillColor:"#38B000" },
+          startY: 44,
+          head: [
+            ["Accommodation Type", "Accommodation Name", "No of Room", "Mobile Number"],
+          ],
+          body: data,
+        });
+        
+        doc.save("Rooms_Report.pdf");
+       }    
+
 
     render() {
         return (
@@ -99,9 +131,9 @@ export default class Accommodation extends Component {
                                 <a href="/Accommodation_Home/Accommodation/add" type="button" class="button" ><span><i class="fal fa-plus-circle"></i>&nbsp;&nbsp;Add Accommodation</span></a><br /><br />
                             </div>
                             <div className="col-3 buttons">
-                                <a href="#" type="button" class="button2" ><span><i class="fas fa-download"></i>&nbsp;&nbsp;Download Report</span></a><br /><br />
+                                <a href="#" type="button" class="button2" onClick={()=>this.exportPDF()} ><span><i class="fas fa-download"></i>&nbsp;&nbsp;Download Report</span></a><br /><br />
                             </div>
-                            <div className="col-2">                                                                
+                            <div className="col-2">                                                            
                             </div>
                             <div className="col-4 search position-relative">
                                 <ReactTooltip />

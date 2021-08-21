@@ -20,7 +20,7 @@ import GetindividualGuide from "./components/Guides/GetindividualGuide";
 import Destinations from "./components/pasindu/Destinations";
 import AddDestinationForm from "./components/pasindu/AddDestinationForm";
 import EditDestinationForm from "./components/pasindu/EditDestinationForm";
-import Services from "./components/pasindu/Services";
+// import Services from "./components/pasindu/Services";
 
 //Travel Accommodation
 import AccommodationHome from "./components/Accommodation/AccommodationHome";
@@ -60,7 +60,7 @@ export default function App() {
             component={EditDestinationForm}
             path={"/destinations/edit"}
           />
-          <Route component={Services} exact path={"/services"} />
+          {/* <Route component={Services} exact path={"/services"} /> */}
 
           {/* Accommodation start*/}
 

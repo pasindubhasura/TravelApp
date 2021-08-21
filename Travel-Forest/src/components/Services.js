@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import styled from "styled-components";
@@ -6,7 +6,7 @@ import DestinationList from "./DestinationList";
 import { colors } from "./data";
 export default function Services() {
   const [selectedTab, setselectedTab] = useState(0);
-  console.log(selectedTab);
+
   return (
     <Div>
       {selectedTab === 0 ? (
@@ -28,7 +28,6 @@ export default function Services() {
         </TabList>
 
         <TabPanel>
-          <Search />
           <DestinationList />
         </TabPanel>
         <TabPanel>
@@ -44,34 +43,38 @@ export default function Services() {
     </Div>
   );
 }
+// function DestinationSearch(prop) {
+//   const [searchInput, setsearchInput] = useState("");
+//   const searchHandler = () => {
+//     if (searchInput.length > 0) {
+//       destinations = destinations.filter((i) => {
+//         return i.destination.toLowerCase().match(searchInput.toLowerCase());
+//       });
+//       console.log(searchInput);
+//     }
 
-function Search() {
-  const [searchInput, setsearchInput] = useState("");
-  const searchHandler = () => {
-    console.log(searchInput);
-  };
-
-  return (
-    <Coulmn>
-      <Row>
-        <h5 style={{ fontWeight: "bold" }}>Destination:</h5>
-      </Row>
-      <Row>
-        <SearchField
-          onChange={(e) => setsearchInput(e.target.value)}
-          placeholder="Search destinations here..."
-        />
-        <Button
-          color={colors.darkerGreen}
-          type="button"
-          onClick={searchHandler}
-        >
-          Search
-        </Button>
-      </Row>
-    </Coulmn>
-  );
-}
+//     return (
+//       <Coulmn>
+//         <Row>
+//           <h5 style={{ fontWeight: "bold" }}>Destination:</h5>
+//         </Row>
+//         <Row>
+//           <SearchField
+//             onChange={(e) => setsearchInput(e.target.value)}
+//             placeholder="Search destinations here..."
+//           />
+//           <Button
+//             color={colors.darkerGreen}
+//             type="button"
+//             onClick={searchHandler}
+//           >
+//             Search
+//           </Button>
+//         </Row>
+//       </Coulmn>
+//     );
+//   };
+// }
 const Coulmn = styled.div`
   display: flex;
   justify-content: center;

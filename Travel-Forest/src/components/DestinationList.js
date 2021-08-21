@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
 import axios from "axios";
-import { resetIdCounter } from "react-tabs";
-import { colors } from "./data";
 export default function DestinationList() {
   let [destinations, setdestinations] = useState([]);
   let [searchInput, setsearchInput] = useState("");
@@ -19,14 +17,6 @@ export default function DestinationList() {
       return i.destination.toLowerCase().match(searchInput.toLowerCase());
     });
   }
-  // const searchHandler = () => {
-  //   console.log("clicked " + searchInput);
-  //   if (searchInput.length > 0) {
-  //     destinations = destinations.filter((i) => {
-  //       return i.destination.toLowerCase().match(searchInput.toLowerCase());
-  //     });
-  //   }
-  // };
   return (
     <Div>
       <Coulmn>
@@ -43,9 +33,6 @@ export default function DestinationList() {
             onChange={(e) => setsearchInput(e.target.value)}
             placeholder="Search destinations here..."
           />
-          {/* <Button color={colors.darkerGreen} type="submit">
-            Search
-          </Button> */}
         </Row>
       </Coulmn>
       {destinations.map((item, index) => {
@@ -165,20 +152,8 @@ const Button = Styled.button`
   border: 2px solid ${(props) => props.color};
   border-radius: 5px;
   font-weight: bold;
-  //padding: 8px 14px;
   &:hover {
     filter: brightness(85%);
     cursor: pointer;
   }
-`;
-// const Div = styled.div`
-//   width: 90%;
-//   margin: 0 auto;
-// `;
-const H3 = Styled.h3`
-  color: ${colors.darkerGreen};
-  font-weight: "bold";
-  display: "flex";
-  justify-content: "flex-start";
-  margin: 40px 0px;
 `;

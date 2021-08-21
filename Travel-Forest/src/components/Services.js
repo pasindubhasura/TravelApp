@@ -4,6 +4,7 @@ import "react-tabs/style/react-tabs.css";
 import styled from "styled-components";
 import DestinationList from "./DestinationList";
 import GuideList from "./GuidesList";
+import RoomsList from "./RoomsList";
 import { colors } from "./data";
 export default function Services() {
   const [selectedTab, setselectedTab] = useState(0);
@@ -20,7 +21,7 @@ export default function Services() {
         <H3 style={{ fontWeight: "bold" }}>Vehicles</H3>
       ) : null}
       {selectedTab === 3 ? (
-        <H3 style={{ fontWeight: "bold" }}>Accomodations</H3>
+        <H3 style={{ fontWeight: "bold" }}>Accommodations</H3>
       ) : null}
       <Tabs
         onSelect={(index) => {
@@ -31,7 +32,7 @@ export default function Services() {
           <Tab>Destinations</Tab>
           <Tab>Guides</Tab>
           <Tab>Vehicles</Tab>
-          <Tab>Accomodations</Tab>
+          <Tab>Rooms</Tab>
         </TabList>
 
         <TabPanel>
@@ -44,7 +45,7 @@ export default function Services() {
           <h2>Any content 3</h2>
         </TabPanel>
         <TabPanel>
-          <h2>Any content 4</h2>
+          <RoomsList />
         </TabPanel>
       </Tabs>
     </Div>

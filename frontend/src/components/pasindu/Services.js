@@ -51,7 +51,9 @@ function Search() {
 
   return (
     <Coulmn>
-      <h6>Destination:</h6>
+      <Row>
+        <h5 style={{ fontWeight: "bold" }}>Destination:</h5>
+      </Row>
       <Row>
         <SearchField onChange={(e) => setsearchInput(e.target.value)} />
         <Button
@@ -72,8 +74,10 @@ const Coulmn = styled.div`
   flex-direction: column;
   padding: 10px;
   border: 1px solid green;
+  border-radius: 5px;
   height: 300px;
   margin: 40px 0px;
+  box-shadow: 5px 6px 10px #888888;
 `;
 const Row = styled.div`
   display: flex;

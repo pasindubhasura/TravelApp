@@ -156,20 +156,8 @@ const Button = Styled.button`
   border: 2px solid ${(props) => props.color};
   border-radius: 5px;
   font-weight: bold;
-  //padding: 8px 14px;
   &:hover {
     filter: brightness(85%);
     cursor: pointer;
   }
-`;
-// const Div = styled.div`
-//   width: 90%;
-//   margin: 0 auto;
-// `;
-const H3 = Styled.h3`
-  color: ${colors.darkerGreen};
-  font-weight: "bold";
-  display: "flex";
-  justify-content: "flex-start";
-  margin: 40px 0px;
 `;

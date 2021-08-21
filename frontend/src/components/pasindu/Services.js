@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
+import styled from "styled-components";
 import DestinationList from "./DestinationList";
 export default function Services() {
   const [selectedTab, setselectedTab] = useState(0);
@@ -24,6 +25,7 @@ export default function Services() {
         </TabList>
 
         <TabPanel>
+          <Search />
           <DestinationList />
         </TabPanel>
         <TabPanel>
@@ -39,3 +41,36 @@ export default function Services() {
     </div>
   );
 }
+
+function Search() {
+  return (
+    <Coulmn>
+      <h6>Destination:</h6>
+      <Row>
+        <SearchField />
+        <Button></Button>
+      </Row>
+    </Coulmn>
+  );
+}
+const Coulmn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px;
+  border: 1px solid green;
+  height: 300px;
+`;
+const Row = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: green;
+  width: 90%;
+`;
+const SearchField = styled.input`
+  background-color: red;
+  width: 90%;
+`;
+const Button = styled.button``;

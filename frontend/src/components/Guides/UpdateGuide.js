@@ -130,192 +130,191 @@ export default class UpdateGuide extends Component {
         const {formErrors}= this.state;
 
         return (
-            <div className="container">
-                <div className="row ">
-                   
-
-                    <div className="col-6 shadowBox" >
-                        
-                        <center>
-                            <h1 className="h3 mb-3 font-weight-normal head-line">Upadete Guide</h1>
-                        </center>
-
-                    <form className="needs-validation " noValidate >
-                     
-                     {/* Registration No */}    
-                        <div className="form-group" style={{ marginBottom: '15px' }}>
-                                <label style={{ marginBottom: '5px' }}>Registration No:</label>
-                                <input type="text"
-                                    className="form-control"
-                                    name="registrationNo"
-                                    placeholder="Enter Registration No"
-                                    value={this.state.registrationNo}
-                                    onChange={this.handleInputChange} />
-
-                                {/* {formErrors.registrationNo.length > 5  &&(
-                                <span style={{color:'red'}} className="errorMessage">{formErrors.registrationNo}</span>
-                            )} */}
-
-                            </div>
-
-                        {/* Guide Name */}
-                            <div className="form-group" style={{ marginBottom: '15px' }}>
-                                <label style={{ marginBottom: '5px' }}>Guide Name</label>
-                                <input type="text"
-                                    className="form-control"
-                                    name="name"
-                                    placeholder="Enter Guide Name"
-                                    value={this.state.name}
-                                    onChange={this.handleInputChange} />
-
-                                {/* {formErrors.name.length > 5  &&(
-                                <span style={{color:'red'}} className="errorMessage">{formErrors.name}</span>
-                            )} */}
-
-                            </div>
-                            
-                        {/* Address */}
-
-                            <div className="form-group" style={{ marginBottom: '15px' }}>
-                                <label style={{ marginBottom: '5px' }}>Address</label>
-                                <input type="text"
-                                    className="form-control"
-                                    name="address"
-                                    placeholder="Enter Address"
-                                    value={this.state.address}
-                                    onChange={this.handleInputChange} />
-                            </div>
-                        
-                         {/* Email */}
-                            <div className="form-group" style={{ marginBottom: '15px' }}>
-                                <label style={{ marginBottom: '5px' }}>Email</label>
-                                <input type="email"
-                                    className={"form-control"}
-                                    name="email"
-                                    placeholder="Enter email"
-                                    value={this.state.email}
-                                    onChange={this.handleInputChange} />
-                                     {/* {formErrors.email.length > 0 && (
-                                    <span style={{ color: 'red',fontWeight:'bold' }} className="errorMessage">{formErrors.email}</span>
-                                )} */}
-                            </div>
-
-                         {/* Phone */}
-                            <div className="form-group" style={{ marginBottom: '15px' }}>
-                                <label style={{ marginBottom: '5px' }}>Phone No</label>
-                                <input type="number"
-                                    className="form-control"
-                                    name="phoneNo"
-                                    placeholder="Enter PhoneNo"
-                                    value={this.state.phoneNo}
-                                    onChange={this.handleInputChange} />
-
-                                {/* {formErrors.phoneNo.length > 10 &&(
-                                <span style={{color:'red'}} className="errorMessage">{formErrors.phoneNo}</span>
-                                 )} */}
-
-                            </div>
-                        
-                       {/* Language */}
-                       <div className="form-group" style={{ marginBottom: '15px' }}>
-                                <label style={{ marginBottom: '5px' }}>Language</label>
-                                <select id="language" className="form-control" name="language" onChange={this.handleInputChange} value={this.state.language} required>  
-                                <option selected>Choose Language</option>
-                                <option value="English">English</option>
-                                <option value="Tamil,English">Tamil,English</option>
-                                <option value="German,English">German,English </option>
-                                <option value="French,English">French,English </option>
-                            </select> 
-                                {/* <input type="text"
-                                    className="form-control"
-                                    name="language"
-                                    placeholder="Enter Language"
-                                    value={this.state.language}
-                                    onChange={this.handleInputChange} /> */}
-                            </div>
-                        
-                
-                        
-                        {/* availability */}
-                            <div className="form-group" style={{ marginBottom: '15px' }}>
-                                <label style={{ marginBottom: '5px' }}>Availability</label>
-                                <select id="availability" className="form-control" name="availability" onChange={this.handleInputChange} value={this.state.availability} required>  
-                                <option selected>Choose Availability</option>
-                                <option value="Available">Available</option>
-                                <option value="Unavailable">Unavailable</option>
-                                </select> 
-                                
-                                {/* <input type="text"
-                                    className="form-control"
-                                    name="availability"
-                                    placeholder="Enter Availability"
-                                    value={this.state.availability}
-                                    onChange={this.handleInputChange} /> */}
-                            </div>
-                    
-                           
-                                <div>
-                                <button href="/guide_add" type="submit"  className="btn btn-outline-success sub_btn2"><i class="far fa-times-circle"></i>&nbsp;Reset</button>
-                                <button type="submit" className="btn btn-primary sub_btn" onClick={this.onSubmit}><i class="far fa-save"></i>&nbsp;Update</button>
-                            
-                                </div>
-                                
-                           
-                        </form>
+            <div className="container containerTop">
+            <div className="row ">
+                <div className="col-2" />
+                <div className="col-10">
+                    <div className="row">
+                        <div className="col position-relative link">
+                            <p><a href="/get_guide">Guide Management</a> {'>'} Update New Guide</p>
+                        </div>
                     </div>
-                    
-                           {/* add image */}
+                    <div className="row">
+                        <div className="col-9 position-relative">
+                            <h2>Update New Guide</h2>
 
-                           <div className="col-6 add-image  ">
-                        <div className="form-row">
-                            <div className="form-group">
-                                {this.state.imgLink ? (
-                                    <img
-                                        src={this.state.imgLink}
-                                        alt="productImg"
-                                        style={{ width: "400px", marginLeft: "90px", display: "flex", flexDirection: "column" }}
-                                    />
-                                ) : (
-                                    <img
-                                        src={this.state.NoItemImg}
-                                        alt="productImg"
-                                        style={{ width: "400px", marginLeft: "97px", display: "flex", flexDirection: "column" }}
-                                    />
-                                )}
+                        </div>
+                        <hr className="hr" style={{ height: '2px', color: '#0a90e8' }} />
+                    </div>
+                    <div className="shadowBoxForm">
+                        <form onSubmit={this.onSubmit}>
+                            <div className="row">
+                                <div className="col-6 form">
+                                    <div className="form-row">
+                                        {/* Registration No */}
+                                        <div className="form-group" style={{ marginBottom: '15px' }}>
+                                            <label style={{ marginBottom: '5px' }}>Registration No:</label>
+                                            <input type="text"
+                                                className="form-control"
+                                                name="registrationNo"
+                                                placeholder="Enter Registration No"
+                                                value={this.state.registrationNo}
+                                                onChange={this.handleInputChange} />
 
-                                <label style={{ fontSize: "12px", marginLeft: "15px" }}>
-                                    {/* Image */}
-                                </label>
-                                <div className="row mt-2">
-                                    <div className="col-md-9">
-                                        <input
-                                            className="form-control "
-                                            type="file"
-                                            id="exampleInputEmail"
-                                            name="Image"
-                                            style={{ padding: "2px", marginLeft: "80px", marginTop: "130px" }}
-                                            onChange={(e) => {
-                                                this.setState({ file: e.target.files[0] });
-                                                this.uploadImage(e);
-                                            }}
-                                            required
-                                        />
+                                            {/* {formErrors.registrationNo.length > 5  &&(
+                                                <span style={{color:'red'}} className="errorMessage">{formErrors.registrationNo}</span>
+                                            )} */}
+
+                                        </div>
+                                        {/* Guide Name */}
+                                        <div className="form-group" style={{ marginBottom: '15px' }}>
+                                            <label style={{ marginBottom: '5px' }}>Guide Name</label>
+                                            <input type="text"
+                                                className="form-control"
+                                                name="name"
+                                                placeholder="Enter Guide Name"
+                                                value={this.state.name}
+                                                onChange={this.handleInputChange} />
+
+                                            {/* {formErrors.name.length > 5 && (
+                                                <span style={{ color: 'red' }} className="errorMessage">{formErrors.name}</span>
+                                            )} */}
+
+                                        </div>
+
+                                        {/* Address */}
+
+                                        <div className="form-group" style={{ marginBottom: '15px' }}>
+                                            <label style={{ marginBottom: '5px' }}>Address</label>
+                                            <input type="text"
+                                                className="form-control"
+                                                name="address"
+                                                placeholder="Enter Address"
+                                                value={this.state.address}
+                                                onChange={this.handleInputChange} />
+                                        </div>
+
+                                        {/* Email */}
+                                        <div className="form-group" style={{ marginBottom: '15px' }}>
+                                            <label style={{ marginBottom: '5px' }}>Email</label>
+                                            <input type="email"
+                                                className={"form-control"}
+                                                name="email"
+                                                placeholder="Enter email"
+                                                value={this.state.email}
+                                                onChange={this.handleInputChange} />
+                                            {/* {formErrors.email.length > 0 && (
+                                                <span style={{ color: 'red', fontWeight: 'bold' }} className="errorMessage">{formErrors.email}</span>
+                                            )} */}
+                                        </div>
+
+                                        {/* Phone */}
+                                        <div className="form-group" style={{ marginBottom: '15px' }}>
+                                            <label style={{ marginBottom: '5px' }}>Phone No</label>
+                                            <input type="number"
+                                                className="form-control"
+                                                name="phoneNo"
+                                                placeholder="Enter PhoneNo"
+                                                value={this.state.phoneNo}
+                                                onChange={this.handleInputChange} />
+
+                                            {/* {formErrors.phoneNo.length > 10 && (
+                                                <span style={{ color: 'red' }} className="errorMessage">{formErrors.phoneNo}</span>
+                                            )} */}
+
+                                        </div>
+
+                                        {/* Language */}
+                                        <div className="form-group" style={{ marginBottom: '15px' }}>
+                                            <label style={{ marginBottom: '5px' }}>Language</label>
+                                            <select id="language" className="form-control" name="language" onChange={this.handleInputChange} value={this.state.language} required>
+                                                <option selected>Choose Language</option>
+                                                <option value="English">English</option>
+                                                <option value="Tamil,English">Tamil,English</option>
+                                                <option value="German,English">German,English </option>
+                                                <option value="French,English">French,English </option>
+                                            </select>
+                                            {/* <input type="text"
+                                className="form-control"
+                                name="language"
+                                placeholder="Enter Language"
+                                value={this.state.language}
+                                onChange={this.handleInputChange} /> */}
+                                        </div>
+
+
+
+                                        {/* availability */}
+                                        <div className="form-group" style={{ marginBottom: '15px' }}>
+                                            <label style={{ marginBottom: '5px' }}>Availability</label>
+                                            <select id="availability" className="form-control" name="availability" onChange={this.handleInputChange} value={this.state.availability} required>
+                                                <option selected>Choose Availability</option>
+                                                <option value="Available">Available</option>
+                                                <option value="Unavailable">Unavailable</option>
+                                            </select>
+
+                                            {/* <input type="text"
+                                className="form-control"
+                                name="availability"
+                                placeholder="Enter Availability"
+                                value={this.state.availability}
+                                onChange={this.handleInputChange} /> */}
+                                        </div>
+
+
+
+                                        <div>
+                                            <button href="/guide_add" type="submit" className="btn btn-outline-success sub_btn2"><i class="far fa-times-circle"></i>&nbsp;Reset</button>
+                                            <button type="submit" className="btn btn-primary sub_btn" onClick={this.onSubmit}><i class="far fa-save"></i>&nbsp;Update</button>
+
+                                        </div>
+
                                     </div>
+
+                                </div>
+
+
+                                {/* add image */}
+                                <div className="col-6 guideImage">
+
+                                    {this.state.imgLink ? (
+                                        <img
+                                            src={this.state.imgLink}
+                                            alt="productImg"
+                                            style={{ width: "400px", marginLeft: "62px", display: "flex", flexDirection: "column" }}
+                                        />
+                                    ) : (
+                                        <img
+                                            src={this.state.NoItemImg}
+                                            alt="productImg"
+                                            style={{ width: "400px", marginLeft: "62px", display: "flex", flexDirection: "column" }}
+                                        />
+                                    )}
+                                    <div className="row">
+                                        <div className="form-group" style={{ width: "500px", marginTop: "40px", marginLeft: "10px" }}>
+                                            <Progress percentage={this.state.uploadPercentage} />
+                                        </div>
+                                    </div>
+                                    <div className="row" style={{ marginTop: '50px', maxWidth: '525px' }}>
+                                        <div class="input-group mb-3">
+                                            <input type="file" class="form-control" id="inputGroupFile02" name="ImgLink" style={{ borderRadius: '20px' }}
+                                                onChange={(e) => { this.setState({ file: e.target.files[0] }); this.uploadImage(e); }} />
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
-                        </div>
-                        <div className="form-group" style={{ marginLeft: "80px", width: "458px", marginTop: "10px" }}>
-                            {/* <Progress percentage={this.state.uploadPercentage} /> */}
-                        </div>
+                        </form>
+
                     </div>
-
-                    {/* <div className="col-6 add-image ">
-                        <img className="add_img" src={defaultImage} />
-                        <button type="submit" className="btn btn-primary sub_btn3" onClick={this.onSubmit}><i class="far fa-save"></i>&nbsp;Add</button>
-                    </div> */}
                 </div>
-            </div>
 
+
+
+
+
+            </div>
+        </div>
         );
     };
 }

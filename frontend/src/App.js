@@ -16,7 +16,7 @@ import UpdateGuide from "./components/Guides/UpdateGuide";
 import Destinations from "./components/pasindu/Destinations";
 import AddDestinationForm from "./components/pasindu/AddDestinationForm";
 import EditDestinationForm from "./components/pasindu/EditDestinationForm";
-
+import Services from "./components/pasindu/Services";
 export default function App() {
   return (
     <div className="container">
@@ -42,6 +42,7 @@ export default function App() {
           component={EditDestinationForm}
           path={"/destinations/edit"}
         />
+        <Route component={Services} exact path={"/services"} />
       </Router>
     </div>
   );

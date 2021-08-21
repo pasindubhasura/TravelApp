@@ -7,8 +7,9 @@ import {jsPDF} from 'jspdf'
 import 'jspdf-autotable'
 import Logo from "../../images/Logo.png";
 import ReactTooltip from 'react-tooltip';
+import swl from 'sweetalert'
 
-// import './estyle.css';
+
 
 
 export default class GuideHome extends Component {
@@ -44,13 +45,24 @@ retrieveGuide(){
 
 
 onDelete = (id) => {
-  axios.delete(`http://localhost:5001/guide/delete/${id}`).then((res) => {
-    toast("Deleted Successfully", {
-      type: toast.TYPE.ERROR,
-      autoClose: 4000
-  });
-    this.retrieveGuide();
+  swl({
+    title: "Are you sure?",
+    text: "Once deleted, you will not be able to recover this file!",
+    icon: "warning",
+    buttons: ["Cancel","Delete"],
+    dangerMode: true,
   })
+  .then((willDelete) => {
+    if (willDelete) {
+        axios.delete(`http://localhost:5001/guide/delete/${id}`).then((res) => {
+
+            swl('Guide successfully Deleted',{
+              icon: "success",
+            });
+            this.retrieveGuide();
+        })                
+    }
+  });
 }
 
 filterData(guide,searchKey){
@@ -140,7 +152,7 @@ exportPDF = () => {
                     </div>
                     <div className="col-4 search position-relative ">
                         <ReactTooltip />
-                        <i className="fa fa-search search_home"></i> <input className="form-control search_home" type="Search" placeholder="Search Guides" name="searchQuery" data-tip="Enter accommodation type or name" data-type="dark" onChange={this.handleSearchArea} />
+                        <i className="fa fa-search search_home"></i> <input className="form-control search_home" type="Search" placeholder="Search Guides" name="searchQuery" data-tip="Enter Guide Name ,Address or Language" data-type="dark" onChange={this.handleSearchArea} />
                     </div>
                     </div>
 

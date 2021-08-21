@@ -56,7 +56,6 @@ router.post(
   validator.validate("editDestination"),
   async (req, res) => {
     const errors = validationResult(req);
-    console.log(errors);
     if (!errors.isEmpty()) {
       return res.json({ error: errors.array() });
     }

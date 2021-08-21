@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import ReactTooltip from 'react-tooltip';
 import swl from 'sweetalert'
+import defaultImage from "../../images/placeholder.png";
+import { storage } from "../../firebase";
+import Progress from "./Progress";
 import './AccStyles.css';
 
 
@@ -31,6 +33,11 @@ export default class EditRoom extends Component {
             price: Number,
             description: "",
             availability: "",
+            //Firebase Image Upload States
+            file: null,
+            uploadPercentage: 0,
+            NoItemImg: defaultImage,
+            image: "",            
             formErrors: {
                 roomNo: 0,
                 noOfBeds: 0,
@@ -40,6 +47,43 @@ export default class EditRoom extends Component {
             }
         }
     }  
+
+    // Upload Image
+    uploadImage(e) {
+        if (e.target.files[0] !== null) {
+            const uploadTask = storage
+                .ref(`products/${e.target.files[0].name}`)
+                .put(e.target.files[0]);
+            uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                    //progress function
+                    const progress = Math.round(
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    );
+                    this.setState({ uploadPercentage: progress });
+                },
+                (error) => {
+                    //error function
+                    console.log(error);
+                },
+                () => {
+                    //complete function
+                    storage
+                        .ref("products")
+                        .child(e.target.files[0].name)
+                        .getDownloadURL()
+                        .then((url) => {
+                            console.log(url);
+                            this.setState({ image: url });
+                        });
+                }
+            );
+        } else {
+            alert("Error Upload Image First")
+        }
+    }
+
 
     //handle input feild
 
@@ -106,7 +150,7 @@ export default class EditRoom extends Component {
         e.preventDefault();
         if (formValid(this.state)) {
             const id = this.props.match.params.id;
-            const { accName, roomNo, noOfBeds, airCondition, price, description, availability } = this.state;
+            const { accName, roomNo, noOfBeds, airCondition, price, description, availability, image } = this.state;
             const data = {
                 accName: accName,
                 roomNo: roomNo,
@@ -114,7 +158,8 @@ export default class EditRoom extends Component {
                 airCondition: airCondition,
                 price: price,
                 description: description,
-                availability: availability
+                availability: availability,
+                image: image
             }
         //console.log(data)
         axios.put(`http://localhost:5001/room/update/${id}`, data).then((res) => {
@@ -154,7 +199,8 @@ export default class EditRoom extends Component {
                     airCondition: res.data.room.airCondition,
                     price: res.data.room.price,
                     description: res.data.room.description,
-                    availability: res.data.room.availability
+                    availability: res.data.room.availability,
+                    image: res.data.room.image
                 });
                 console.log(this.state.room);
             }
@@ -260,13 +306,32 @@ export default class EditRoom extends Component {
                                             <div className="col-6" />
                                         </div>
                                     </div>
+                                    {/* add image */}
                                     <div className="col-6 accRoomImage">
-                                        <img src="/images/placeholder.png" />
-                                        <div className="row" style={{ marginTop: '50px', maxWidth: '525px' }}>
-                                            <div class="input-group mb-3">
-                                                <input type="file" class="form-control" id="inputGroupFile02" style={{ borderRadius: '20px' }} />
+
+                                        {this.state.image ? (
+                                            <img
+                                                src={this.state.image}
+                                                alt="Room image"
+                                            />
+                                        ) : (
+                                            <img
+                                                src={this.state.NoItemImg}
+                                                alt="Room image"
+                                            />
+                                        )}
+                                        <div className="row">
+                                            <div className="form-group" style={{ width: "500px", marginTop: "40px", marginLeft: "10px" }}>
+                                                <Progress percentage={this.state.uploadPercentage} />
                                             </div>
                                         </div>
+                                        <div className="row" style={{ marginTop: '50px', maxWidth: '525px' }}>
+                                            <div class="input-group mb-3">
+                                                <input type="file" class="form-control" id="inputGroupFile02" name="Image" style={{ borderRadius: '20px' }}
+                                                    onChange={(e) => { this.setState({ file: e.target.files[0] }); this.uploadImage(e); }} />
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </form>

@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import defaultImage from "../../images/placeholder.png";
+import { storage } from "../../firebase";
+import Progress from "./Progress";
 import './AccStyles.css';
 
 const formValid = ({ formErrors, ...rest }) => {
@@ -28,15 +31,57 @@ export default class AddRoom extends Component {
             airCondition: "",
             price: Number,
             description: "",
+            //Firebase Image Upload States
+            file: null,
+            uploadPercentage: 0,
+            NoItemImg: defaultImage,
+            image: "",
             formErrors: {
                 roomNo: 0,
                 noOfBeds: 0,
                 airCondition: "",
                 price: 0,
-                description: ""                    
+                description: ""
             }
         }
-    }    
+    }
+
+    // Upload Image 
+    uploadImage(e) {
+        if (e.target.files[0] !== null) {
+            const uploadTask = storage
+                .ref(`products/${e.target.files[0].name}`)
+                .put(e.target.files[0]);
+            uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                    //progress function
+                    const progress = Math.round(
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    );
+                    this.setState({ uploadPercentage: progress });
+                },
+                (error) => {
+                    //error function
+                    console.log(error);
+                },
+                () => {
+                    //complete function
+                    storage
+                        .ref("products")
+                        .child(e.target.files[0].name)
+                        .getDownloadURL()
+                        .then((url) => {
+                            console.log(url);
+                            this.setState({ image: url });
+                        });
+                }
+            );
+        } else {
+            alert("Error Upload Image First")
+        }
+    }
+
 
     //handle input feild
 
@@ -54,25 +99,25 @@ export default class AddRoom extends Component {
                         ? "Minimum Digits must be 5"
                         : "";
                 break;
-                case "noOfBeds":
-                    formErrors.noOfBeds =
-                        value < 0
-                            ? "Invalid Number !"
-                            : "";
-                    break;
-                    case "airCondition":
-                        formErrors.airCondition =
-                            value < 0
-                                ? "You haven't choose Air Condition type !"
-                                : "";
-                        case "price":
-                            formErrors.price =
-                            value < 0
-                                    ? "Price cannot be a negative value !"
-                                    : "";
-                        break;
-                default:
-                    break;
+            case "noOfBeds":
+                formErrors.noOfBeds =
+                    value < 0
+                        ? "Invalid Number !"
+                        : "";
+                break;
+            case "airCondition":
+                formErrors.airCondition =
+                    value < 0
+                        ? "You haven't choose Air Condition type !"
+                        : "";
+            case "price":
+                formErrors.price =
+                    value < 0
+                        ? "Price cannot be a negative value !"
+                        : "";
+                break;
+            default:
+                break;
         }
         this.setState({ formErrors, [name]: value }, () => console.log(this.state));
         this.setState({
@@ -84,7 +129,7 @@ export default class AddRoom extends Component {
     //calling the accommodation api
     componentDidMount() {
         this.retrieveAccommodations();
-    }    
+    }
 
     //display accommdation
     retrieveAccommodations() {
@@ -96,46 +141,47 @@ export default class AddRoom extends Component {
                 console.log(this.state.accommodations)
             }
         });
-    }    
+    }
 
     onSubmit = (e) => {
 
         e.preventDefault();
         if (formValid(this.state)) {
-            const { accName, roomNo, noOfBeds, airCondition, price, description } = this.state;
+            const { accName, roomNo, noOfBeds, airCondition, price, description, image } = this.state;
             const data = {
                 accName: accName,
                 roomNo: roomNo,
                 noOfBeds: noOfBeds,
                 airCondition: airCondition,
                 price: price,
-                description: description
+                description: description,
+                image: image
             }
-        //console.log(data)
-        axios.post("http://localhost:5001/room/add", data).then((res) => {
-            if (res.data.success) {
-                toast.success('Room no ' + this.state.roomNo + ' added Successful !');
-                this.setState(
-                    {
-                        accName: "",
-                        roomNo: Number,
-                        noOfBeds: Number,
-                        airCondition: "",
-                        price: Number,
-                        description: ""
-                    }
-                )
-            } else {
-                toast.error("You have an Error in Inserting");
-            }
-        });
-    }
-    else
-        alert("Please Enter Details Correclty !");
-    };    
+            //console.log(data)
+            axios.post("http://localhost:5001/room/add", data).then((res) => {
+                if (res.data.success) {
+                    toast.success('Room no ' + this.state.roomNo + ' added Successful !');
+                    this.setState(
+                        {
+                            accName: "",
+                            roomNo: Number,
+                            noOfBeds: Number,
+                            airCondition: "",
+                            price: Number,
+                            description: ""
+                        }
+                    )
+                } else {
+                    toast.error("You have an Error in Inserting");
+                }
+            });
+        }
+        else
+            alert("Please Enter Details Correclty !");
+    };
 
     render() {
-        const { formErrors } = this.state; 
+        const { formErrors } = this.state;
         return (
             <div className="container containerTop">
                 <div className="row">
@@ -170,16 +216,16 @@ export default class AddRoom extends Component {
                                             <div className="form-group col" style={{ marginTop: '15px' }}>
                                                 <label>Room No : </label>
                                                 <input type="text" className="form-control" name="roomNo" placeholder="10XXX" onChange={this.handleInputChange} value={this.state.roomNo} style={{ marginTop: '10px' }} required />
-                                                {formErrors.roomNo < 5 ||(
-                                                    <p style={{color:'red'}} className="errorMessage">{formErrors.roomNo}</p>
-                                                )}                                                
+                                                {formErrors.roomNo < 5 || (
+                                                    <p style={{ color: 'red' }} className="errorMessage">{formErrors.roomNo}</p>
+                                                )}
                                             </div>
                                             <div className="form-group col" style={{ marginTop: '15px' }}>
                                                 <label>Number of Beds : </label>
-                                                <input type="number" className="form-control" name="noOfBeds" placeholder="2" value={this.state.noOfBeds}  onChange={this.handleInputChange} style={{ marginTop: '10px' }} required />
-                                                {formErrors.noOfBeds < 1   ||(
-											        <p style={{color:'red'}} className="errorMessage">{formErrors.noOfBeds}</p>
-										        )}                                                
+                                                <input type="number" className="form-control" name="noOfBeds" placeholder="2" value={this.state.noOfBeds} onChange={this.handleInputChange} style={{ marginTop: '10px' }} required />
+                                                {formErrors.noOfBeds < 1 || (
+                                                    <p style={{ color: 'red' }} className="errorMessage">{formErrors.noOfBeds}</p>
+                                                )}
                                             </div>
                                             <div className="form-group col" style={{ marginTop: '15px' }}>
                                                 <label>Air Condition : </label>
@@ -193,24 +239,24 @@ export default class AddRoom extends Component {
                                                     <input class="form-check-input" type="radio" name="airCondition" id="condition" onChange={this.handleInputChange} value="Non-AC" style={{ marginTop: '10px' }} required />
                                                     <label class="form-check-label" for="inlineRadio2">Non-AC</label>
                                                 </div>
-                                                {formErrors.airCondition < 1   ||(
-											        <p style={{color:'red'}} className="errorMessage">{formErrors.airCondition}</p>
-										        )}  
+                                                {formErrors.airCondition < 1 || (
+                                                    <p style={{ color: 'red' }} className="errorMessage">{formErrors.airCondition}</p>
+                                                )}
                                             </div>
                                             <div className="form-group col" style={{ marginTop: '15px' }}>
                                                 <label>Price per Day : </label>
                                             </div>
                                             <div class="input-group col" style={{ marginTop: '15px' }}>
                                                 <span class="input-group-text">Rs:</span>
-                                                <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" name="price" placeholder="XXX" value={this.state.price} onChange={this.handleInputChange}  required />
+                                                <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" name="price" placeholder="XXX" value={this.state.price} onChange={this.handleInputChange} required />
                                                 <span class="input-group-text">.00</span>
                                             </div>
-                                                {formErrors.price < 1   ||(
-											        <p style={{color:'red'}} className="errorMessage">{formErrors.price}</p>
-										        )}   
+                                            {formErrors.price < 1 || (
+                                                <p style={{ color: 'red' }} className="errorMessage">{formErrors.price}</p>
+                                            )}
                                             <div className="form-group col" style={{ marginTop: '15px' }}>
                                                 <label>Description : </label>
-                                                <textarea class="form-control" aria-label="With textarea" name="description" placeholder="XXXXXXXXX" value={this.state.description}  onChange={this.handleInputChange} style={{ marginTop: '10px' }} required />
+                                                <textarea class="form-control" aria-label="With textarea" name="description" placeholder="XXXXXXXXX" value={this.state.description} onChange={this.handleInputChange} style={{ marginTop: '10px' }} required />
                                             </div>
                                         </div>
                                         <div className="row">
@@ -226,13 +272,32 @@ export default class AddRoom extends Component {
                                             <div className="col-6" />
                                         </div>
                                     </div>
+                                    {/* add image */}
                                     <div className="col-6 accRoomImage">
-                                        <img src="/images/placeholder.png" />
-                                        <div className="row" style={{ marginTop: '50px', maxWidth: '525px' }}>
-                                            <div class="input-group mb-3">
-                                                <input type="file" class="form-control" id="inputGroupFile02" style={{ borderRadius: '20px' }} />
+
+                                        {this.state.image ? (
+                                            <img
+                                                src={this.state.image}
+                                                alt="Room image"
+                                            />
+                                        ) : (
+                                            <img
+                                                src={this.state.NoItemImg}
+                                                alt="Room image"
+                                            />
+                                        )}
+                                        <div className="row">
+                                            <div className="form-group" style={{ width: "500px", marginTop: "40px", marginLeft: "10px" }}>
+                                                <Progress percentage={this.state.uploadPercentage} />
                                             </div>
                                         </div>
+                                        <div className="row" style={{ marginTop: '50px', maxWidth: '525px' }}>
+                                            <div class="input-group mb-3">
+                                                <input type="file" class="form-control" id="inputGroupFile02" name="Image" style={{ borderRadius: '20px' }}
+                                                    onChange={(e) => { this.setState({ file: e.target.files[0] }); this.uploadImage(e); }} />
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </form>

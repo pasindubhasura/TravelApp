@@ -180,6 +180,16 @@ h1{
     margin-bottom: 10px;
 }
 
+
+.guideImage img {
+    border-radius: 20px;
+    width: 540px;
+    height: 390px;
+    margin-top: 100px;
+    /* border: 2px solid #00FFFF; */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.12);
+}
+
 /* .order_img{
     width: 600px;
     height: 450px;

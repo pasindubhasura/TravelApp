@@ -80,10 +80,9 @@ export default function Destinations(props) {
     doc.save("DestinationsReport.pdf");
   }; //report generation function
 
-  let x = 1;
   return (
     <MainDiv>
-      <H2>Destination</H2>
+      <H2>Destinations</H2>
       <Row>
         <ButtonSection>
           <Button
@@ -122,10 +121,10 @@ export default function Destinations(props) {
             </tr>
           </thead>
           <tbody>
-            {destinations.map((item) => {
+            {destinations.map((item, index) => {
               return (
                 <tr key={item._id}>
-                  <td>{x++}</td>
+                  <td>{++index}</td>
                   <td>{item.destination}</td>
                   <td>{item.city}</td>
                   <td>{item.district}</td>
@@ -162,12 +161,14 @@ export default function Destinations(props) {
   );
 }
 const MainDiv = Styled.div`
-margin:0px auto;
+margin:30px auto;
 background-color:white;
-width:100%;
+width:90%;
 display:flex;
 flex-direction: column;
 min-height:100vh;
+box-shadow: 5px 6px 10px #888888;
+padding: 20px;
 `;
 const H2 = Styled.h2`
 margin:20px 0px 10px 20px;
@@ -200,10 +201,11 @@ margin:10px 20px;
 `;
 const Table = Styled.table`
 border-radius:;
-th,td{
+/* th,td{
   border: 1px solid black;
   padding:5px;
-}
+} */
+
 th{
   padding: 12px;
 }
@@ -217,8 +219,6 @@ thead{
   max-width:
 }
 font-weight:bold;
-border: 1px solid black;
-border-collapse: collapse;
 width: 100%;
 `;
 const Button = Styled.button`

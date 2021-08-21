@@ -31,6 +31,7 @@ export default class AddGuide extends Component {
             //Firebase Image Upload States
             file: null,
             uploadPercentage: 0,
+
             NoItemImg: defaultImage,
             imgLink: "",
 

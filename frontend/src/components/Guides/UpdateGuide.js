@@ -3,7 +3,8 @@ import axios from 'axios';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import defaultImage from "../../images/vector.jpg";
-
+import { storage } from "../../firebase";
+import Progress from "./Progress";
 
 export default class UpdateGuide extends Component {
 
@@ -18,8 +19,49 @@ export default class UpdateGuide extends Component {
             language: "",
             availability:"",
 
+             //Firebase Image Upload States
+             file: null,
+             uploadPercentage: 0,
+             NoItemImg: defaultImage,
+             imgLink: "",
+
         }
     }
+
+     uploadImage(e) {
+        if (e.target.files[0] !== null) {
+          const uploadTask = storage
+            .ref(`products/${e.target.files[0].name}`)
+            .put(e.target.files[0]);
+          uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+              //progress function
+              const progress = Math.round(
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+              );
+              this.setState({ uploadPercentage: progress });
+            },
+            (error) => {
+              //error function
+              console.log(error);
+            },
+            () => {
+              //complete function
+              storage
+                .ref("products")
+                .child(e.target.files[0].name)
+                .getDownloadURL()
+                .then((url) => {
+                  console.log(url);
+                  this.setState({ imgLink: url });
+                });
+            }
+          );
+        } else {
+            alert("Error Upload Image First")
+        }
+      }
 
     handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -33,7 +75,7 @@ export default class UpdateGuide extends Component {
 
         e.preventDefault();
         const id = this.props.match.params.id;
-        const {registrationNo,name, address,email, phoneNo, language, availability } = this.state;
+        const {registrationNo,name, address,email, phoneNo, language, availability, imgLink } = this.state;
         const data = {
             registrationNo:registrationNo,
             name: name,
@@ -42,6 +84,7 @@ export default class UpdateGuide extends Component {
             phoneNo: phoneNo,
             language: language,
             availability: availability,
+            imgLink: imgLink,
         }
         console.log(data)
         axios.put(`http://localhost:5001/guide/update/${id}`, data).then((res) => {
@@ -77,6 +120,7 @@ export default class UpdateGuide extends Component {
                     phoneNo: res.data.guide.phoneNo,
                     language: res.data.guide.language,
                     availability: res.data.guide.availability,
+                    imgLink:res.data.guide.imgLink
                 });
                 console.log(this.state.guide);
             }
@@ -219,10 +263,56 @@ export default class UpdateGuide extends Component {
                            
                         </form>
                     </div>
-                    <div className="col-6 add-image ">
+                    
+                           {/* add image */}
+
+                           <div className="col-6 add-image  ">
+                        <div className="form-row">
+                            <div className="form-group">
+                                {this.state.imgLink ? (
+                                    <img
+                                        src={this.state.imgLink}
+                                        alt="productImg"
+                                        style={{ width: "400px", marginLeft: "90px", display: "flex", flexDirection: "column" }}
+                                    />
+                                ) : (
+                                    <img
+                                        src={this.state.NoItemImg}
+                                        alt="productImg"
+                                        style={{ width: "400px", marginLeft: "97px", display: "flex", flexDirection: "column" }}
+                                    />
+                                )}
+
+                                <label style={{ fontSize: "12px", marginLeft: "15px" }}>
+                                    {/* Image */}
+                                </label>
+                                <div className="row mt-2">
+                                    <div className="col-md-9">
+                                        <input
+                                            className="form-control "
+                                            type="file"
+                                            id="exampleInputEmail"
+                                            name="Image"
+                                            style={{ padding: "2px", marginLeft: "80px", marginTop: "130px" }}
+                                            onChange={(e) => {
+                                                this.setState({ file: e.target.files[0] });
+                                                this.uploadImage(e);
+                                            }}
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="form-group" style={{ marginLeft: "80px", width: "458px", marginTop: "10px" }}>
+                            {/* <Progress percentage={this.state.uploadPercentage} /> */}
+                        </div>
+                    </div>
+
+                    {/* <div className="col-6 add-image ">
                         <img className="add_img" src={defaultImage} />
                         <button type="submit" className="btn btn-primary sub_btn3" onClick={this.onSubmit}><i class="far fa-save"></i>&nbsp;Add</button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 

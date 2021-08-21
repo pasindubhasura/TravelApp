@@ -6,6 +6,7 @@ import {toast} from 'react-toastify';
 import {jsPDF} from 'jspdf'
 import 'jspdf-autotable'
 import Logo from "../../images/Logo.png";
+import ReactTooltip from 'react-tooltip';
 
 // import './estyle.css';
 
@@ -108,89 +109,100 @@ exportPDF = () => {
 
   render() {
     return (
-      <div className="container" >
-        <div className="row search">
-          <div className="col-lg-9 mt-2 mb-2">
-
-            </div>
-            <div className="col-lg-3 mt-2 mb-2 " >
-              <input
-              className="form-control"
-              type="search"
-              placeholder="🔍 Search"
-              name="searchQuery"
-              onChange={this.handleSearchArea}></input>
-              
-            </div>
-
-        </div> 
-            <div className="py-4">
-            <h1>Guides</h1>
-            
-
+      <div className="container containerTop" >
         <div className="row">
-          <div className="col-lg-9 mt-2 mb-2">
-           {/* add button  */}
-           <Link to="/guide_add" className="btn btn-warning"><i className="fas fa-user-plus"></i>&nbsp;Add Guide</Link>&nbsp;
-          <Link onClick={()=>this.exportPDF()} to="#" className="btn btn-success"><i class="fas fa-download"></i>&nbsp;Download Report</Link>
-           </div>
-        </div>
+         <div className="col-1"/>
+             <div className="col-11">
+                  
+                  <div className="row">
+                      <div className="col position-relative link">
+                          <p><a href="/">Home</a> {'>'} Guides</p>
+                      </div>
+                  </div>
 
-
-
-            <table class=" table table-striped borde" >
-                <thead class="thead-dark">
-                    <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Registion No</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">PhoneNo</th>
-                    <th scope="col">Languages</th>
-                    <th scope="col">Availability</th>
-                    <th scope="col">Action</th>
-                    
-                    
-                    </tr>
-                </thead>
-                <tbody>
-                   {this.state.guide.map((guide,index)=> (
-                      <tr key={index}>
-                          <th scope="row">G{index + 1}</th>
-                          <td>
-                             <a href={`/guide/${guide._id}`} style={{textDecoration:'none'}}>
-                              {guide.registrationNo}
-                            </a>
-                            </td>
-                            
-                          <td>{guide.name}</td>
-                          <td>{guide.address}</td>
-                          <td>{guide.email}</td>
-                          <td>{guide.phoneNo}</td>
-                          <td>{guide.language}</td>
-                          <td>{guide.availability}</td>
-                         
-                          
-                          <td>
-                               
-                            <Link className="btn btn-outline-warning" to={`/guide_update/${guide._id}`}>
-                              <i className="fas fa-edit"></i> &nbsp;Update
-                            
-                            </Link>
-                            &nbsp;
-                            <Link className="btn btn-danger" onClick={()=>this.onDelete(guide._id)}><i className="far fa-trash-alt"></i>&nbsp;Delete</Link>
-                                
-                            </td>
-                      </tr>
-                    ))}
-
-                </tbody>
-                </table>
-               
                 
-                
- 
+                  <div className="row">
+                  <div className="col-9 position-relative">
+                          <h2>Guides</h2>
+                                                     
+                  </div>
+                      <hr className="hr" style={{ height: '2px', color: '#0a90e8' }} />
+                  </div>
+
+                  <div className="row">
+                    <div className="col-2 buttons">
+                        <a href="/guide_add" type="button" class="button_add" ><span><i class="fal fa-plus-circle"></i>&nbsp;&nbsp;Add Guide</span></a><br /><br />
+                    </div>
+                    <div className="col-3 buttons">
+                        <a href="#" type="button" class="button_pdf" onClick={()=>this.exportPDF()} ><span><i class="fas fa-download"></i>&nbsp;&nbsp;Download Report</span></a><br /><br />
+                    </div>
+                    <div className="col-2">                                                            
+                    </div>
+                    <div className="col-4 search position-relative ">
+                        <ReactTooltip />
+                        <i className="fa fa-search search_home"></i> <input className="form-control search_home" type="Search" placeholder="Search Guides" name="searchQuery" data-tip="Enter accommodation type or name" data-type="dark" onChange={this.handleSearchArea} />
+                    </div>
+                    </div>
+
+                  <div className="tiew">
+                    <div className="shadowBox t_sbox">
+                    <table class="table table-hover " >
+                          <thead class="thead-dark">
+                              <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Registion No</th>
+                              <th scope="col">Name</th>
+                              <th scope="col">Address</th>
+                              <th scope="col">Email</th>
+                              <th scope="col">PhoneNo</th>
+                              <th scope="col">Languages</th>
+                              <th scope="col">Availability</th>
+                              <th scope="col">Action</th>
+                              
+                              
+                              </tr>
+                          </thead>
+                          <tbody>
+                            {this.state.guide.map((guide,index)=> (
+                                <tr key={index}>
+                                    <th scope="row">G{index + 1}</th>
+                                    <td>
+                                      <a href={`/guide/${guide._id}`} style={{textDecoration:'none'}}>
+                                        {guide.registrationNo}
+                                      </a>
+                                      </td>
+                                      
+                                    <td>{guide.name}</td>
+                                    <td>{guide.address}</td>
+                                    <td>{guide.email}</td>
+                                    <td>{guide.phoneNo}</td>
+                                    <td>{guide.language}</td>
+                                    <td>{guide.availability}</td>
+                                  
+                                    
+                                    <td>
+                                        
+                                      <Link className="btn btn-outline-warning" to={`/guide_update/${guide._id}`}>
+                                        <i className="fas fa-edit"></i> &nbsp;Update
+                                      
+                                      </Link>
+                                      &nbsp;
+                                      <Link className="btn btn-danger" onClick={()=>this.onDelete(guide._id)}><i className="far fa-trash-alt"></i>&nbsp;Delete</Link>
+                                          
+                                      </td>
+                                </tr>
+                              ))}
+
+                          </tbody>
+                          </table>
+                  
+                  
+                          </div>
+                          </div>
+                            {/* </div>
+                        </div>
+                             */}
+              </div>
             </div>
         </div>
     )

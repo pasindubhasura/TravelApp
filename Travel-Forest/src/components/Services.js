@@ -3,6 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import styled from "styled-components";
 import DestinationList from "./DestinationList";
+import GuideList from "./GuidesList";
 import { colors } from "./data";
 export default function Services() {
   const [selectedTab, setselectedTab] = useState(0);
@@ -37,7 +38,7 @@ export default function Services() {
           <DestinationList />
         </TabPanel>
         <TabPanel>
-          <h2>Any content 2</h2>
+          <GuideList />
         </TabPanel>
         <TabPanel>
           <h2>Any content 3</h2>

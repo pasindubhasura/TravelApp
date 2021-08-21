@@ -57,9 +57,10 @@ const Card = styled.div`
   }
 `;
 const Image = styled.img`
-  max-width: 90%;
+  width: 90%;
   height: 100%;
   padding: 5px;
+  object-fit: cover;
 `;
 const Column = styled.div`
   width: 100%;
@@ -88,7 +89,7 @@ const P = styled.div`
 const ImageContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   max-width: 20%;
   min-width: 20%;
   height: 100%;

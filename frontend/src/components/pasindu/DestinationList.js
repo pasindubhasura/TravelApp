@@ -15,7 +15,7 @@ export default function DestinationList() {
     if (!response.data.error) setdestinations(response.data.destinations);
   };
   return (
-    <div>
+    <Div>
       {destinations.map((item, index) => {
         return (
           <Column key={index}>
@@ -40,9 +40,14 @@ export default function DestinationList() {
           </Column>
         );
       })}
-    </div>
+    </Div>
   );
 }
+const Div = styled.div`
+  width: 100%;
+  margin: 0 auto;
+`;
+
 const Card = styled.div`
   width: 100%;
   height: 170px;

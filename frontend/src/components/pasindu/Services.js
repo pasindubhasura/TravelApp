@@ -8,8 +8,10 @@ export default function Services() {
   const [selectedTab, setselectedTab] = useState(0);
   console.log(selectedTab);
   return (
-    <div>
-      {selectedTab === 0 ? <h1>Destinations</h1> : null}
+    <Div>
+      {selectedTab === 0 ? (
+        <h1 style={{ color: colors.darkerGreen }}>Destinations</h1>
+      ) : null}
       {selectedTab === 1 ? <h1>Guides</h1> : null}
       {selectedTab === 2 ? <h1>Vehicles</h1> : null}
       {selectedTab === 3 ? <h1>Accomodations</h1> : null}
@@ -39,7 +41,7 @@ export default function Services() {
           <h2>Any content 4</h2>
         </TabPanel>
       </Tabs>
-    </div>
+    </Div>
   );
 }
 
@@ -55,7 +57,10 @@ function Search() {
         <h5 style={{ fontWeight: "bold" }}>Destination:</h5>
       </Row>
       <Row>
-        <SearchField onChange={(e) => setsearchInput(e.target.value)} />
+        <SearchField
+          onChange={(e) => setsearchInput(e.target.value)}
+          placeholder="Search destinations here..."
+        />
         <Button
           color={colors.darkerGreen}
           type="button"
@@ -105,4 +110,8 @@ const Button = styled.button`
     filter: brightness(85%);
     cursor: pointer;
   }
+`;
+const Div = styled.div`
+  width: 90%;
+  margin: 0 auto;
 `;

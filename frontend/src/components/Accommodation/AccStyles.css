@@ -129,13 +129,19 @@ table tr {
     justify-content: center;
 }
 
+.table-green tr{
+    background-color: #38B000;
+    color: #fff;
+}
+
+
 .buttons {
     margin-top: 20px;
 }
 
 .button {
     border-radius: 20px;
-    background-color: #316ad4c7;
+    background-color: #52B788;
     color: #fff;
     text-align: center;
     padding-left: 20px;
@@ -166,7 +172,7 @@ table tr {
 
 .button:hover {
     color: #fff;
-    background-color: #316ad4;
+    background-color: #40916C;
 }
 
 .button:hover span {
@@ -178,6 +184,51 @@ table tr {
     right: 0;
 }
 
+.button2 {
+    border-radius: 20px;
+    
+    border: 2px solid #52B788;
+    color: #52B788;
+    text-align: center;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    font-size: 18px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.button2 span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.button2 span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.button2:hover {
+    color: #fff;
+    background-color: #40916C;
+}
+
+.button2:hover span {
+    padding-right: 25px;
+}
+
+.button2:hover span:after {
+    opacity: 1;
+    right: 0;
+}
 
 /* Add Accommodation */
 

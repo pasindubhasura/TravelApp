@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
 import axios from "axios";
-export default function DestinationList() {
-  let [destinations, setdestinations] = useState([]);
+export default function GuideList() {
+  let [guides, setguides] = useState([]);
   let [searchInput, setsearchInput] = useState("");
+
   useEffect(() => {
     fetchData();
   }, []);
   const fetchData = async () => {
-    const response = await axios.get("http://localhost:5001/destinations");
-    if (!response.data.error) setdestinations(response.data.destinations);
+    const response = await axios.get("http://localhost:5001/guides");
+    if (response.data.success) {
+      setguides(response.data.existingGuide);
+    }
   };
 
   if (searchInput.length > 0) {
-    destinations = destinations.filter((i) => {
-      return i.destination.toLowerCase().match(searchInput.toLowerCase());
+    guides = guides.filter((i) => {
+      return i.name.toLowerCase().match(searchInput.toLowerCase());
     });
   }
   return (
@@ -26,33 +29,33 @@ export default function DestinationList() {
             marginLeft: "9%",
           }}
         >
-          <h5 style={{ fontWeight: "bold" }}>Destination:</h5>
+          <h5 style={{ fontWeight: "bold" }}>Guides:</h5>
         </Row>
         <Row>
           <SearchField
             onChange={(e) => setsearchInput(e.target.value)}
-            placeholder="Search destinations here..."
+            placeholder="Search Guides here..."
           />
         </Row>
       </Coulmn>
-      {destinations.map((item, index) => {
+      {guides.map((item, index) => {
         return (
           <Column key={index}>
             <Card>
               <ImageContainer>
-                <Image src={item.image} />
+                <Image src={item.imgLink} />
               </ImageContainer>
 
               <LocationList>
-                <Title>{item.destination}</Title>
+                <Title>{item.name}</Title>
 
                 <Location>
-                  <P>{item.city} |</P>
-                  <P>{item.district} |</P>
-                  <P>{item.province} </P>
+                  <P>{item.address} |</P>
+                  <P>{item.email} |</P>
+                  <P>{item.phoneNo} </P>
                 </Location>
                 <P style={{ paddingLeft: "10px", paddingTop: "5px" }}>
-                  {item.description}
+                  {item.language}
                 </P>
               </LocationList>
             </Card>

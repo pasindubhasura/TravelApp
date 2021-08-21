@@ -297,7 +297,6 @@ export default class AddRoom extends Component {
                                                     onChange={(e) => { this.setState({ file: e.target.files[0] }); this.uploadImage(e); }} />
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </form>

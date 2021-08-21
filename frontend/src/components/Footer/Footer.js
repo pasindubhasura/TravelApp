@@ -15,7 +15,7 @@ export default class Footer extends Component{
             <div>
                 <footer className="foo">
                   <div class="copyright text-center">
-                  Copyright © 2021 High Garden. All Rights Reserved
+                  Copyright © 2021 Travel Forest. All Rights Reserved
                     {/* Copyright &copy; 2021 <span>High Garden</span> */}
                   </div>
                 </footer>

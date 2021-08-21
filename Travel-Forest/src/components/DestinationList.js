@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
 import axios from "axios";
 import { resetIdCounter } from "react-tabs";
-
+import { colors } from "./data";
 export default function DestinationList() {
   let [destinations, setdestinations] = useState([]);
-  let [search, setsearch] = useState("");
+  let [searchInput, setsearchInput] = useState("");
   useEffect(() => {
     fetchData();
   }, []);
@@ -13,8 +13,36 @@ export default function DestinationList() {
     const response = await axios.get("http://localhost:5001/destinations");
     if (!response.data.error) setdestinations(response.data.destinations);
   };
+
+  if (searchInput.length > 0) {
+    destinations = destinations.filter((i) => {
+      return i.destination.toLowerCase().match(searchInput.toLowerCase());
+    });
+  }
+  // const searchHandler = () => {
+  //   console.log("clicked " + searchInput);
+  //   if (searchInput.length > 0) {
+  //     destinations = destinations.filter((i) => {
+  //       return i.destination.toLowerCase().match(searchInput.toLowerCase());
+  //     });
+  //   }
+  // };
   return (
     <Div>
+      <Coulmn>
+        <Row>
+          <h5 style={{ fontWeight: "bold" }}>Destination:</h5>
+        </Row>
+        <Row>
+          <SearchField
+            onChange={(e) => setsearchInput(e.target.value)}
+            placeholder="Search destinations here..."
+          />
+          {/* <Button color={colors.darkerGreen} type="submit">
+            Search
+          </Button> */}
+        </Row>
+      </Coulmn>
       {destinations.map((item, index) => {
         return (
           <Column key={index}>
@@ -98,4 +126,54 @@ const ImageContainer = Styled.div`
   min-width: 20%;
   height: 100%;
   border-right: 0.5px solid black;
+`;
+const Coulmn = Styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px;
+  border: 1px solid green;
+  border-radius: 5px;
+  height: 300px;
+  margin: 40px 0px;
+  box-shadow: 5px 6px 10px #888888;
+`;
+const Row = Styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+`;
+const SearchField = Styled.input`
+  width: 90%;
+  height: 40px;
+  padding-left: 5px;
+  border-radius: 5px;
+`;
+const Button = Styled.button`
+  width: 8%;
+  margin-left: 2%;
+  height: 100%;
+  background-color: ${(props) => props.color};
+  color: ${(props) => props.fontColor || "white"};
+  border: 2px solid ${(props) => props.color};
+  border-radius: 5px;
+  font-weight: bold;
+  //padding: 8px 14px;
+  &:hover {
+    filter: brightness(85%);
+    cursor: pointer;
+  }
+`;
+// const Div = styled.div`
+//   width: 90%;
+//   margin: 0 auto;
+// `;
+const H3 = Styled.h3`
+  color: ${colors.darkerGreen};
+  font-weight: "bold";
+  display: "flex";
+  justify-content: "flex-start";
+  margin: 40px 0px;
 `;

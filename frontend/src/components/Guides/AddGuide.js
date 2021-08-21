@@ -3,6 +3,9 @@ import axios from 'axios';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import defaultImage from "../../images/vector.jpg";
+import { storage } from "../../firebase";
+import Progress from "./Progress";
+
 
 const invoiceRegx = RegExp(/^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/gm);
 const formValid = formErrors =>{
@@ -23,7 +26,13 @@ export default class AddGuide extends Component {
             phoneNo: Number,
             language: "",
             availability:"",
-            
+
+            //Firebase Image Upload States
+            file: null,
+            uploadPercentage: 0,
+            // NoItemImg:"https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg",
+            NoItemImg:defaultImage,
+            imgLink:"",
 
             formErrors:{
                 phoneNo:Number,
@@ -34,6 +43,43 @@ export default class AddGuide extends Component {
 
         }
     }
+
+    uploadImage(e) {
+        if (e.target.files[0] !== null) {
+          const uploadTask = storage
+            .ref(`products/${e.target.files[0].name}`)
+            .put(e.target.files[0]);
+          uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+              //progress function
+              const progress = Math.round(
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+              );
+              this.setState({ uploadPercentage: progress });
+            },
+            (error) => {
+              //error function
+              console.log(error);
+            },
+            () => {
+              //complete function
+              storage
+                .ref("products")
+                .child(e.target.files[0].name)
+                .getDownloadURL()
+                .then((url) => {
+                  console.log(url);
+                  this.setState({ imgLink: url });
+                });
+            }
+          );
+        } else {
+            alert("Error Upload Image First")
+        }
+      }
+
+
 
     handleInputChange = (e) => {
         // validaons
@@ -74,7 +120,7 @@ export default class AddGuide extends Component {
         if(formValid(this.state.formErrors)){
            
 
-        const {registrationNo,name, address,email, phoneNo, language, availability } = this.state;
+        const {registrationNo,name, address,email, phoneNo, language, availability,imgLink } = this.state;
 
         const data = {
             registrationNo:registrationNo,
@@ -84,6 +130,7 @@ export default class AddGuide extends Component {
             phoneNo: phoneNo,
             language: language,
             availability: availability,
+            imgLink:imgLink,
            
         }
         console.log(data)
@@ -121,11 +168,11 @@ export default class AddGuide extends Component {
         const {formErrors}= this.state;
 
         return (
-            <div className="container">
+            <div className="container shadowBox" >
                 <div className="row ">
                    
 
-                    <div className="col-6 shadowBox" >
+                    <div className="col-6 " >
                         
                         <center>
                             <h1 className="h3 mb-3 font-weight-normal head-line" style={{ fontWeight: '15px' }} >Add New Guide</h1>
@@ -255,9 +302,51 @@ export default class AddGuide extends Component {
                            
                         </form>
                     </div>
-                    <div className="col-6 add-image ">
-                        <img className="add_img" src={defaultImage} />
-                        <button type="submit" className="btn btn-primary sub_btn3" onClick={this.onSubmit}><i class="far fa-save"></i>&nbsp;Add</button>
+                    
+
+                    {/* add image */}
+
+                    <div className="col-6 add-image  ">
+                                <div className="form-row">
+                            <div className="form-group">
+                            {this.state.imgLink ? (
+                                <img
+                                src={this.state.imgLink}
+                                alt="productImg"
+                                style={{ width: "400px" , marginLeft:"90px" ,display:"flex",flexDirection:"column" }}
+                                />
+                            ) : (
+                                <img
+                                src={this.state.NoItemImg}
+                                alt="productImg"
+                                style={{ width: "400px", marginLeft:"97px" ,display:"flex",flexDirection:"column" }}
+                                />
+                            )}
+
+                            <label style={{ fontSize: "12px", marginLeft: "15px" }}>
+                                {/* Image */}
+                            </label>
+                            <div className="row mt-2">
+                                <div className="col-md-9">
+                                <input
+                                    className="form-control "
+                                    type="file"
+                                    id="exampleInputEmail"
+                                    name="Image"
+                                    style={{ padding: "2px",marginLeft:"80px" ,marginTop:"130px"}}
+                                    onChange={(e) => {
+                                    this.setState({ file: e.target.files[0] });
+                                    this.uploadImage(e);
+                                    }}
+                                    required
+                                />
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <div className="form-group" style={{ marginLeft: "80px",width:"458px" ,marginTop:"10px"}}>
+                            {/* <Progress percentage={this.state.uploadPercentage} /> */}
+                        </div>
                     </div>
                    
                 </div>

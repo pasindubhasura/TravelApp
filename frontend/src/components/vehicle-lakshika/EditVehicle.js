@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
 import axios from "axios";
 import styled from "styled-components";
@@ -6,21 +6,41 @@ import defaultImage from "../../images/defaultImage.jpg";
 import { districts, provinces, colors } from "./data";
 import spinner from "../../images/spinner.gif";
 
-export default function AddDestinationForm() {
+export default function EditDestinationForm(props) {
   const [img, setImg] = useState(defaultImage);
-  const [isLoading, setisLoading] = useState(false);
   const [district, setdistrict] = useState("none");
   const [province, setprovince] = useState("none");
   const [destination, setdestination] = useState("");
   const [city, setcity] = useState("");
   const [description, setdescription] = useState("");
+  const [id, setid] = useState(props.history.location.state.id);
   const [destinationError, setdestinationError] = useState("");
   const [cityError, setcityError] = useState("");
   const [districtError, setdistrictError] = useState("");
   const [provinceError, setprovinceError] = useState("");
   const [descriptionError, setdescriptionError] = useState("");
   const [imgError, setimgError] = useState("");
+  const [isLoading, setisLoading] = useState(false);
   const [errors, seterrors] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, [id]);
+
+  const fetchData = async () => {
+    const response = await axios.get(
+      `http://localhost:5001/destinations/get_one/${id}`
+    );
+    if (response.data.destination) {
+      const destination = response.data.destination;
+      setcity(destination.city);
+      setdistrict(destination.district);
+      setprovince(destination.province);
+      setdestination(destination.destination);
+      setdescription(destination.description);
+      setImg(destination.image);
+    }
+  };
 
   const clear = () => {
     setcity("");
@@ -34,8 +54,8 @@ export default function AddDestinationForm() {
     seterrors([]);
     e.preventDefault();
     const response = await axios.post(
-      "http://localhost:5001/destinations/add",
-      { district, province, destination, city, description, image: img }
+      "http://localhost:5001/destinations/update",
+      { id, district, province, destination, city, description, image: img }
     );
     if (district === "none")
       seterrors((oldArr) => [
@@ -54,7 +74,8 @@ export default function AddDestinationForm() {
       });
     }
   };
-  // const validation = () => {
+
+  // const validation = async () => {
   //   setdestinationError("");
   //   setcityError("");
   //   setdistrictError("");
@@ -87,9 +108,11 @@ export default function AddDestinationForm() {
   //     descriptionError === "" &&
   //     imgError === ""
   //   ) {
+  //     console.log("true");
   //     return true;
   //   }
   // };
+
   const imageHandler = (evt) => {
     setisLoading(true);
     var f = evt.target.files[0]; // FileList object
@@ -121,13 +144,13 @@ export default function AddDestinationForm() {
 
   return (
     <MainDiv>
-      <H2>Add Destination Details</H2>
+      <H2>Edit Destination Details</H2>
       {errors.length > 0
         ? errors.map((i, index) => {
             return <Span key={index}>{errors[index].msg}</Span>;
           })
         : null}
-      <FormGrid onSubmit={formHandler}>
+      <FormGrid onSubmit={formHandler} noValidate>
         <Column>
           {destinationError.length > 0 ? (
             <Span>{destinationError}</Span>
@@ -211,7 +234,7 @@ export default function AddDestinationForm() {
             Clear
           </Button>
           <ButtonSecondary color={colors.darkerGreen} type="submit">
-            Add Destination
+            Edit Destination
           </ButtonSecondary>
         </Column>
         <Column>
@@ -226,7 +249,12 @@ export default function AddDestinationForm() {
             ) : (
               <Span style={{ visibility: "hidden" }}></Span>
             )}
-            <FileInput type="file" onChange={imageHandler} id="fileInput" />
+            <FileInput
+              type="file"
+              onChange={imageHandler}
+              id="fileInput"
+              required
+            />
             <UploadButton
               color={colors.darkerGreen}
               type="button"
@@ -283,19 +311,10 @@ const TextInput = styled.input`
   width: 100%;
   padding-left: 5px;
   height: 40px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   border-radius: 5px;
   border: 1px solid;
 `;
-
-const Span = styled.p`
-  width: 100%;
-  margin: 15px 0px 0px 20px;
-  color: red;
-  font-weight: bold;
-  font-size: 14px;
-`;
-
 const TextInputBox = styled.textarea`
   width: 100%;
   padding: 5px;
@@ -308,23 +327,6 @@ const Image = styled.img`
   height: 100%;
   object-fit: cover;
 `;
-const Spinner = styled.img`
-  width: 100px;
-  height: 100px;
-  display: flex;
-  justify-content: center;
-`;
-const ImageContainner = styled.div`
-  width: 90%;
-  height: 300px;
-  margin-top: 15px;
-  margin-bottom: 0px;
-  //border: 1px solid ${colors.darkerGreen};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 5px 6px 10px #888888;
-`;
 const Center = Styled.div`
 display:flex;
 flex-direction:column;
@@ -333,9 +335,7 @@ align-items:center;
 `;
 
 const FileInput = styled.input`
-  opacity: 0;
-  margin: 0px;
-  padding: 0px;
+  display: none;
 `;
 const UploadButton = styled.button`
   border: 1px solid ${(props) => props.color};
@@ -343,9 +343,8 @@ const UploadButton = styled.button`
   border-radius: 5px;
   font-weight: bold;
   padding: 8px 14px;
-  width: 90%;
   background-color: ${(props) => props.color};
-  margin: 0px;
+  margin: 10px 0px;
   color: white;
   &:hover {
     filter: brightness(85%);
@@ -372,6 +371,30 @@ const Dropdown = styled.select`
   margin-bottom: 20px;
   border-radius: 5px;
   border-style: solid;
+`;
+const Span = styled.p`
+  width: 100%;
+  margin: 15px 0px 0px 20px;
+  color: red;
+  font-weight: bold;
+  font-size: 14px;
+`;
+const Spinner = styled.img`
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+`;
+const ImageContainner = styled.div`
+  width: 90%;
+  height: 300px;
+  margin-top: 15px;
+  margin-bottom: 0px;
+  //border: 3px solid ${colors.darkerGreen};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 5px 6px 10px #888888;
 `;
 const I = styled.i`
   margin: 0px 7px;

@@ -270,12 +270,14 @@ export default function EditDestinationForm(props) {
 }
 
 const MainDiv = Styled.div`
-margin:0px auto;
+margin:40px auto;
 background-color:white;
-width:100%;
+width:80%;
 display:flex;
 flex-direction: column;
-min-height:100vh;
+min-height:auto;
+box-shadow: 5px 6px 10px #888888;
+padding: 20px;
 `;
 
 const H2 = Styled.h2`
@@ -323,6 +325,7 @@ const TextInputBox = styled.textarea`
 const Image = styled.img`
   width: 100%;
   height: 100%;
+  object-fit: cover;
 `;
 const Center = Styled.div`
 display:flex;
@@ -387,10 +390,11 @@ const ImageContainner = styled.div`
   height: 300px;
   margin-top: 15px;
   margin-bottom: 0px;
-  border: 3px solid ${colors.darkerGreen};
+  //border: 3px solid ${colors.darkerGreen};
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 5px 6px 10px #888888;
 `;
 const I = styled.i`
   margin: 0px 7px;

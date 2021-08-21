@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
 import axios from "axios";
-import { resetIdCounter } from "react-tabs";
 import { colors } from "./data";
 export default function DestinationList() {
   let [destinations, setdestinations] = useState([]);

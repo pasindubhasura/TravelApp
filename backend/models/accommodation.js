@@ -14,10 +14,10 @@ const accommodationScheema = new mongoose.Schema({
         type: Number,
         require:true,
     },
-    image:{
-        type:String,
+    mobile:{
+        type: Number,
         require:true
-    },
+    }
 },{
     timestamps: true,
 })

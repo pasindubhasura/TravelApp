@@ -6,6 +6,10 @@ const roomSchema = new mongoose.Schema({
         type: String,
         require:true
     },
+    roomNo:{
+        type: Number,
+        require:true
+    },
     noOfBeds:{
         type: Number,
         require:true
@@ -23,6 +27,11 @@ const roomSchema = new mongoose.Schema({
         requre: true
     },
     availability:{ 
+        type: String,
+        default: "Available",
+        require:true
+    },
+    image:{
         type: String,
         require:true
     }

@@ -20,6 +20,7 @@ export default function AddDestinationForm() {
   const [provinceError, setprovinceError] = useState("");
   const [descriptionError, setdescriptionError] = useState("");
   const [imgError, setimgError] = useState("");
+  const [errors, seterrors] = useState([]);
 
   const clear = () => {
     setcity("");
@@ -30,52 +31,65 @@ export default function AddDestinationForm() {
     setImg(defaultImage);
   };
   const formHandler = async (e) => {
+    seterrors([]);
     e.preventDefault();
-    if (validation()) {
-      const response = await axios.post(
-        "http://localhost:5001/destinations/add",
-        { district, province, destination, city, description, image: img }
-      );
-      if (response.data.success) window.location = "/destinations";
-      if (response.data.error) alert(response.data.error);
+    const response = await axios.post(
+      "http://localhost:5001/destinations/add",
+      { district, province, destination, city, description, image: img }
+    );
+    if (district === "none")
+      seterrors((oldArr) => [
+        ...oldArr,
+        { msg: "District should be selected" },
+      ]);
+    if (province === "none")
+      seterrors((oldArr) => [
+        ...oldArr,
+        { msg: "Province should be selected" },
+      ]);
+    if (response.data.success) window.location = "/destinations";
+    if (response.data.error) {
+      response.data.error.map((item) => {
+        seterrors((oldArr) => [...oldArr, { msg: item.msg }]);
+      });
     }
   };
-  const validation = () => {
-    setdestinationError("");
-    setcityError("");
-    setdistrictError("");
-    setprovinceError("");
-    setdescriptionError("");
-    setimgError("");
+  // const validation = () => {
+  //   setdestinationError("");
+  //   setcityError("");
+  //   setdistrictError("");
+  //   setprovinceError("");
+  //   setdescriptionError("");
+  //   setimgError("");
 
-    if (destination === "") {
-      setdestinationError("Destination can't be empty!");
-    }
-    if (city === "") {
-      setcityError("City can't be empty!");
-    }
-    if (district === "none") {
-      setdistrictError("District has to be selected!");
-    }
-    if (province === "none") {
-      setprovinceError("Province has to be selected!");
-    }
-    if (description === "") {
-      setdescriptionError("Description can't be empty!");
-    }
-    if (img === defaultImage) {
-      setimgError("Add an Image");
-    } else if (
-      destinationError === "" &&
-      cityError === "" &&
-      districtError === "" &&
-      provinceError === "" &&
-      descriptionError === "" &&
-      imgError === ""
-    ) {
-      return true;
-    }
-  };
+  //   if (destination === "") {
+  //     setdestinationError("Destination can't be empty!");
+  //   }
+  //   if (city === "") {
+  //     setcityError("City can't be empty!");
+  //   }
+  //   if (district === "none") {
+  //     setdistrictError("District has to be selected!");
+  //   }
+  //   if (province === "none") {
+  //     setprovinceError("Province has to be selected!");
+  //   }
+  //   if (description === "") {
+  //     setdescriptionError("Description can't be empty!");
+  //   }
+  //   if (img === defaultImage) {
+  //     setimgError("Add an Image");
+  //   } else if (
+  //     destinationError === "" &&
+  //     cityError === "" &&
+  //     districtError === "" &&
+  //     provinceError === "" &&
+  //     descriptionError === "" &&
+  //     imgError === ""
+  //   ) {
+  //     return true;
+  //   }
+  // };
   const imageHandler = (evt) => {
     setisLoading(true);
     var f = evt.target.files[0]; // FileList object
@@ -108,7 +122,12 @@ export default function AddDestinationForm() {
   return (
     <MainDiv>
       <H2>Add Destination Details</H2>
-      <FormGrid>
+      {errors.length > 0
+        ? errors.map((i, index) => {
+            return <Span key={index}>{errors[index].msg}</Span>;
+          })
+        : null}
+      <FormGrid onSubmit={formHandler}>
         <Column>
           {destinationError.length > 0 ? (
             <Span>{destinationError}</Span>
@@ -191,11 +210,7 @@ export default function AddDestinationForm() {
           >
             Clear
           </Button>
-          <ButtonSecondary
-            color={colors.darkerGreen}
-            type="submit"
-            onClick={(e) => formHandler(e)}
-          >
+          <ButtonSecondary color={colors.darkerGreen} type="submit">
             Add Destination
           </ButtonSecondary>
         </Column>
@@ -211,12 +226,7 @@ export default function AddDestinationForm() {
             ) : (
               <Span style={{ visibility: "hidden" }}></Span>
             )}
-            <FileInput
-              type="file"
-              onChange={imageHandler}
-              id="fileInput"
-              required
-            />
+            <FileInput type="file" onChange={imageHandler} id="fileInput" />
             <UploadButton
               color={colors.darkerGreen}
               type="button"
@@ -232,12 +242,14 @@ export default function AddDestinationForm() {
 }
 
 const MainDiv = Styled.div`
-margin:0px auto;
+margin:40px auto;
 background-color:white;
-width:100%;
+width:80%;
 display:flex;
 flex-direction: column;
-min-height:100vh;
+min-height:auto;
+box-shadow: 5px 6px 10px #888888;
+padding: 20px;
 `;
 
 const H2 = Styled.h2`
@@ -278,7 +290,7 @@ const TextInput = styled.input`
 
 const Span = styled.p`
   width: 100%;
-  margin: 15px 0px 0px 0px;
+  margin: 15px 0px 0px 20px;
   color: red;
   font-weight: bold;
   font-size: 14px;
@@ -294,6 +306,7 @@ const TextInputBox = styled.textarea`
 const Image = styled.img`
   width: 100%;
   height: 100%;
+  object-fit: cover;
 `;
 const Spinner = styled.img`
   width: 100px;
@@ -306,10 +319,11 @@ const ImageContainner = styled.div`
   height: 300px;
   margin-top: 15px;
   margin-bottom: 0px;
-  border: 1px solid ${colors.darkerGreen};
+  //border: 1px solid ${colors.darkerGreen};
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 5px 6px 10px #888888;
 `;
 const Center = Styled.div`
 display:flex;

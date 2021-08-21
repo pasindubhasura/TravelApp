@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const Destination = require("../models/destination");
 const router = require("express").Router();
 const imgbbUploader = require("imgbb-uploader");
+const validator = require("../functions/validator");
+const { validationResult } = require("express-validator");
 
 router.get("/", async (req, res) => {
   try {
@@ -26,7 +28,7 @@ router.get("/get_one/:id", async (req, res) => {
   }
 }); //get one destination record
 
-router.post("/add", async (req, res) => {
+router.post("/add", validator.validate("addDestination"), async (req, res) => {
   const destination = await new Destination();
   destination.destination = req.body.destination;
   destination.city = req.body.city;
@@ -34,6 +36,12 @@ router.post("/add", async (req, res) => {
   destination.province = req.body.province;
   destination.description = req.body.description;
   destination.image = req.body.image;
+
+  let errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.json({ error: errors.array() });
+    return;
+  }
 
   try {
     await destination.save();
@@ -43,24 +51,33 @@ router.post("/add", async (req, res) => {
   }
 }); //add destination record
 
-router.post("/update", async (req, res) => {
-  try {
-    const id = req.body.id;
-    const destination = await Destination.findById(id);
+router.post(
+  "/update",
+  validator.validate("editDestination"),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.json({ error: errors.array() });
+    }
 
-    destination.destination = req.body.destination;
-    destination.city = req.body.city;
-    destination.district = req.body.district;
-    destination.province = req.body.province;
-    destination.description = req.body.description;
-    destination.image = req.body.image;
+    try {
+      const id = req.body.id;
+      const destination = await Destination.findById(id);
 
-    await destination.save();
-    res.json({ success: "Record Successfully Updated!" });
-  } catch (error) {
-    res.json({ error: "Couldn't update the Record!" });
+      destination.destination = req.body.destination;
+      destination.city = req.body.city;
+      destination.district = req.body.district;
+      destination.province = req.body.province;
+      destination.description = req.body.description;
+      destination.image = req.body.image;
+
+      await destination.save();
+      res.json({ success: "Record Successfully Updated!" });
+    } catch (error) {
+      res.json({ error: "Couldn't update the Record!" });
+    }
   }
-}); //update destination record
+); //update destination record
 
 router.post("/delete", async (req, res) => {
   const id = req.body.id;

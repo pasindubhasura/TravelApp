@@ -4,6 +4,9 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import ReactTooltip from 'react-tooltip';
 import swl from 'sweetalert'
+import {jsPDF} from 'jspdf'
+import 'jspdf-autotable'
+import Logo from "../../images/Logo.png";
 import './AccStyles.css';
 
 
@@ -78,6 +81,37 @@ export default class Rooms extends Component {
         });
     }
 
+    //export PDF.
+    exportPDF = () => {
+ 
+
+        const data = this.state.rooms.map(dlt=> [dlt.accName, dlt.roomNo, dlt.noOfBeds, dlt.airCondition, dlt.price, dlt.description, dlt.availability])       
+      
+        const doc = new jsPDF({ orientation: "landscape" });
+        var time = new Date().toLocaleString();
+        doc.setFontSize(27);
+        doc.text(`Travel Accommodation Details Report`, 150, 35, null, null, "center");
+        doc.setFontSize(10);
+        doc.text(`(Generated on ${time})`, 150, 41, null, null, "center");
+        doc.setFontSize(12);
+       
+        doc.addImage(Logo, "JPEG", 142, 0, 25, 25); 
+        doc.autoTable({
+          theme: "grid",
+          styles: { halign: "center" },
+          headStyles: { fillColor:"#38B000" },
+          startY: 44,
+          head: [
+            ["Acc_name", "RoomNo", "No of Bed", "Air Condition", "Price", "Description" ,"Availability"],
+          ],
+          body: data,
+        });
+        
+        doc.save("Accommodation_Report.pdf");
+       }
+
+
+
     render() {
         return (
             <div className="container containerTop">
@@ -101,20 +135,20 @@ export default class Rooms extends Component {
                                 <a href="/Accommodation_Home/Rooms/add" type="button" class="button" ><span><i class="fal fa-plus-circle"></i>&nbsp;&nbsp;Add Rooms</span></a><br /><br />
                             </div>
                             <div className="col-4 buttons">
-                                <a href="#" type="button" class="button" ><span><i class="fas fa-download"></i>&nbsp;&nbsp;Download Report</span></a><br /><br />
+                                <a href="#" type="button" class="button2" onClick={()=>this.exportPDF()} ><span><i class="fas fa-download"></i>&nbsp;&nbsp;Download Report</span></a><br /><br />
                             </div>
                             <div className="col-2">                                                                
                             </div>
                             <div className="col-4 search position-relative">
                                 <ReactTooltip />
-                                <i className="fa fa-search"></i> <input className="form-control" type="Search" placeholder="Search an accommodation" name="searchQuery" data-tip="Enter accommodation name OR room no OR availability" data-type="dark" onChange={this.handleSearchArea} />
+                                <i className="fa fa-search"></i> <input className="form-control" type="Search" placeholder="Search a room" name="searchQuery" data-tip="Enter accommodation name OR room no OR availability" data-type="dark" onChange={this.handleSearchArea} />
                             </div>
                         </div>
                         <div className="shadowBox">
                             <div className="row">
                                 <div className="col-12 ">
                                     <table class="table table-hover">
-                                        <thead className="table-secondary">
+                                        <thead className="table-green">
                                             <tr>
                                                 <th scope="col">#</th>
                                                 <th scope="col">Accommodation Name</th>
@@ -130,7 +164,7 @@ export default class Rooms extends Component {
                                         {this.state.rooms.map((rooms, index) => (
                                             <tbody>
                                                 <tr>
-                                                    <th scope="row"><a href={`/accommodation/${rooms._id}`} style={{ textDecoration: 'none' }}>{index + 1}</a></th>
+                                                    <th scope="row"><a href={`/accommodation/${rooms._id}`} style={{ textDecoration: 'none', color:'#000' }}>{index + 1}</a></th>
                                                     <td>{rooms.accName}</td>
                                                     <td>{rooms.roomNo}</td>
                                                     <td>{rooms.noOfBeds}</td>
@@ -139,7 +173,7 @@ export default class Rooms extends Component {
                                                     <td>{rooms.description}</td>
                                                     <td>{rooms.availability}</td>
                                                     <td>
-                                                        <a href={`/Accommodation_Home/Rooms/edit/${rooms._id}`} type="button" class="btn btn-success" style={{width:'95px', margin:'2px'}}>
+                                                        <a href={`/Accommodation_Home/Rooms/edit/${rooms._id}`} type="button" class="btn btn-warning" style={{width:'95px', margin:'2px'}}>
                                                             <i class="far fa-edit"></i>&nbsp;Edit
                                                         </a>&nbsp;&nbsp;
                                                         <a href="#" type="button" class="btn btn-danger" onClick={() => this.onDelete(rooms._id)}>

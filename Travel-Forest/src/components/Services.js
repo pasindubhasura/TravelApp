@@ -12,9 +12,15 @@ export default function Services() {
       {selectedTab === 0 ? (
         <H3 style={{ fontWeight: "bold" }}>Destinations</H3>
       ) : null}
-      {selectedTab === 1 ? <h1>Guides</h1> : null}
-      {selectedTab === 2 ? <h1>Vehicles</h1> : null}
-      {selectedTab === 3 ? <h1>Accomodations</h1> : null}
+      {selectedTab === 1 ? (
+        <H3 style={{ fontWeight: "bold" }}>Guides</H3>
+      ) : null}
+      {selectedTab === 2 ? (
+        <H3 style={{ fontWeight: "bold" }}>Vehicles</H3>
+      ) : null}
+      {selectedTab === 3 ? (
+        <H3 style={{ fontWeight: "bold" }}>Accomodations</H3>
+      ) : null}
       <Tabs
         onSelect={(index) => {
           setselectedTab(index);

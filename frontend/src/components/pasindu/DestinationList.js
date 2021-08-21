@@ -16,9 +16,9 @@ export default function DestinationList() {
   };
   return (
     <div>
-      {destinations.map((item) => {
+      {destinations.map((item, index) => {
         return (
-          <Column>
+          <Column key={index}>
             <Card>
               <ImageContainer>
                 <Image src={item.image} />

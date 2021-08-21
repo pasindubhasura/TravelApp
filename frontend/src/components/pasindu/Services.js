@@ -3,6 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import styled from "styled-components";
 import DestinationList from "./DestinationList";
+import { colors } from "./data";
 export default function Services() {
   const [selectedTab, setselectedTab] = useState(0);
   console.log(selectedTab);
@@ -43,12 +44,23 @@ export default function Services() {
 }
 
 function Search() {
+  const [searchInput, setsearchInput] = useState("");
+  const searchHandler = () => {
+    console.log(searchInput);
+  };
+
   return (
     <Coulmn>
       <h6>Destination:</h6>
       <Row>
-        <SearchField />
-        <Button></Button>
+        <SearchField onChange={(e) => setsearchInput(e.target.value)} />
+        <Button
+          color={colors.darkerGreen}
+          type="button"
+          onClick={searchHandler}
+        >
+          Search
+        </Button>
       </Row>
     </Coulmn>
   );
@@ -61,16 +73,32 @@ const Coulmn = styled.div`
   padding: 10px;
   border: 1px solid green;
   height: 300px;
+  margin: 40px 0px;
 `;
 const Row = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  background-color: green;
   width: 90%;
 `;
 const SearchField = styled.input`
-  background-color: red;
   width: 90%;
+  height: 40px;
+  padding-left: 5px;
+  border-radius: 5px;
 `;
-const Button = styled.button``;
+const Button = styled.button`
+  width: 8%;
+  margin-left: 2%;
+  height: 100%;
+  background-color: ${(props) => props.color};
+  color: ${(props) => props.fontColor || "white"};
+  border: 2px solid ${(props) => props.color};
+  border-radius: 5px;
+  font-weight: bold;
+  //padding: 8px 14px;
+  &:hover {
+    filter: brightness(85%);
+    cursor: pointer;
+  }
+`;

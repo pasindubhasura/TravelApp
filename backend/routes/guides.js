@@ -1,6 +1,7 @@
 //importing dependencies
 const router = require('express').Router();
 const Guide = require('../models/guide');
+const imgbbUploader = require("imgbb-uploader")
 
 
 
@@ -82,5 +83,19 @@ router.delete('/guide/delete/:id',(req,res)=>{
 
     });
 });
+
+//image handling
+// router.post("/guide/upload", async (req, res) => {
+//     const path = req.body.path;
+  
+//     const options = {
+//       apiKey: "b9873515ab55dff911b045133a42e546",
+//       base64string: path,
+//     };
+//     const response = await imgbbUploader(options);
+  
+//     console.log(response.image.url);
+//     res.json({ imgUrl: response.image.url });
+//   });
 
 module.exports = router;

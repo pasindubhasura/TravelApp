@@ -30,7 +30,12 @@ export default function DestinationList() {
   return (
     <Div>
       <Coulmn>
-        <Row>
+        <Row
+          style={{
+            justifyContent: "flex-start",
+            marginLeft: "9%",
+          }}
+        >
           <h5 style={{ fontWeight: "bold" }}>Destination:</h5>
         </Row>
         <Row>
@@ -89,9 +94,9 @@ const Card = Styled.div`
   }
 `;
 const Image = Styled.img`
-  width: 90%;
+  width: 100%;
   height: 100%;
-  padding: 5px;
+  padding: 8px;
   object-fit: cover;
 `;
 const Column = Styled.div`

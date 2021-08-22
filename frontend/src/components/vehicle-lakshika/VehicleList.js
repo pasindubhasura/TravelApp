@@ -4,7 +4,7 @@ import axios from "axios";
 import { resetIdCounter } from "react-tabs";
 
 export default function VehicleList() {
-  let [travelVehicles, settravelVehicles] = useState([]);
+  let [travelVehicle, settravelVehicles] = useState([]);
   let [search, setsearch] = useState("");
   useEffect(() => {
     fetchData();
@@ -15,7 +15,7 @@ export default function VehicleList() {
   };
   return (
     <Div>
-      {travelVehicles.map((item, index) => {
+      {travelVehicle.map((item, index) => {
         return (
           <Column key={index}>
             <Card>

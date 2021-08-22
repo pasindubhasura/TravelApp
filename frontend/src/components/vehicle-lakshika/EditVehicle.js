@@ -3,7 +3,7 @@ import Styled from "styled-components";
 import axios from "axios";
 import styled from "styled-components";
 import defaultImage from "../../images/defaultImage.jpg";
-import { vehicleLocation, vehicleType, colors } from "./vehicle-data";
+import { vehicleLocations, vehicleTypes, colors } from "./vehicle-data";
 import spinner from "../../images/spinner.gif";
 
 export default function EditVehicle(props) {
@@ -29,7 +29,7 @@ export default function EditVehicle(props) {
 
   const fetchData = async () => {
     const response = await axios.get(
-      `http://localhost:5001/travelVehicles/getOne/${id}`
+      `http://localhost:5001/travelVehicle/getOne/${id}`
     );
     if (response.data.vehicle) {
       const vehicle = response.data.vehicle;
@@ -73,7 +73,7 @@ export default function EditVehicle(props) {
         ...oldArr,
         { msg: "Location should be selected" },
       ]);
-    if (response.data.success) window.location = "/travelVehicles";
+    if (response.data.success) window.location = "/travelVehicle";
     if (response.data.error) {
       response.data.error.map((item) => {
         seterrors((oldArr) => [...oldArr, { msg: item.msg }]);
@@ -192,7 +192,7 @@ export default function EditVehicle(props) {
             <option value="none" disabled hidden>
               Vehicle Type
             </option>
-            {vehicleType.map((item) => {
+            {vehicleTypes.map((item) => {
               return (
                 <option value={item} key={item}>
                   {item}
@@ -212,7 +212,7 @@ export default function EditVehicle(props) {
             <option value="none" disabled hidden>
               Location
             </option>
-            {vehicleLocation.map((item) => {
+            {vehicleLocations.map((item) => {
               return (
                 <option value={item} key={item}>
                   {item}

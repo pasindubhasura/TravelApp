@@ -1,4 +1,4 @@
-export const vehicleLocation = [
+export const vehicleLocations = [
   "Ampara",
   "Anuradhapura",
   "Badulla",
@@ -25,7 +25,7 @@ export const vehicleLocation = [
   "Trincomalee",
   "Vavuniya",
 ];
-export const vehicleType = [
+export const vehicleTypes = [
   "Luxury Car",
   "Premium Car",
   "General Car",

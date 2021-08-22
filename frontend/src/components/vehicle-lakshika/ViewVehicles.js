@@ -8,7 +8,7 @@ import Logo from "../../images/Logo.png";
 //import "../../css/IT19140162.css";
 
 export default function ViewVehicles(props) {
-  let [travelVehicles, settravelVehicles] = useState([]);
+  let [travelVehicle, settravelVehicles] = useState([]);
   let [search, setsearch] = useState("");
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function ViewVehicles(props) {
 
   const fetchData = async () => {
     const response = await axios.get("http://localhost:5001/travelVehicle");
-    if (!response.data.error) settravelVehicles(response.data.travelVehicles);
+    if (!response.data.error) settravelVehicles(response.data.travelVehicle);
   };
 
   const addVehicle = () => {
@@ -39,23 +39,23 @@ export default function ViewVehicles(props) {
     props.history.push("travelVehicle/edit", { id });
   };
   if (search.length > 0) {
-    travelVehicles = travelVehicles.filter((i) => {
+    travelVehicle = travelVehicle.filter((i) => {
       return i.vehicleType.toLowerCase().match(search.toLowerCase());
     });
   }
 
   const pdf = () => {
     let bodyData = [];
-    let length = travelVehicles.length;
+    let length = travelVehicle.length;
     let x = 1;
     for (let i = 0; i < length; i++) {
       bodyData.push([
         x++,
-        travelVehicles[i].vehicleType,
-        travelVehicles[i].vehicleLocation,
-        travelVehicles[i].vehiclePricePerkm,
-        travelVehicles[i].vehiclePhone,
-        travelVehicles[i].vehicleAvailability,
+        travelVehicle[i].vehicleType,
+        travelVehicle[i].vehicleLocation,
+        travelVehicle[i].vehiclePricePerkm,
+        travelVehicle[i].vehiclePhone,
+        travelVehicle[i].vehicleAvailability,
       ]);
     } //save json data to bodydata in order to print in the pdf table
 
@@ -119,7 +119,7 @@ export default function ViewVehicles(props) {
             </tr>
           </thead>
           <tbody>
-            {travelVehicles.map((item, index) => {
+            {travelVehicle.map((item, index) => {
               return (
                 <tr key={item._id}>
                   <td>{++index}</td>

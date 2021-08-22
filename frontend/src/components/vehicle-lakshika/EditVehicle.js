@@ -31,15 +31,15 @@ export default function EditVehicle(props) {
     const response = await axios.get(
       `http://localhost:5001/travelVehicle/getOne/${id}`
     );
-    if (response.data.vehicle) {
-      const vehicle = response.data.vehicle;
+    if (response.data.travelVehicle) {
+      const travelVehicle = response.data.travelVehicle;
 
-      setvehiclePhone(vehicle.vehiclePhone);
-      setvehicleType(vehicle.vehicleType);
-      setvehicleLocation(vehicle.vehicleLocation);
-      setvehiclePricePerkm(vehicle.vehiclePricePerkm);
-      setvehicleAvailability(vehicle.vehicleAvailability);
-      setImg(vehicle.image);
+      setvehiclePhone(travelVehicle.vehiclePhone);
+      setvehicleType(travelVehicle.vehicleType);
+      setvehicleLocation(travelVehicle.vehicleLocation);
+      setvehiclePricePerkm(travelVehicle.vehiclePricePerkm);
+      setvehicleAvailability(travelVehicle.vehicleAvailability);
+      setImg(travelVehicle.image);
     }
   };
 

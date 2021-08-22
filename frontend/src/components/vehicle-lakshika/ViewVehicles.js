@@ -8,7 +8,7 @@ import Logo from "../../images/Logo.png";
 //import "../../css/IT19140162.css";
 
 export default function ViewVehicles(props) {
-  let [travelVehicle, settravelVehicles] = useState([]);
+  let [travelVehicles, settravelVehicles] = useState([]);
   let [search, setsearch] = useState("");
 
   useEffect(() => {
@@ -39,23 +39,23 @@ export default function ViewVehicles(props) {
     props.history.push("travelVehicle/edit", { id });
   };
   if (search.length > 0) {
-    travelVehicle = travelVehicle.filter((i) => {
+    travelVehicles = travelVehicles.filter((i) => {
       return i.vehicleType.toLowerCase().match(search.toLowerCase());
     });
   }
 
   const pdf = () => {
     let bodyData = [];
-    let length = travelVehicle.length;
+    let length = travelVehicles.length;
     let x = 1;
     for (let i = 0; i < length; i++) {
       bodyData.push([
         x++,
-        travelVehicle[i].vehicleType,
-        travelVehicle[i].vehicleLocation,
-        travelVehicle[i].vehiclePricePerkm,
-        travelVehicle[i].vehiclePhone,
-        travelVehicle[i].vehicleAvailability,
+        travelVehicles[i].vehicleType,
+        travelVehicles[i].vehicleLocation,
+        travelVehicles[i].vehiclePricePerkm,
+        travelVehicles[i].vehiclePhone,
+        travelVehicles[i].vehicleAvailability,
       ]);
     } //save json data to bodydata in order to print in the pdf table
 
@@ -119,7 +119,7 @@ export default function ViewVehicles(props) {
             </tr>
           </thead>
           <tbody>
-            {travelVehicle.map((item, index) => {
+            {travelVehicles.map((item, index) => {
               return (
                 <tr key={item._id}>
                   <td>{++index}</td>

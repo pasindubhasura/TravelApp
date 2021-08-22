@@ -41,7 +41,7 @@ export default function AddVehicle() {
     seterrors([]);
     e.preventDefault();
     const response = await axios.post(
-      "http://localhost:5001/travelVehicles/add",
+      "http://localhost:5001/travelVehicle/add",
       {
         vehicleType,
         vehicleLocation,
@@ -62,7 +62,7 @@ export default function AddVehicle() {
         ...oldArr,
         { msg: "vehicleLocation should be selected" },
       ]);
-    if (response.data.success) window.location = "/travelVehicles";
+    if (response.data.success) window.location = "/travelVehicle";
     if (response.data.error) {
       response.data.error.map((item) => {
         seterrors((oldArr) => [...oldArr, { msg: item.msg }]);
@@ -118,7 +118,7 @@ export default function AddVehicle() {
         var base64String = window.btoa(binaryData);
         //showing file converted to base64
         const res = await axios.post(
-          "http://localhost:5001/travelVehicles/upload",
+          "http://localhost:5001/travelVehicle/upload",
           {
             path: base64String,
           }

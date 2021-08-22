@@ -55,7 +55,7 @@ export default function EditVehicle(props) {
     seterrors([]);
     e.preventDefault();
     const response = await axios.post(
-      "http://localhost:5001/travelVehicles/update",
+      "http://localhost:5001/travelVehicle/update",
       {
         id,
         vehicleType,
@@ -131,7 +131,7 @@ export default function EditVehicle(props) {
         var base64String = window.btoa(binaryData);
         //showing file converted to base64
         const res = await axios.post(
-          "http://localhost:5001/travelVehicles/upload",
+          "http://localhost:5001/travelVehicle/upload",
           {
             path: base64String,
           }

@@ -10,7 +10,7 @@ export default function VehicleList() {
     fetchData();
   }, []);
   const fetchData = async () => {
-    const response = await axios.get("http://localhost:5001/travelVehicles");
+    const response = await axios.get("http://localhost:5001/travelVehicle");
     if (!response.data.error) settravelVehicles(response.data.travelVehicles);
   };
   return (

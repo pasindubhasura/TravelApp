@@ -3,19 +3,19 @@ import Styled from "styled-components";
 import axios from "axios";
 
 export default function VehicleList() {
-  let [destinations, setdestinations] = useState([]);
+  let [travelVehicles, settravelVehicles] = useState([]);
   let [searchInput, setsearchInput] = useState("");
   useEffect(() => {
     fetchData();
   }, []);
   const fetchData = async () => {
-    const response = await axios.get("http://localhost:5001/destinations");
-    if (!response.data.error) setdestinations(response.data.destinations);
+    const response = await axios.get("http://localhost:5001/travelVehicles");
+    if (!response.data.error) settravelVehicles(response.data.travelVehicles);
   };
 
   if (searchInput.length > 0) {
-    destinations = destinations.filter((i) => {
-      return i.destination.toLowerCase().match(searchInput.toLowerCase());
+    travelVehicles = travelVehicles.filter((i) => {
+      return i.vehicleType.toLowerCase().match(searchInput.toLowerCase());
     });
   }
   return (
@@ -27,16 +27,16 @@ export default function VehicleList() {
             marginLeft: "9%",
           }}
         >
-          <h5 style={{ fontWeight: "bold" }}>Destination:</h5>
+          <h5 style={{ fontWeight: "bold" }}>Vehicle:</h5>
         </Row>
         <Row>
           <SearchField
             onChange={(e) => setsearchInput(e.target.value)}
-            placeholder="Search destinations here..."
+            placeholder="Search vehicles here..."
           />
         </Row>
       </Coulmn>
-      {destinations.map((item, index) => {
+      {travelVehicles.map((item, index) => {
         return (
           <Column key={index}>
             <Card>
@@ -45,16 +45,14 @@ export default function VehicleList() {
               </ImageContainer>
 
               <LocationList>
-                <Title>{item.destination}</Title>
+                <Title>{item.vehicleType}</Title>
 
                 <Location>
-                  <P>{item.city} |</P>
-                  <P>{item.district} |</P>
-                  <P>{item.province} </P>
+                  <P>{item.vehicleLocation} |</P>
+                  <P>{item.vehiclePricePerkm} |</P>
+                  <P>{item.vehiclePhone} </P>
+                  <P>{item.vehicleAvailability} </P>
                 </Location>
-                <P style={{ paddingLeft: "10px", paddingTop: "5px" }}>
-                  {item.description}
-                </P>
               </LocationList>
             </Card>
           </Column>

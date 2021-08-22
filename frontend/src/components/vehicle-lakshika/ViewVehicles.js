@@ -1,206 +1,250 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
+import Styled from "styled-components";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import "./styles.css";
-import { toast } from "react-toastify";
+import { colors } from "./vehicle-data";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import Logo from "../../images/Logo.png";
-import "../../css/IT19140162.css";
+//import "../../css/IT19140162.css";
 
-export default class ViewVehicles extends Component {
-  constructor(props) {
-    super(props);
+export default function ViewVehicles(props) {
+  let [travelVehicles, settravelVehicles] = useState([]);
+  let [search, setsearch] = useState("");
 
-    this.state = {
-      vehicle: [],
-    };
-  }
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  //export PDF.
-  componentDidMount() {
-    this.retrieveVehicle();
-  }
-
-  retrieveVehicle() {
-    axios.get(`http://localhost:5001/vehicles`).then((res) => {
-      if (res.data.success) {
-        this.setState({
-          vehicle: res.data.existingVehicle,
-        });
-        console.log(this.state.vehicle);
-      }
-    });
-  }
-
-  onDelete = (id) => {
-    axios.delete(`http://localhost:5001/vehicle/delete/${id}`).then((res) => {
-      toast("Vehicle Deleted Successfully", {
-        type: toast.TYPE.ERROR,
-        autoClose: 4000,
-      });
-      this.retrieveVehicle();
-    });
+  const fetchData = async () => {
+    const response = await axios.get("http://localhost:5001/travelVehicles");
+    if (!response.data.error) settravelVehicles(response.data.travelVehicles);
   };
 
-  filterData(vehicle, searchKey) {
-    const result = guide.filter(
-      (vehicle) =>
-        vehicle.vehicleType.toLowerCase().includes(searchKey) ||
-        vehicle.vehicleLocation.toLowerCase().includes(searchKey) ||
-        vehicle.vehiclePricePerkm.toLowerCase().includes(searchKey) ||
-        vehicle.vehiclePhone.toLowerCase().includes(searchKey) ||
-        vehicle.vehicleAvailability.toLowerCase().includes(searchKey)
+  const addVehicle = () => {
+    window.location = "/travelVehicles/add";
+  };
+  const deleteItem = async (id) => {
+    alert("Are you sure?");
+    console.log(id);
+    const response = await axios.post(
+      "http://localhost:5001/travelVehicles/delete",
+      {
+        id,
+      }
     );
-    this.setState({ vehicle: result });
+    if (response.data.success) window.location = "/travelVehicles";
+    if (response.data.error) alert(response.data.error);
+  };
+  const editVehicle = (id) => {
+    props.history.push("travelVehicles/edit", { id });
+  };
+  if (search.length > 0) {
+    travelVehicles = travelVehicles.filter((i) => {
+      return i.vehicleType.toLowerCase().match(search.toLowerCase());
+    });
   }
 
-  handleSearchVehicle = (e) => {
-    // console.log(e.currentTarget.value);
-    const searchKey = e.currentTarget.value;
-    axios.get(`http://localhost:5001/vehicles`).then((res) => {
-      if (res.data.success) {
-        this.filterData(res.data.existingVehicle, searchKey);
-      }
-    });
-  };
-
-  exportPDF = () => {
-    // let bodyData = [];
-    // let length = guide.length;
-    // let x = 1;
-    // console.log(guide);
-    const data = this.state.guide.map((vehiclesPdf) => [
-      vehiclesPdf.vehicleType,
-      vehiclesPdf.vehicleLocation,
-      vehiclesPdf.vehiclePricePerkm,
-      vehiclesPdf.vehiclePhone,
-      vehiclesPdf.vehicleAvailability,
-    ]);
-    // for (let i = 0; i < length; i++) {
-    //   bodyData.push([
-    //     x++,
-    //     guide[i].registrationNo,
-    //     guide[i].name,
-    //     guide[i].address,
-    //     guide[i].email,
-    //     guide[i].phoneNo,
-    //     guide[i].language,
-    //     guide[i].availability,
-    //   ]);
-    // }
-    // //save json data to bodydata in order to print in the pdf table
+  const pdf = () => {
+    let bodyData = [];
+    let length = travelVehicles.length;
+    let x = 1;
+    for (let i = 0; i < length; i++) {
+      bodyData.push([
+        x++,
+        travelVehicles[i].vehicleType,
+        travelVehicles[i].vehicleLocation,
+        travelVehicles[i].vehiclePricePerkm,
+        travelVehicles[i].vehiclePhone,
+        travelVehicles[i].vehicleAvailability,
+      ]);
+    } //save json data to bodydata in order to print in the pdf table
 
     const doc = new jsPDF({ orientation: "portrait" });
     var time = new Date().toLocaleString();
     doc.setFontSize(27);
-    doc.text(`Guide Details Report`, 105, 35, null, null, "center");
+    doc.text(`Vehicle Details Report`, 105, 35, null, null, "center");
     doc.setFontSize(10);
     doc.text(`(Generated on ${time})`, 105, 39, null, null, "center");
     doc.setFontSize(14);
-    // doc.text("Thilina Hardware", 105, 20, null, null, "center");
-    // doc.text("No 55, Main Road, Horana", 105, 25, null, null, "center");
     doc.addImage(Logo, "JPEG", 90, 0, 25, 25);
     doc.autoTable({
       theme: "grid",
       styles: { halign: "center" },
-      headStyles: { fillColor: "#38B000" },
+      headStyles: { fillColor: colors.darkerGreen },
       startY: 44,
-      head: [
-        ["Vehicle Type", "Location", "Price Per km", "Phone", "Availability"],
-      ],
-      body: data,
+      head: [["No", "Type", "Location", "Price", "Phone", "Availability"]],
+      body: bodyData,
     });
-    doc.save("Vehicles.pdf");
-  };
+    doc.save("VehiclesReport.pdf");
+  }; //report generation function
 
-  render() {
-    return (
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-9 mt-2 mb-2"></div>
-          <div className="col-lg-3 mt-2 mb-2 ">
-            <input
-              className="form-control"
-              type="search"
-              placeholder="🔍 Search"
-              name="searchQuery"
-              onChange={this.handleSearchArea}
-            ></input>
-          </div>
-        </div>
-        <div className="py-4">
-          <h1>Vehicles</h1>
-
-          <div className="row">
-            <div className="col-lg-9 mt-2 mb-2">
-              {/* add button  */}
-              <Link to="/vehicle_add" className="btn btn-warning">
-                <i className="fas fa-user-plus"></i>&nbsp;Add Vehicle
-              </Link>
-              &nbsp;
-              <Link
-                onClick={() => this.exportPDF()}
-                to="#"
-                className="btn btn-success"
-              >
-                <i class="fas fa-download"></i>&nbsp;Download Report
-              </Link>
-            </div>
-          </div>
-
-          <table class=" table table-striped borde">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Vehicle Type </th>
-                <th scope="col">Location</th>
-                <th scope="col">Price per KM</th>
-                <th scope="col">PhoneNo</th>
-                <th scope="col">Availability</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.vehicle.map((vehicle, index) => (
-                <tr key={index}>
-                  <th scope="row">G{index + 1}</th>
+  return (
+    <MainDiv>
+      <H2>Vehicles</H2>
+      <Row>
+        <ButtonSection>
+          <Button
+            color={colors.darkerGreen}
+            style={{ margin: "0px 7px 0px 20px" }}
+            onClick={addVehicle}
+          >
+            <i className="fas fa-user-plus"></i> Add Vehicle
+          </Button>
+          <ButtonSecondary color={colors.darkerGreen} onClick={pdf}>
+            <i class="fas fa-save"></i> Download
+          </ButtonSecondary>
+        </ButtonSection>
+        <SearchBar>
+          <SearchBarInput
+            placeholder={`Search here...`}
+            value={search}
+            onChange={(e) => setsearch(e.target.value)}
+          />
+        </SearchBar>
+      </Row>
+      <TableContainer>
+        <Table
+          bgcolor={colors.darkerGreen}
+          className="table table-striped borde"
+        >
+          <thead className="thead-dark">
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Type</th>
+              <th scope="col">Location</th>
+              <th scope="col">Price</th>
+              <th scope="col">Phone</th>
+              <th scope="col">Availability</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {travelVehicles.map((item, index) => {
+              return (
+                <tr key={item._id}>
+                  <td>{++index}</td>
+                  <td>{item.vehicleType}</td>
+                  <td>{item.vehicleLocation}</td>
+                  <td>{item.vehiclePricePerkm}</td>
+                  <td>{item.vehiclePhone}</td>
+                  <td>{item.vehicleAvailability}</td>
                   <td>
-                    <a
-                      href={`/vehicle/${vehicle._id}`}
-                      style={{ textDecoration: "none" }}
-                    >
-                      {vehicle.registrationNo}
-                    </a>
-                  </td>
-
-                  <td>{vehicle.type}</td>
-                  <td>{vehicle.location}</td>
-                  <td>{vehicle.price}</td>
-                  <td>{vehicle.phoneNo}</td>
-                  <td>{vehicle.availability}</td>
-
-                  <td>
-                    <Link
-                      className="btn btn-outline-warning"
-                      to={`/vehicle_update/${vehicle._id}`}
-                    >
-                      <i className="fas fa-edit"></i> &nbsp;Update
-                    </Link>
-                    &nbsp;
-                    <Link
-                      className="btn btn-danger"
-                      onClick={() => this.onDelete(vehicle._id)}
-                    >
-                      <i className="far fa-trash-alt"></i>&nbsp;Delete
-                    </Link>
+                    <Center>
+                      <ButtonSecondary
+                        color={"blue"}
+                        style={{ margin: "5px 7px 5px 15px" }}
+                        onClick={() => {
+                          editVehicle(item._id);
+                        }}
+                      >
+                        <i className="fas fa-edit"></i>Edit
+                      </ButtonSecondary>
+                      <ButtonSecondary
+                        color={"red"}
+                        style={{ margin: "5px 15px 5px 0px" }}
+                        type="button"
+                        onClick={() => deleteItem(item._id)}
+                      >
+                        <i className="far fa-trash-alt"></i> Delete
+                      </ButtonSecondary>
+                    </Center>
                   </td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    );
-  }
+              );
+            })}
+          </tbody>
+        </Table>
+      </TableContainer>
+    </MainDiv>
+  );
 }
+const MainDiv = Styled.div`
+margin:30px auto;
+background-color:white;
+width:90%;
+display:flex;
+flex-direction: column;
+min-height:100vh;
+box-shadow: 5px 6px 10px #888888;
+padding: 20px;
+`;
+const H2 = Styled.h2`
+margin:20px 0px 10px 20px;
+
+`;
+const Row = Styled.div`
+width:100%;
+display:grid;
+grid-template-columns:5;
+`;
+const ButtonSection = Styled.div`
+  grid-column-start:1;
+  grid-column-end:2;
+margin: 10px 20px 10px 0px;
+`;
+const SearchBar = Styled.form`
+grid-column-start:5;
+grid-column-end:5;
+margin: 10px 20px;
+`;
+const SearchBarInput = Styled.input`
+width: 100%;
+height:100%;
+border-radius:12px; 
+border:1px solid black;
+padding-left:8px;
+`;
+const TableContainer = Styled.div`
+margin:10px 20px;
+`;
+const Table = Styled.table`
+border-radius:;
+/* th,td{
+  border: 1px solid black;
+  padding:5px;
+} */
+
+th{
+  padding: 12px;
+}
+tr td:last-child {
+    width: 1%;
+    white-space: nowrap;
+}
+thead{
+  background-color:${(props) => props.bgcolor};
+  color:white;
+  max-width:
+}
+font-weight:bold;
+width: 100%;
+`;
+const Button = Styled.button`
+background-color: ${(props) => props.color};
+color: ${(props) => props.fontColor || "white"};
+border: 2px solid ${(props) => props.color};
+border-radius:5px; 
+font-weight:bold;
+padding: 8px 14px;
+&:hover{
+  filter: brightness(85%);
+  cursor:pointer;
+}`;
+
+const ButtonSecondary = Styled.button`
+background-color: white;
+color: ${(props) => props.color || "black"};
+border: 2px solid ${(props) => props.color};
+border-radius:5px ;
+font-weight:bold;
+padding: 8px 14px;
+&:hover{
+  background-color:${(props) => props.color};
+  color: white;
+  cursor:pointer;
+}`;
+
+const Center = Styled.div`
+display:flex;
+justify-content:center;
+`;

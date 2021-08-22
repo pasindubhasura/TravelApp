@@ -181,7 +181,7 @@ export default function AddVehicle() {
             <option value="none" disabled hidden>
               Vehicle Type
             </option>
-            {vehicleTypes.map((item) => {
+            {vehicleType.map((item) => {
               return (
                 <option value={item} key={item}>
                   {item}
@@ -200,9 +200,9 @@ export default function AddVehicle() {
             value={vehicleLocation}
           >
             <option value="none" disabled hidden>
-              vehicleLocation
+              Location
             </option>
-            {vehicleLocations.map((item) => {
+            {vehicleLocation.map((item) => {
               return (
                 <option value={item} key={item}>
                   {item}

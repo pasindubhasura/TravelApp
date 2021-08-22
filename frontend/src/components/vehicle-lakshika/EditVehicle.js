@@ -3,22 +3,22 @@ import Styled from "styled-components";
 import axios from "axios";
 import styled from "styled-components";
 import defaultImage from "../../images/defaultImage.jpg";
-import { districts, provinces, colors } from "./data";
+import { vehicleLocation, vehicleType, colors } from "./vehicle-data";
 import spinner from "../../images/spinner.gif";
 
-export default function EditDestinationForm(props) {
+export default function EditVehicle(props) {
   const [img, setImg] = useState(defaultImage);
-  const [district, setdistrict] = useState("none");
-  const [province, setprovince] = useState("none");
-  const [destination, setdestination] = useState("");
-  const [city, setcity] = useState("");
-  const [description, setdescription] = useState("");
+  const [vehicleType, setvehicleType] = useState("none");
+  const [vehicleLocation, setvehicleLocation] = useState("none");
+  const [vehiclePricePerkm, setvehiclePricePerkm] = useState("");
+  const [vehiclePhone, setvehiclePhone] = useState("");
+  const [vehicleAvailability, setvehicleAvailability] = useState("");
   const [id, setid] = useState(props.history.location.state.id);
-  const [destinationError, setdestinationError] = useState("");
-  const [cityError, setcityError] = useState("");
-  const [districtError, setdistrictError] = useState("");
-  const [provinceError, setprovinceError] = useState("");
-  const [descriptionError, setdescriptionError] = useState("");
+  const [vehicleTypeError, setvehicleTypeError] = useState("");
+  const [vehicleLocationError, setvehicleLocationError] = useState("");
+  const [vehiclePricePerkmError, setvehiclePricePerkmError] = useState("");
+  const [vehiclePhoneError, setvehiclePhoneError] = useState("");
+  const [vehicleAvailabilityError, setvehicleAvailabilityError] = useState("");
   const [imgError, setimgError] = useState("");
   const [isLoading, setisLoading] = useState(false);
   const [errors, seterrors] = useState([]);
@@ -29,45 +29,51 @@ export default function EditDestinationForm(props) {
 
   const fetchData = async () => {
     const response = await axios.get(
-      `http://localhost:5001/destinations/get_one/${id}`
+      `http://localhost:5001/travelVehicles/getOne/${id}`
     );
-    if (response.data.destination) {
-      const destination = response.data.destination;
-      setcity(destination.city);
-      setdistrict(destination.district);
-      setprovince(destination.province);
-      setdestination(destination.destination);
-      setdescription(destination.description);
-      setImg(destination.image);
+    if (response.data.vehicle) {
+      const vehicle = response.data.vehicle;
+
+      setvehiclePhone(vehicle.vehiclePhone);
+      setvehicleType(vehicle.vehicleType);
+      setvehicleLocation(vehicle.vehicleLocation);
+      setvehiclePricePerkm(vehicle.vehiclePricePerkm);
+      setvehicleAvailability(vehicle.vehicleAvailability);
+      setImg(vehicle.image);
     }
   };
 
   const clear = () => {
-    setcity("");
-    setdistrict("none");
-    setprovince("none");
-    setdestination("");
-    setdescription("");
+    setvehiclePhone("");
+    setvehicleType("none");
+    setvehicleLocation("none");
+    setvehiclePricePerkm("");
+    setvehicleAvailability("");
     setImg(defaultImage);
   };
   const formHandler = async (e) => {
     seterrors([]);
     e.preventDefault();
     const response = await axios.post(
-      "http://localhost:5001/destinations/update",
-      { id, district, province, destination, city, description, image: img }
+      "http://localhost:5001/travelVehicles/update",
+      {
+        id,
+        vehicleType,
+        vehicleLocation,
+        vehiclePricePerkm,
+        vehiclePhone,
+        vehicleAvailability,
+        image: img,
+      }
     );
-    if (district === "none")
+    if (vehicleType === "none")
+      seterrors((oldArr) => [...oldArr, { msg: "Type should be selected" }]);
+    if (vehicleLocation === "none")
       seterrors((oldArr) => [
         ...oldArr,
-        { msg: "District should be selected" },
+        { msg: "Location should be selected" },
       ]);
-    if (province === "none")
-      seterrors((oldArr) => [
-        ...oldArr,
-        { msg: "Province should be selected" },
-      ]);
-    if (response.data.success) window.location = "/destinations";
+    if (response.data.success) window.location = "/travelVehicles";
     if (response.data.error) {
       response.data.error.map((item) => {
         seterrors((oldArr) => [...oldArr, { msg: item.msg }]);
@@ -125,7 +131,7 @@ export default function EditDestinationForm(props) {
         var base64String = window.btoa(binaryData);
         //showing file converted to base64
         const res = await axios.post(
-          "http://localhost:5001/destinations/upload",
+          "http://localhost:5001/travelVehicles/upload",
           {
             path: base64String,
           }
@@ -144,7 +150,7 @@ export default function EditDestinationForm(props) {
 
   return (
     <MainDiv>
-      <H2>Edit Destination Details</H2>
+      <H2>Edit Vehicle Details</H2>
       {errors.length > 0
         ? errors.map((i, index) => {
             return <Span key={index}>{errors[index].msg}</Span>;
@@ -152,41 +158,41 @@ export default function EditDestinationForm(props) {
         : null}
       <FormGrid onSubmit={formHandler} noValidate>
         <Column>
-          {destinationError.length > 0 ? (
-            <Span>{destinationError}</Span>
+          {vehiclePricePerkmError.length > 0 ? (
+            <Span>{vehiclePricePerkmError}</Span>
           ) : (
             <Span style={{ visibility: "hidden" }}></Span>
           )}
           <TextInput
-            placeholder="Destination"
+            placeholder="Price Per km"
             type="text"
-            value={destination}
-            onChange={(e) => setdestination(e.target.value)}
+            value={vehiclePricePerkm}
+            onChange={(e) => setvehiclePricePerkm(e.target.value)}
           />
-          {cityError.length > 0 ? (
-            <Span>{cityError}</Span>
+          {vehiclePhoneError.length > 0 ? (
+            <Span>{vehiclePhoneError}</Span>
           ) : (
             <Span style={{ visibility: "hidden" }}></Span>
           )}
           <TextInput
-            placeholder="City"
+            placeholder="Phone"
             type="text"
-            onChange={(e) => setcity(e.target.value)}
-            value={city}
+            onChange={(e) => setvehiclePhone(e.target.value)}
+            value={vehiclePhone}
           />
-          {districtError.length > 0 ? (
-            <Span>{districtError}</Span>
+          {vehicleTypeError.length > 0 ? (
+            <Span>{vehicleTypeError}</Span>
           ) : (
             <Span style={{ visibility: "hidden" }}></Span>
           )}
           <Dropdown
-            onChange={(e) => setdistrict(e.target.value)}
-            value={district}
+            onChange={(e) => setvehicleType(e.target.value)}
+            value={vehicleType}
           >
             <option value="none" disabled hidden>
-              District
+              Vehicle Type
             </option>
-            {districts.map((item) => {
+            {vehicleType.map((item) => {
               return (
                 <option value={item} key={item}>
                   {item}
@@ -194,19 +200,19 @@ export default function EditDestinationForm(props) {
               );
             })}
           </Dropdown>
-          {provinceError.length > 0 ? (
-            <Span>{provinceError}</Span>
+          {vehicleLocationError.length > 0 ? (
+            <Span>{vehicleLocationError}</Span>
           ) : (
             <Span style={{ visibility: "hidden" }}></Span>
           )}
           <Dropdown
-            onChange={(e) => setprovince(e.target.value)}
-            value={province}
+            onChange={(e) => setvehicleLocation(e.target.value)}
+            value={vehicleLocation}
           >
             <option value="none" disabled hidden>
-              Province
+              Location
             </option>
-            {provinces.map((item) => {
+            {vehicleLocation.map((item) => {
               return (
                 <option value={item} key={item}>
                   {item}
@@ -214,16 +220,15 @@ export default function EditDestinationForm(props) {
               );
             })}
           </Dropdown>
-          {descriptionError.length > 0 ? (
-            <Span>{descriptionError}</Span>
+          {vehicleAvailabilityError.length > 0 ? (
+            <Span>{vehicleAvailabilityError}</Span>
           ) : (
             <Span style={{ visibility: "hidden" }}></Span>
           )}
-          <TextInputBox
-            placeholder="Description"
-            rows={8}
-            onChange={(e) => setdescription(e.target.value)}
-            value={description}
+          <TextInput
+            placeholder="Availability"
+            onChange={(e) => setvehicleAvailability(e.target.value)}
+            value={vehicleAvailability}
           />
           <Button
             color={colors.darkerGreen}
@@ -234,7 +239,7 @@ export default function EditDestinationForm(props) {
             Clear
           </Button>
           <ButtonSecondary color={colors.darkerGreen} type="submit">
-            Edit Destination
+            Edit Vehicle
           </ButtonSecondary>
         </Column>
         <Column>

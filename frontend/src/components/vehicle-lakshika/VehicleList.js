@@ -4,18 +4,18 @@ import axios from "axios";
 import { resetIdCounter } from "react-tabs";
 
 export default function VehicleList() {
-  let [vehicles, setvehicles] = useState([]);
+  let [travelVehicles, settravelVehicles] = useState([]);
   let [search, setsearch] = useState("");
   useEffect(() => {
     fetchData();
   }, []);
   const fetchData = async () => {
     const response = await axios.get("http://localhost:5001/travelVehicles");
-    if (!response.data.error) setvehicles(response.data.vehicles);
+    if (!response.data.error) settravelVehicles(response.data.travelVehicles);
   };
   return (
     <Div>
-      {vehicles.map((item, index) => {
+      {travelVehicles.map((item, index) => {
         return (
           <Column key={index}>
             <Card>
@@ -24,16 +24,14 @@ export default function VehicleList() {
               </ImageContainer>
 
               <LocationList>
-                <Title>{item.destination}</Title>
+                <Title>{item.vehicleType}</Title>
 
                 <Location>
-                  <P>{item.city} |</P>
-                  <P>{item.district} |</P>
-                  <P>{item.province} </P>
+                  <P>{item.vehicleLocation} |</P>
+                  <P>{item.vehiclePricePerkm} |</P>
+                  <P>{item.vehiclePhone} </P>
+                  <P>{item.vehicleAvailability} </P>
                 </Location>
-                <P style={{ paddingLeft: "10px", paddingTop: "5px" }}>
-                  {item.description}
-                </P>
               </LocationList>
             </Card>
           </Column>

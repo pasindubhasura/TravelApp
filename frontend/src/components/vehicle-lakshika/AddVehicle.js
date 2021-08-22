@@ -3,7 +3,7 @@ import Styled from "styled-components";
 import axios from "axios";
 import styled from "styled-components";
 import defaultImage from "../../images/defaultImage.jpg";
-import { vehicleLocation, vehicleType, colors } from "./vehicle-data";
+import { vehicleLocations, vehicleTypes, colors } from "./vehicle-data";
 import spinner from "../../images/spinner.gif";
 
 export default function AddVehicle() {
@@ -60,7 +60,7 @@ export default function AddVehicle() {
     if (vehicleLocation === "none")
       seterrors((oldArr) => [
         ...oldArr,
-        { msg: "vehicleLocation should be selected" },
+        { msg: "Location should be selected" },
       ]);
     if (response.data.success) window.location = "/travelVehicle";
     if (response.data.error) {
@@ -181,7 +181,7 @@ export default function AddVehicle() {
             <option value="none" disabled hidden>
               Vehicle Type
             </option>
-            {vehicleType.map((item) => {
+            {vehicleTypes.map((item) => {
               return (
                 <option value={item} key={item}>
                   {item}
@@ -202,7 +202,7 @@ export default function AddVehicle() {
             <option value="none" disabled hidden>
               Location
             </option>
-            {vehicleLocation.map((item) => {
+            {vehicleLocations.map((item) => {
               return (
                 <option value={item} key={item}>
                   {item}

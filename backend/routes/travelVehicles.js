@@ -8,8 +8,8 @@ const { validationResult } = require("express-validator");
 //get all vehicle records
 router.get("/", async (req, res) => {
   try {
-    const vehicles = await Vehicle.find();
-    res.json({ vehicles });
+    const travelVehicles = await Vehicle.find();
+    res.json({ travelVehicles });
   } catch (error) {
     res.json({ error });
   }
@@ -20,11 +20,11 @@ router.get("/getOne/:id", async (req, res) => {
   const id = req.params.id;
   console.log(id);
   try {
-    const vehicle = await Vehicle.findById(id);
-    if (vehicle == null) {
+    const travelVehicle = await Vehicle.findById(id);
+    if (travelVehicle == null) {
       return res.json({ error: "No such vehicle" });
     }
-    res.json({ vehicle });
+    res.json({ travelVehicle });
   } catch (error) {
     res.json({ error });
   }
@@ -33,13 +33,13 @@ router.get("/getOne/:id", async (req, res) => {
 //add vehicle record
 //router.post("/add", validator.validate("addVehicle"), async (req, res) => {
 router.post("/add", async (req, res) => {
-  const vehicle = await new Vehicle();
-  vehicle.vehicleType = req.body.vehicleType;
-  vehicle.vehicleLocation = req.body.vehicleLocation;
-  vehicle.vehiclePricePerkm = req.body.vehiclePricePerkm;
-  vehicle.vehiclePhone = req.body.vehiclePhone;
-  vehicle.vehicleAvailability = req.body.vehicleAvailability;
-  vehicle.image = req.body.image;
+  const travelVehicle = await new Vehicle();
+  travelVehicle.vehicleType = req.body.vehicleType;
+  travelVehicle.vehicleLocation = req.body.vehicleLocation;
+  travelVehicle.vehiclePricePerkm = req.body.vehiclePricePerkm;
+  travelVehicle.vehiclePhone = req.body.vehiclePhone;
+  travelVehicle.vehicleAvailability = req.body.vehicleAvailability;
+  travelVehicle.image = req.body.image;
 
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -48,7 +48,7 @@ router.post("/add", async (req, res) => {
   }
 
   try {
-    await vehicle.save();
+    await travelVehicle.save();
     res.json({ success: "Record added successfully!" });
   } catch (error) {
     res.json({ error: "Record added failed!" });
@@ -65,16 +65,16 @@ router.post("/update", async (req, res) => {
 
   try {
     const id = req.body.id;
-    const vehicle = await Vehicle.findById(id);
+    const travelVehicle = await Vehicle.findById(id);
 
-    vehicle.vehicleType = req.body.vehicleType;
-    vehicle.vehicleLocation = req.body.vehicleLocation;
-    vehicle.vehiclePricePerkm = req.body.vehiclePricePerkm;
-    vehicle.vehiclePhone = req.body.vehiclePhone;
-    vehicle.vehicleAvailability = req.body.vehicleAvailability;
-    vehicle.image = req.body.image;
+    travelVehicle.vehicleType = req.body.vehicleType;
+    travelVehicle.vehicleLocation = req.body.vehicleLocation;
+    travelVehicle.vehiclePricePerkm = req.body.vehiclePricePerkm;
+    travelVehicle.vehiclePhone = req.body.vehiclePhone;
+    travelVehicle.vehicleAvailability = req.body.vehicleAvailability;
+    travelVehicle.image = req.body.image;
 
-    await vehicle.save();
+    await travelVehicle.save();
     res.json({ success: "Record Successfully Updated!" });
   } catch (error) {
     res.json({ error: "Couldn't update the Record!" });

@@ -3,88 +3,104 @@ import Styled from "styled-components";
 import axios from "axios";
 import styled from "styled-components";
 import defaultImage from "../../images/defaultImage.jpg";
-import { districts, provinces, colors } from "./data";
+import { vehicleLocation, vehicleType, colors } from "./vehicle-data";
 import spinner from "../../images/spinner.gif";
 
-export default function AddDestinationForm() {
+export default function AddVehicle() {
   const [img, setImg] = useState(defaultImage);
-  const [isLoading, setisLoading] = useState(false);
-  const [district, setdistrict] = useState("none");
-  const [province, setprovince] = useState("none");
-  const [destination, setdestination] = useState("");
-  const [city, setcity] = useState("");
-  const [description, setdescription] = useState("");
-  const [destinationError, setdestinationError] = useState("");
-  const [cityError, setcityError] = useState("");
-  const [districtError, setdistrictError] = useState("");
-  const [provinceError, setprovinceError] = useState("");
-  const [descriptionError, setdescriptionError] = useState("");
   const [imgError, setimgError] = useState("");
+
+  const [isLoading, setisLoading] = useState(false);
+
+  const [vehicleType, setvehicleType] = useState("none");
+  const [vehicleTypeError, setvehicleTypeError] = useState("");
+
+  const [vehicleLocation, setvehicleLocation] = useState("none");
+  const [vehicleLocationError, setvehicleLocationError] = useState("");
+
+  const [vehiclePricePerkm, setvehiclePricePerkm] = useState("");
+  const [vehiclePricePerkmError, setvehiclePricePerkmError] = useState("");
+
+  const [vehiclePhone, setvehiclePhone] = useState("");
+  const [vehiclePhoneError, setvehiclePhoneError] = useState("");
+
+  const [vehicleAvailability, setvehicleAvailability] = useState("");
+  const [vehicleAvailabilityError, setvehicleAvailabilityError] = useState("");
+
   const [errors, seterrors] = useState([]);
 
   const clear = () => {
-    setcity("");
-    setdistrict("none");
-    setprovince("none");
-    setdestination("");
-    setdescription("");
+    setvehiclePhone("");
+    setvehicleType("none");
+    setvehicleLocation("none");
+    setvehiclePricePerkm("");
+    setvehicleAvailability("");
     setImg(defaultImage);
   };
   const formHandler = async (e) => {
     seterrors([]);
     e.preventDefault();
     const response = await axios.post(
-      "http://localhost:5001/destinations/add",
-      { district, province, destination, city, description, image: img }
+      "http://localhost:5001/travelVehicles/add",
+      {
+        vehicleType,
+        vehicleLocation,
+        vehiclePricePerkm,
+        vehiclePhone,
+        vehicleAvailability,
+        image: img,
+      }
     );
-    if (district === "none")
+    if (vehicleType === "none")
       seterrors((oldArr) => [
         ...oldArr,
-        { msg: "District should be selected" },
+        { msg: "Vehicle Type should be selected" },
       ]);
-    if (province === "none")
+
+    if (vehicleLocation === "none")
       seterrors((oldArr) => [
         ...oldArr,
-        { msg: "Province should be selected" },
+        { msg: "vehicleLocation should be selected" },
       ]);
-    if (response.data.success) window.location = "/destinations";
+    if (response.data.success) window.location = "/travelVehicles";
     if (response.data.error) {
       response.data.error.map((item) => {
         seterrors((oldArr) => [...oldArr, { msg: item.msg }]);
       });
     }
   };
+
   // const validation = () => {
-  //   setdestinationError("");
-  //   setcityError("");
-  //   setdistrictError("");
-  //   setprovinceError("");
-  //   setdescriptionError("");
+  //   setvehiclePricePerkmError("");
+  //   setvehiclePhoneError("");
+  //   setvehicleTypeError("");
+  //   setvehicleLocationError("");
+  //   setvehicleAvailabilityError("");
   //   setimgError("");
 
-  //   if (destination === "") {
-  //     setdestinationError("Destination can't be empty!");
+  //   if (vehiclePricePerkm === "") {
+  //     setvehiclePricePerkmError("vehiclePricePerkm can't be empty!");
   //   }
-  //   if (city === "") {
-  //     setcityError("City can't be empty!");
+  //   if (vehiclePhone === "") {
+  //     setvehiclePhoneError("vehiclePhone can't be empty!");
   //   }
-  //   if (district === "none") {
-  //     setdistrictError("District has to be selected!");
+  //   if (vehicleType === "none") {
+  //     setvehicleTypeError("vehicleType has to be selected!");
   //   }
-  //   if (province === "none") {
-  //     setprovinceError("Province has to be selected!");
+  //   if (vehicleLocation === "none") {
+  //     setvehicleLocationError("vehicleLocation has to be selected!");
   //   }
-  //   if (description === "") {
-  //     setdescriptionError("Description can't be empty!");
+  //   if (vehicleAvailability === "") {
+  //     setvehicleAvailabilityError("vehicleAvailability can't be empty!");
   //   }
   //   if (img === defaultImage) {
   //     setimgError("Add an Image");
   //   } else if (
-  //     destinationError === "" &&
-  //     cityError === "" &&
-  //     districtError === "" &&
-  //     provinceError === "" &&
-  //     descriptionError === "" &&
+  //     vehiclePricePerkmError === "" &&
+  //     vehiclePhoneError === "" &&
+  //     vehicleTypeError === "" &&
+  //     vehicleLocationError === "" &&
+  //     vehicleAvailabilityError === "" &&
   //     imgError === ""
   //   ) {
   //     return true;
@@ -102,7 +118,7 @@ export default function AddDestinationForm() {
         var base64String = window.btoa(binaryData);
         //showing file converted to base64
         const res = await axios.post(
-          "http://localhost:5001/destinations/upload",
+          "http://localhost:5001/travelVehicles/upload",
           {
             path: base64String,
           }
@@ -121,7 +137,7 @@ export default function AddDestinationForm() {
 
   return (
     <MainDiv>
-      <H2>Add Destination Details</H2>
+      <H2>Add Vehicle Details</H2>
       {errors.length > 0
         ? errors.map((i, index) => {
             return <Span key={index}>{errors[index].msg}</Span>;
@@ -129,41 +145,43 @@ export default function AddDestinationForm() {
         : null}
       <FormGrid onSubmit={formHandler}>
         <Column>
-          {destinationError.length > 0 ? (
-            <Span>{destinationError}</Span>
+          {vehiclePricePerkmError.length > 0 ? (
+            <Span>{vehiclePricePerkmError}</Span>
           ) : (
             <Span style={{ visibility: "hidden" }}></Span>
           )}
           <TextInput
-            placeholder="Destination"
+            placeholder="Price Per km"
             type="text"
-            value={destination}
-            onChange={(e) => setdestination(e.target.value)}
+            value={vehiclePricePerkm}
+            onChange={(e) => setvehiclePricePerkm(e.target.value)}
           />
-          {cityError.length > 0 ? (
-            <Span>{cityError}</Span>
+
+          {vehiclePhoneError.length > 0 ? (
+            <Span>{vehiclePhoneError}</Span>
           ) : (
             <Span style={{ visibility: "hidden" }}></Span>
           )}
           <TextInput
-            placeholder="City"
+            placeholder="Phone"
             type="text"
-            onChange={(e) => setcity(e.target.value)}
-            value={city}
+            onChange={(e) => setvehiclePhone(e.target.value)}
+            value={vehiclePhone}
           />
-          {districtError.length > 0 ? (
-            <Span>{districtError}</Span>
+
+          {vehicleTypeError.length > 0 ? (
+            <Span>{vehicleTypeError}</Span>
           ) : (
             <Span style={{ visibility: "hidden" }}></Span>
           )}
           <Dropdown
-            onChange={(e) => setdistrict(e.target.value)}
-            value={district}
+            onChange={(e) => setvehicleType(e.target.value)}
+            value={vehicleType}
           >
             <option value="none" disabled hidden>
-              District
+              Vehicle Type
             </option>
-            {districts.map((item) => {
+            {vehicleTypes.map((item) => {
               return (
                 <option value={item} key={item}>
                   {item}
@@ -171,19 +189,20 @@ export default function AddDestinationForm() {
               );
             })}
           </Dropdown>
-          {provinceError.length > 0 ? (
-            <Span>{provinceError}</Span>
+
+          {vehicleLocationError.length > 0 ? (
+            <Span>{vehicleLocationError}</Span>
           ) : (
             <Span style={{ visibility: "hidden" }}></Span>
           )}
           <Dropdown
-            onChange={(e) => setprovince(e.target.value)}
-            value={province}
+            onChange={(e) => setvehicleLocation(e.target.value)}
+            value={vehicleLocation}
           >
             <option value="none" disabled hidden>
-              Province
+              vehicleLocation
             </option>
-            {provinces.map((item) => {
+            {vehicleLocations.map((item) => {
               return (
                 <option value={item} key={item}>
                   {item}
@@ -191,17 +210,18 @@ export default function AddDestinationForm() {
               );
             })}
           </Dropdown>
-          {descriptionError.length > 0 ? (
-            <Span>{descriptionError}</Span>
+
+          {vehicleAvailabilityError.length > 0 ? (
+            <Span>{vehicleAvailabilityError}</Span>
           ) : (
             <Span style={{ visibility: "hidden" }}></Span>
           )}
-          <TextInputBox
-            placeholder="Description"
-            rows={8}
-            onChange={(e) => setdescription(e.target.value)}
-            value={description}
+          <TextInput
+            placeholder="Availability"
+            onChange={(e) => setvehicleAvailability(e.target.value)}
+            value={vehicleAvailability}
           />
+
           <Button
             color={colors.darkerGreen}
             style={{ marginRight: "2%" }}
@@ -211,9 +231,10 @@ export default function AddDestinationForm() {
             Clear
           </Button>
           <ButtonSecondary color={colors.darkerGreen} type="submit">
-            Add Destination
+            Add Vehicle
           </ButtonSecondary>
         </Column>
+
         <Column>
           <Center>
             <ImageContainner>

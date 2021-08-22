@@ -3,19 +3,19 @@ import Styled from "styled-components";
 import axios from "axios";
 import { resetIdCounter } from "react-tabs";
 
-export default function DestinationList() {
-  let [destinations, setdestinations] = useState([]);
+export default function VehicleList() {
+  let [vehicles, setvehicles] = useState([]);
   let [search, setsearch] = useState("");
   useEffect(() => {
     fetchData();
   }, []);
   const fetchData = async () => {
-    const response = await axios.get("http://localhost:5001/destinations");
-    if (!response.data.error) setdestinations(response.data.destinations);
+    const response = await axios.get("http://localhost:5001/travelVehicles");
+    if (!response.data.error) setvehicles(response.data.vehicles);
   };
   return (
     <Div>
-      {destinations.map((item, index) => {
+      {vehicles.map((item, index) => {
         return (
           <Column key={index}>
             <Card>

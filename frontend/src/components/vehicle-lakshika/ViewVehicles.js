@@ -17,7 +17,7 @@ export default function ViewVehicles(props) {
 
   const fetchData = async () => {
     const response = await axios.get("http://localhost:5001/travelVehicle");
-    if (!response.data.error) settravelVehicles(response.data.travelVehicle);
+    if (!response.data.error) settravelVehicles(response.data.travelVehicles);
   };
 
   const addVehicle = () => {

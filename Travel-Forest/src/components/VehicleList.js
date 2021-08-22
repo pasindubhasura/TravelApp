@@ -3,18 +3,22 @@ import Styled from "styled-components";
 import axios from "axios";
 
 export default function VehicleList() {
-  let [travelVehicles, settravelVehicles] = useState([]);
+  let [travelVehicle, settravelVehicles] = useState([]);
   let [searchInput, setsearchInput] = useState("");
   useEffect(() => {
     fetchData();
   }, []);
   const fetchData = async () => {
-    const response = await axios.get("http://localhost:5001/travelVehicles");
-    if (!response.data.error) settravelVehicles(response.data.travelVehicles);
+    const response = await axios
+      .get("http://localhost:5001/travelVehicle")
+      .then((res) => {
+        console.log(res.data.travelVehicles);
+        settravelVehicles(res.data.travelVehicles);
+      });
   };
 
   if (searchInput.length > 0) {
-    travelVehicles = travelVehicles.filter((i) => {
+    travelVehicle = travelVehicle.filter((i) => {
       return i.vehicleType.toLowerCase().match(searchInput.toLowerCase());
     });
   }
@@ -36,7 +40,7 @@ export default function VehicleList() {
           />
         </Row>
       </Coulmn>
-      {travelVehicles.map((item, index) => {
+      {travelVehicle.map((item, index) => {
         return (
           <Column key={index}>
             <Card>
@@ -48,10 +52,16 @@ export default function VehicleList() {
                 <Title>{item.vehicleType}</Title>
 
                 <Location>
-                  <P>{item.vehicleLocation} |</P>
-                  <P>{item.vehiclePricePerkm} |</P>
-                  <P>{item.vehiclePhone} </P>
-                  <P>{item.vehicleAvailability} </P>
+                  <P>Location | {item.vehicleLocation} </P>
+                </Location>
+                <Location>
+                  <P>Price Per Kelo Meter | {item.vehiclePricePerkm} </P>
+                </Location>
+                <Location>
+                  <P>Phone | {item.vehiclePhone} </P>
+                </Location>
+                <Location>
+                  <P>Availability | {item.vehicleAvailability} </P>
                 </Location>
               </LocationList>
             </Card>

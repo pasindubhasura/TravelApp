@@ -45,19 +45,19 @@ export default function GuideList() {
               <ImageContainer>
                 <Image src={item.imgLink} />
               </ImageContainer>
-
-              <LocationList>
+            
+              <GList>
                 <Title>{item.name}</Title>
-
+              
                 <Location>
-                  <P>{item.address} |</P>
-                  <P>{item.email} |</P>
+                  <P>{item.address} </P>
+                  <P>{item.email} </P>
                   <P>{item.phoneNo} </P>
                 </Location>
                 <P style={{ paddingLeft: "10px", paddingTop: "5px" }}>
                   {item.language}
                 </P>
-              </LocationList>
+              </GList>
             </Card>
           </Column>
         );
@@ -89,6 +89,12 @@ const Image = Styled.img`
   padding: 8px;
   object-fit: cover;
 `;
+// const Ishanka = Styled.img`
+//   width: 100%;
+//   height: 100%;
+//   padding: 8px;
+//   object-fit: cover;
+// `;
 const Column = Styled.div`
   width: 100%;
   display: flex;
@@ -106,7 +112,7 @@ const Location = Styled.div`
   font-weight: bold;
   display: flex;
 `;
-const LocationList = Styled.div`
+const GList = Styled.div`
   display: flex;
   flex-direction: column;
 `;
@@ -149,7 +155,7 @@ const SearchField = Styled.input`
 const Button = Styled.button`
   width: 8%;
   margin-left: 2%;
-  height: 100%;
+  height: 100%; 
   background-color: ${(props) => props.color};
   color: ${(props) => props.fontColor || "white"};
   border: 2px solid ${(props) => props.color};

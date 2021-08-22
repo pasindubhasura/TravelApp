@@ -48,9 +48,9 @@ export default function App() {
           <Route path="/guide/:id" component={GetindividualGuide} exact></Route>
 
           {/*Vehicle*/}
-          <Route path="/travelVehicles/viewVehicle" exact component={ViewVehicle} />
-          <Route path="/travelVehicles/add" exact component={AddVehicle}/>
-          <Route path="/travelVehicles/edit" exact component={EditVehicle}/>
+          <Route path={"/travelVehicle"} exact component={ViewVehicle} />
+          <Route path={"/travelVehicle/add"} exact component={AddVehicle} />
+          <Route path={"/travelVehicle/edit"} exact component={EditVehicle} />
 
           {/* travelDestinations */}
           <Route exact component={Destinations} path={"/destinations"} />

@@ -16,27 +16,27 @@ export default function ViewVehicles(props) {
   }, []);
 
   const fetchData = async () => {
-    const response = await axios.get("http://localhost:5001/travelVehicles");
+    const response = await axios.get("http://localhost:5001/travelVehicle");
     if (!response.data.error) settravelVehicles(response.data.travelVehicles);
   };
 
   const addVehicle = () => {
-    window.location = "/travelVehicles/add";
+    window.location = "/travelVehicle/add";
   };
   const deleteItem = async (id) => {
     alert("Are you sure?");
     console.log(id);
     const response = await axios.post(
-      "http://localhost:5001/travelVehicles/delete",
+      "http://localhost:5001/travelVehicle/delete",
       {
         id,
       }
     );
-    if (response.data.success) window.location = "/travelVehicles";
+    if (response.data.success) window.location = "/travelVehicle";
     if (response.data.error) alert(response.data.error);
   };
   const editVehicle = (id) => {
-    props.history.push("travelVehicles/edit", { id });
+    props.history.push("travelVehicle/edit", { id });
   };
   if (search.length > 0) {
     travelVehicles = travelVehicles.filter((i) => {

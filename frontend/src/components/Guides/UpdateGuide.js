@@ -132,8 +132,8 @@ export default class UpdateGuide extends Component {
         return (
             <div className="container containerTop">
             <div className="row ">
-                <div className="col-2" />
-                <div className="col-10">
+                
+                <div className="col-12">
                     <div className="row">
                         <div className="col position-relative link">
                             <p><a href="/get_guide">Guide Management</a> {'>'} Update New Guide</p>

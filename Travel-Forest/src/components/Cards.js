@@ -12,25 +12,25 @@ function Cards() {
          
           <ul className='cards__items'>
             <CardItem
-              src='images/img-3.jpg'
+              src='images/acc-gallery-2.jpg'
               text='Set Sail in the Atlantic Ocean visiting Uncharted Waters'
               label='Destinations'
               path='/services'
             />
             <CardItem
-              src='images/img-4.jpg'
+              src='images/guide.jpg'
               text='Experience Football on Top of the Himilayan Mountains'
               label='Guides'
-              path='/products'
+              path='/services'
             />
             <CardItem
-              src='images/img-8.jpg'
+              src='images/Car.jpg'
               text='Ride through the Sahara Desert on a guided camel tour'
               label='Vehicles'
               path='/sign-up'
             />
              <CardItem
-              src='images/img-8.jpg'
+              src='images/acc-img0.jpg'
               text='Ride through the Sahara Desert on a guided camel tour'
               label='Acommodation'
               path='/sign-up'
@@ -46,12 +46,13 @@ function Cards() {
               path='/services'
             />
             <CardItem
-              src='images/img-2.jpg'
-              text='Travel through the Islands of Bali in a Private Cruise'
-              label='Luxury'
+              src='images/back.jpg'
+              text='Yala is the busiest and most popular park in Sri Lanka, and with good reason. It boasts the highest density of leopards in Asia as well as sloth bears, crocodiles, deer and a plethora of birdlife.'
+              label='Wild'
               path='/services'
             />
           </ul>
+          
         </div>
       </div>
 

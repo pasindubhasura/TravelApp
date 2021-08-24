@@ -123,8 +123,8 @@ exportPDF = () => {
     return (
       <div className="container containerTop" >
         <div className="row">
-         <div className="col-1"/>
-             <div className="col-11">
+        
+             <div className="col-12">
                   
                   <div className="row">
                       <div className="col position-relative link">

@@ -6,6 +6,7 @@ import defaultImage from "../../images/vector.jpg";
 import { storage } from "../../firebase";
 import Progress from "./Progress";
 import './styles.css'
+import { Link } from "react-router-dom";
 
 
 
@@ -173,8 +174,8 @@ export default class AddGuide extends Component {
         return (
             <div className="container containerTop">
                 <div className="row ">
-                    <div className="col-2" />
-                    <div className="col-10">
+                    
+                    <div className="col-12">
                         <div className="row">
                             <div className="col position-relative link">
                                 <p><a href="/get_guide">Guide Management</a> {'>'} Add New Guide</p>
@@ -239,7 +240,7 @@ export default class AddGuide extends Component {
                                             <div className="form-group" style={{ marginBottom: '15px' }}>
                                                 <label style={{ marginBottom: '5px' }}>Email</label>
                                                 <input type="email"
-                                                    className={formErrors.email.length > 0 ? "error" : "form-control"}
+                                                    className={ "form-control"}
                                                     name="email"
                                                     placeholder="Enter email"
                                                     value={this.state.email}
@@ -303,9 +304,9 @@ export default class AddGuide extends Component {
                                             </div>
 
 
-
+            
                                             <div>
-                                                <button href="/guide_add" type="submit" className="btn btn-outline-success sub_btn2"><i class="far fa-times-circle"></i>&nbsp;Reset</button>
+                                                <button  type="reset" className="btn btn-outline-success sub_btn2"><i class="far fa-times-circle"></i>&nbsp;Reset</button>
                                                 <button type="submit" className="btn btn-primary sub_btn" onClick={this.onSubmit}><i class="far fa-save"></i>&nbsp;Add</button>
 
                                             </div>

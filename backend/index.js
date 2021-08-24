@@ -5,6 +5,7 @@ const cors = require("cors");
 
 //routes
 const DestinationsRouter = require("./routes/destinations");
+const travelVehicleRouter = require("./routes/travelVehicles");
 const guideRoute = require("./routes/guides");
 const AccomdationRouter = require("./routes/Accommodations");
 const RoomsRouter = require("./routes/Rooms");
@@ -17,7 +18,6 @@ app.use(cors());
 //configuring dotenv variables
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
-
 //creating express server
 app.listen(PORT, async () => {
   //mongoDB connection
@@ -38,6 +38,7 @@ app.listen(PORT, async () => {
 
 //routes
 app.use("/destinations", DestinationsRouter);
+app.use("/travelVehicle", travelVehicleRouter);
 app.use(guideRoute);
 app.use(AccomdationRouter);
 app.use(RoomsRouter);

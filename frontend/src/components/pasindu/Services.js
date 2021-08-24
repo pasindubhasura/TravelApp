@@ -3,6 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import styled from "styled-components";
 import DestinationList from "./DestinationList";
+import VehicleList from "../vehicle-lakshika/VehicleList";
 import { colors } from "./data";
 export default function Services() {
   const [selectedTab, setselectedTab] = useState(0);
@@ -35,7 +36,7 @@ export default function Services() {
           <h2>Any content 2</h2>
         </TabPanel>
         <TabPanel>
-          <h2>Any content 3</h2>
+          <VehicleList />
         </TabPanel>
         <TabPanel>
           <h2>Any content 4</h2>

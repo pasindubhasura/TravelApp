@@ -5,6 +5,7 @@ import styled from "styled-components";
 import DestinationList from "./DestinationList";
 import GuideList from "./GuidesList";
 import RoomsList from "./RoomsList";
+import VehicleList from "./VehicleList";
 import { colors } from "./data";
 export default function Services() {
   const [selectedTab, setselectedTab] = useState(0);
@@ -42,7 +43,7 @@ export default function Services() {
           <GuideList />
         </TabPanel>
         <TabPanel>
-          <h2>Any content 3</h2>
+          <VehicleList />
         </TabPanel>
         <TabPanel>
           <RoomsList />

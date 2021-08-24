@@ -7,7 +7,9 @@ import Footer from "./components/Footer/Footer";
 import "./App.css";
 
 //travelVehicle
-import viewPageVehicle from "./components/ViewVehicles";
+import AddVehicle from "./components/vehicle-lakshika/AddVehicle";
+import ViewVehicle from "./components/vehicle-lakshika/ViewVehicles";
+import EditVehicle from "./components/vehicle-lakshika/EditVehicle";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -46,7 +48,9 @@ export default function App() {
           <Route path="/guide/:id" component={GetindividualGuide} exact></Route>
 
           {/*Vehicle*/}
-          <Route path="/viewVehicle" exact component={viewPageVehicle} />
+          <Route path={"/travelVehicle"} exact component={ViewVehicle} />
+          <Route path={"/travelVehicle/add"} exact component={AddVehicle} />
+          <Route path={"/travelVehicle/edit"} exact component={EditVehicle} />
 
           {/* travelDestinations */}
           <Route exact component={Destinations} path={"/destinations"} />

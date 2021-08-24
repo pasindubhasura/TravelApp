@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
 import axios from "axios";
+import styled from "styled-components";
 export default function GuideList() {
   let [guides, setguides] = useState([]);
   let [searchInput, setsearchInput] = useState("");
@@ -17,7 +18,9 @@ export default function GuideList() {
 
   if (searchInput.length > 0) {
     guides = guides.filter((i) => {
-      return i.name.toLowerCase().match(searchInput.toLowerCase());
+      return i.name.toLowerCase().match(searchInput.toLowerCase())||
+      i.language.toLowerCase().match(searchInput.toLowerCase())||
+      i.address.toLowerCase().match(searchInput.toLowerCase());
     });
   }
   return (
@@ -45,18 +48,30 @@ export default function GuideList() {
               <ImageContainer>
                 <Image src={item.imgLink} />
               </ImageContainer>
-            
+
               <GList>
                 <Title>{item.name}</Title>
               
                 <Location>
-                  <P>{item.address} </P>
-                  <P>{item.email} </P>
-                  <P>{item.phoneNo} </P>
+                  <P>Location : {item.address} </P>
+                  <P>Email : {item.email} </P>
+                  <P>Phone No : {item.phoneNo} </P>
+                  <P>Languages : {item.language} </P>
                 </Location>
-                <P style={{ paddingLeft: "10px", paddingTop: "5px" }}>
-                  {item.language}
-                </P>
+
+                <Availability>
+                  <P  style={{ fontWeight: "bold", 
+                   border: "1px solid red",
+                   borderRadius:"10px",
+                   padding:"5px",
+                   backgroundColor:"green",
+                   color:"white",
+                   width:"100px"}}>
+                    {item.availability}
+                  </P>
+                </Availability>
+
+
               </GList>
             </Card>
           </Column>
@@ -72,7 +87,7 @@ const Div = Styled.div`
 
 const Card = Styled.div`
   width: 100%;
-  height: 170px;
+  height: 180px;
   border: 1px solid green;
   border-radius: 5px;
   margin: 0px 0px 25px 0px;
@@ -110,7 +125,7 @@ const Title = Styled.h5`
 const Location = Styled.div`
   padding-left: 10px;
   font-weight: bold;
-  display: flex;
+  
 `;
 const GList = Styled.div`
   display: flex;
@@ -165,4 +180,10 @@ const Button = Styled.button`
     filter: brightness(85%);
     cursor: pointer;
   }
+`;
+const Availability = styled.p`
+ padding-left: 980px;
+ font-weight: bold;
+
+
 `;

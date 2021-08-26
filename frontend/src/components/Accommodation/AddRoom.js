@@ -79,7 +79,7 @@ export default class AddRoom extends Component {
                 }
             );
         } else {
-            alert("Error Upload Image First")
+            toast.error("Error in Uploading an Image 🛑");
         }
     }
 
@@ -173,12 +173,12 @@ export default class AddRoom extends Component {
                         }
                     )
                 } else {
-                    toast.error("You have an Error in Inserting");
+                    toast.error("You have an Error in Inserting 🛑");
                 }
             });
         }
         else
-            alert("Please Enter Details Correclty !");
+            toast.error("Please Enter Details Correclty ❗");
     };
 
     render() {

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import swl from 'sweetalert'
+import { Link } from 'react-router-dom';
 import defaultImage from "../../images/placeholder.png";
 import { storage } from "../../firebase";
 import Progress from "./Progress";
@@ -80,7 +80,7 @@ export default class EditRoom extends Component {
                 }
             );
         } else {
-            alert("Error Upload Image First")
+            toast.error("Error in Uploading an Image 🛑");
         }
     }
 
@@ -177,12 +177,12 @@ export default class EditRoom extends Component {
                     }
                 )
             } else {
-                toast.error("You have an Error in Updating");
+                toast.error("You have an Error in Updating 🛑");
             }
         });
     }
     else
-        alert("Please Enter Details Correclty !");
+        toast.error("Please Enter Details Correclty ❗");
     };    
     
     //calling the accommodation api
@@ -212,11 +212,11 @@ export default class EditRoom extends Component {
         return (
             <div className="container containerTop">
                 <div className="row">
-                    <div className="col-2" />
+                    <div className="col-1" />
                     <div className="col-10">
                         <div className="row">
                             <div className="col position-relative link">
-                            <p><a href="/Accommodation_Home/">Accommodation Management</a> {'>'} <a href="/Accommodation_Home/Rooms/">Rooms</a> {'>'} Edit Room</p>
+                                <p><Link to="/">Home</Link> {'>'} <Link to="/Accommodation_Home/">Accommodation Management</Link> {'>'} <Link to="/Accommodation_Home/Rooms/">Rooms</Link> {'>'} Edit Room</p>
                             </div>
                         </div>
                         <div className="row">
@@ -300,7 +300,7 @@ export default class EditRoom extends Component {
                                                     <button type="reset" className="btn btn-primary acc-button"><i class="fas fa-eraser"></i>&nbsp;Clear</button>
                                                 </div>
                                                 <div className="form-group col" style={{ marginTop: '15px' }}>
-                                                    <a href="/Accommodation_Home/Rooms/" className="btn btn-danger acc-button"><i className="fas fa-times"></i>&nbsp;Cancel</a>
+                                                    <Link to="/Accommodation_Home/Rooms/" className="btn btn-danger acc-button"><i className="fas fa-times"></i>&nbsp;Cancel</Link>
                                                 </div>
                                             </div>
                                             <div className="col-6" />
@@ -337,6 +337,7 @@ export default class EditRoom extends Component {
                             </form>
                         </div>
                     </div>
+                    <div className="col-1" />
                 </div>
             </div>
         )

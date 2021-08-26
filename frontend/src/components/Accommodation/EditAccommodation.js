@@ -77,7 +77,7 @@ export default class EditAccommodation extends Component {
                 }
             );
         } else {
-            alert("Error Upload Image First")
+            toast.error("Error in Uploading an Image 🛑");
         }
     }
 

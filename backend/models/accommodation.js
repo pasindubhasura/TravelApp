@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 
 const accommodationScheema = new mongoose.Schema({
 
+    accommodationId: {
+        type: String,
+        require: true,
+        unique: true
+    },    
     accommodationType:{
         type: String,
         require: true,
@@ -17,6 +22,10 @@ const accommodationScheema = new mongoose.Schema({
     mobile:{
         type: Number,
         require:true
+    },
+    accImage:{
+        type: String,
+        require: true
     }
 },{
     timestamps: true,

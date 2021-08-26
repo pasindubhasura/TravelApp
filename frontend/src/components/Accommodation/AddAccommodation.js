@@ -247,7 +247,7 @@ export default class AddAccommodation extends Component {
                                                     <button type="reset" className="btn btn-primary acc-button"><i class="fas fa-eraser"></i>&nbsp;Clear</button>
                                                 </div>
                                                 <div className="form-group col" style={{ marginTop: '15px' }}>
-                                                    <a href="/Accommodation_Home/Accommodation/" className="btn btn-danger acc-button"><i className="fas fa-times"></i>&nbsp;Cancel</a>
+                                                    <Link to="/Accommodation_Home/Accommodation/" className="btn btn-danger acc-button"><i className="fas fa-times"></i>&nbsp;Cancel</Link>
                                                 </div>
                                             </div>
                                             <div className="col-6" />

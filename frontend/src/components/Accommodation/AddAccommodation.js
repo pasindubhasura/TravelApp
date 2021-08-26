@@ -160,12 +160,12 @@ export default class AddAccommodation extends Component {
                     }
                 )
             } else {
-                toast.error("You have an Error in Inserting");
+                toast.error("You have an Error in Updating 🛑");
             }
         });
     }
     else
-        alert("Please Enter Details Correclty !");
+        toast.error("Please Enter Details Correclty ❗");
     };
 
 

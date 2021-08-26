@@ -10,6 +10,11 @@ export default class AccommodationHome extends Component {
                 <div className="row">
                     <div className="col-1"/>
                     <div className="col-10">
+                        <div className="row">
+                            <div className="col position-relative link">
+                            <p><Link to="/">Home</Link> {'>'} Accommodation Management</p>
+                            </div>
+                        </div>
                         <div className="row caption">
                             <div className="col-9 position-relative">
                                 <h2>Accommodation Management</h2>
@@ -22,7 +27,7 @@ export default class AccommodationHome extends Component {
                                     <img className="card-img-top" src="/images/acc-img2.jpg" alt="Card image cap"/>
                                     <div className="card-body">
                                         <h5 className="card-title text-center">Manage Accommodations</h5>
-                                        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                        <p className="card-text">Accommodation Management enables you to configure a variety of options related to Accommodation Details and management.</p>
                                         <div className="view d-flex justify-content-center">
                                             <Link className="btn button btn-primary text-center" to="/Accommodation_Home/Accommodation/">View &raquo;</Link>
                                         </div>
@@ -34,7 +39,7 @@ export default class AccommodationHome extends Component {
                                     <img className="card-img-top" src="/images/acc-img4.jpg" alt="Card image cap"/>
                                     <div className="card-body">
                                         <h5 className="card-title text-center">Manage Rooms</h5>
-                                        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                        <p className="card-text">Room Management enables you to configure a variety of options related to rooms and management.</p>
                                         <div className="view d-flex justify-content-center">
                                             <Link className="btn button btn-primary text-center" to="/Accommodation_Home/Rooms/">View &raquo;</Link>
                                         </div>

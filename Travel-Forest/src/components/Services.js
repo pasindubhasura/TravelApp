@@ -4,7 +4,7 @@ import "react-tabs/style/react-tabs.css";
 import styled from "styled-components";
 import DestinationList from "./DestinationList";
 import GuideList from "./GuidesList";
-import RoomsList from "./RoomsList";
+import AccommodationList from "./AccommodationList";
 import VehicleList from "./VehicleList";
 import { colors } from "./data";
 export default function Services() {
@@ -33,7 +33,7 @@ export default function Services() {
           <Tab>Destinations</Tab>
           <Tab>Guides</Tab>
           <Tab>Vehicles</Tab>
-          <Tab>Rooms</Tab>
+          <Tab>Accommodations</Tab>
         </TabList>
 
         <TabPanel>
@@ -46,7 +46,7 @@ export default function Services() {
           <VehicleList />
         </TabPanel>
         <TabPanel>
-          <RoomsList />
+          <AccommodationList />
         </TabPanel>
       </Tabs>
     </Div>

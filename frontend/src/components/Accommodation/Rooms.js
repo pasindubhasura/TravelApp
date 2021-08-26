@@ -3,6 +3,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import ReactTooltip from 'react-tooltip';
+import { Link } from 'react-router-dom';
 import swl from 'sweetalert'
 import {jsPDF} from 'jspdf'
 import 'jspdf-autotable'
@@ -90,7 +91,7 @@ export default class Rooms extends Component {
         const doc = new jsPDF({ orientation: "landscape" });
         var time = new Date().toLocaleString();
         doc.setFontSize(27);
-        doc.text(`Travel Accommodation Details Report`, 150, 35, null, null, "center");
+        doc.text(`Travel Accommodation Room Details Report`, 150, 35, null, null, "center");
         doc.setFontSize(10);
         doc.text(`(Generated on ${time})`, 150, 41, null, null, "center");
         doc.setFontSize(12);
@@ -107,7 +108,7 @@ export default class Rooms extends Component {
           body: data,
         });
         
-        doc.save("Accommodation_Report.pdf");
+        doc.save("Room_Report.pdf");
        }
 
 
@@ -116,11 +117,10 @@ export default class Rooms extends Component {
         return (
             <div className="container containerTop">
                 <div className="row">
-                    <div className="col-1"/>
-                    <div className="col-11">
+                    <div className="col-12">
                         <div className="row">
                             <div className="col position-relative link">
-                                <p><a href="/Accommodation_Home/">Accommodation Management</a> {'>'} Rooms</p>
+                            <p><Link to="/">Home</Link> {'>'} <Link to="/Accommodation_Home/">Accommodation Management</Link> {'>'} Rooms</p>
                             </div>
                         </div>
                         <div className="row">
@@ -132,14 +132,14 @@ export default class Rooms extends Component {
                         </div>
                         <div className="row">
                             <div className="col-2 buttons">
-                                <a href="/Accommodation_Home/Rooms/add" type="button" class="button" ><span><i class="fal fa-plus-circle"></i>&nbsp;&nbsp;Add Rooms</span></a><br /><br />
+                                <Link to="/Accommodation_Home/Rooms/add" type="button" class="button" ><span><i class="fal fa-plus-circle"></i>&nbsp;&nbsp;Add Rooms</span></Link><br /><br />
                             </div>
                             <div className="col-4 buttons">
-                                <a href="#" type="button" class="button2" onClick={()=>this.exportPDF()} ><span><i class="fas fa-download"></i>&nbsp;&nbsp;Download Report</span></a><br /><br />
+                                <Link to="#" type="button" class="button2" onClick={()=>this.exportPDF()} ><span><i class="fas fa-download"></i>&nbsp;&nbsp;Download Report</span></Link><br /><br />
                             </div>
-                            <div className="col-2">                                                                
+                            <div className="col-3">                                                                
                             </div>
-                            <div className="col-4 search position-relative">
+                            <div className="col-3 search position-relative">
                                 <ReactTooltip />
                                 <i className="fa fa-search"></i> <input className="form-control" type="Search" placeholder="Search a room" name="searchQuery" data-tip="Enter accommodation name OR room no OR availability" data-type="dark" onChange={this.handleSearchArea} />
                             </div>
@@ -170,15 +170,15 @@ export default class Rooms extends Component {
                                                     <td>{rooms.noOfBeds}</td>
                                                     <td>{rooms.airCondition}</td>
                                                     <td>{rooms.price}</td>
-                                                    <td>{rooms.description}</td>
+                                                    <td style={{maxWidth:'100px',whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis'}} >{rooms.description}</td>
                                                     <td>{rooms.availability}</td>
                                                     <td>
-                                                        <a href={`/Accommodation_Home/Rooms/edit/${rooms._id}`} type="button" class="btn btn-warning" style={{width:'95px', margin:'2px'}}>
+                                                        <Link to={`/Accommodation_Home/Rooms/edit/${rooms._id}`} type="button" class="btn btn-warning" style={{width:'95px', margin:'2px'}}>
                                                             <i class="far fa-edit"></i>&nbsp;Edit
-                                                        </a>&nbsp;&nbsp;
-                                                        <a href="#" type="button" class="btn btn-danger" onClick={() => this.onDelete(rooms._id)}>
+                                                        </Link>&nbsp;&nbsp;
+                                                        <Link to="#" type="button" class="btn btn-danger" onClick={() => this.onDelete(rooms._id)}>
                                                             <i className="far fa-trash-alt"></i>&nbsp;Delete
-                                                        </a>
+                                                        </Link>
                                                     </td>
                                                 </tr>
                                             </tbody>

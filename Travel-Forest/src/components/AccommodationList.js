@@ -1,27 +1,30 @@
 import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
 import axios from "axios";
-export default function RoomsList() {
-  let [rooms, setRooms] = useState([]);
+
+
+export default function AccommodationList() {
+
+  let [accommodations, setAccommodations] = useState([]);
   let [searchInput, setsearchInput] = useState("");
 
   useEffect(() => {
     fetchData();
   }, []);
   const fetchData = async () => {
-    const response = await axios.get("http://localhost:5001/room");
+    const response = await axios.get("http://localhost:5001/accommodation");
     if (response.data.success) {
-      setRooms(response.data.existingRooms);
+      setAccommodations(response.data.existingAccommodations);
     }
   };
 
   if (searchInput.length > 0) {
-    rooms = rooms.filter((i) => {
-      return i.accName.toLowerCase().match(searchInput.toLowerCase());
+    accommodations = accommodations.filter((i) => {
+      return i.accommodationType.toLowerCase().match(searchInput.toLowerCase());
     });
   }
   return (
-    <Div>
+    <Div className="container">
       <Coulmn>
         <Row
           style={{
@@ -29,33 +32,37 @@ export default function RoomsList() {
             marginLeft: "9%",
           }}
         >
-          <h5 style={{ fontWeight: "bold" }}>Rooms:</h5>
+          <h5 style={{ fontWeight: "bold" }}>Accommodations :</h5>
         </Row>
         <Row>
           <SearchField
             onChange={(e) => setsearchInput(e.target.value)}
-            placeholder="Search Guides here..."
+            placeholder="Search an accommodation here..."
           />
         </Row>
       </Coulmn>
-      {rooms.map((item, index) => {
-        return (
+      {accommodations.map((accommodation, index) => {
+        return (          
           <Column key={index}>
             <Card>
               <ImageContainer>
-                <Image src={item.image} />
+                <Image src={accommodation.accImage} />
               </ImageContainer>
 
-              <LocationList>
-                <Title>{item.accName}</Title>
+              <LocationList style={{marginLeft:'20px'}}>
+                <Title>{accommodation.accommodationType} - {accommodation.name}</Title>
 
                 <Location>
-                  <P>{item.roomNo} |</P>
-                  <P>{item.noOfBeds} |</P>
-                  <P>{item.airCondition} </P>
+                  <P>No of Rooms : {accommodation.noOfRomm} </P>
                 </Location>
+
+
                 <P style={{ paddingLeft: "10px", paddingTop: "5px" }}>
-                  {item.description}
+                  Location : {accommodation.location} 
+                </P>
+
+                <P style={{ paddingLeft: "10px", paddingTop: "5px" }}>
+                  Contact :{accommodation.mobile}
                 </P>
               </LocationList>
             </Card>
@@ -70,23 +77,26 @@ const Div = Styled.div`
   margin: 0 auto;
 `;
 
-const Card = Styled.div`
+const Card = Styled.div`  
   width: 100%;
   height: 170px;
-  border: 1px solid green;
-  border-radius: 5px;
-  margin: 0px 0px 25px 0px;
+  border: 0.05px solid green;
+  border-radius: 20px;
+  margin: 0px 0px 40px 0px;
   display: flex;
-  box-shadow: 5px 6px 10px #888888;
+  box-shadow: 0 6px 20px rgba(56, 125, 255, 0.17);
+  -webkit-filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
+  filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
   &:hover {
     cursor: pointer;
-    filter: brightness(70%);
+    background-color: rgb(235, 235, 235);
   }
 `;
 const Image = Styled.img`
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
   width: 100%;
   height: 100%;
-  padding: 8px;
   object-fit: cover;
 `;
 const Column = Styled.div`
@@ -102,11 +112,13 @@ const Title = Styled.h5`
   font-weight: bold;
 `;
 const Location = Styled.div`
+  margin-top: 20px;
   padding-left: 10px;
   font-weight: bold;
   display: flex;
 `;
 const LocationList = Styled.div`
+  margin-Top:10px;
   display: flex;
   flex-direction: column;
 `;
@@ -132,7 +144,9 @@ const Coulmn = Styled.div`
   border-radius: 5px;
   height: 300px;
   margin: 40px 0px;
-  box-shadow: 5px 6px 10px #888888;
+  box-shadow: 0 6px 20px rgba(56, 125, 255, 0.17);
+  -webkit-filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
+  filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
 `;
 const Row = Styled.div`
   display: flex;

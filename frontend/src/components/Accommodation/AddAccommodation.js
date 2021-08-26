@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom';
+import defaultImage from "../../images/placeholder.png";
+import { storage } from "../../firebase";
+import Progress from "./Progress";
 import './AccStyles.css';
 
 
@@ -21,49 +25,103 @@ export default class AddAccommodation extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            accommodationId:"",
             accommodationType:"",
             name:"",
+            location:"",
             noOfRomm:Number,
             mobile:Number,
+            //Firebase Image Upload States
+            file: null,
+            uploadPercentage: 0,
+            NoItemImg: defaultImage,
+            accImage: "",            
             formErrors: {
+                accommodationId: "",
+                location:"",
                 name: "",
                 noOfRomm: 0,
                 mobile: 0
             }
         };
     }
+    
 
-    //handle input feild
-
-    handleTypeChange=(e)=>{
-        this.setState(
-            {accommodationType: e.target.value});
+    // Upload Image 
+    uploadImage(e) {
+        if (e.target.files[0] !== null) {
+            const uploadTask = storage
+                .ref(`products/${e.target.files[0].name}`)
+                .put(e.target.files[0]);
+            uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                    //progress function
+                    const progress = Math.round(
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    );
+                    this.setState({ uploadPercentage: progress });
+                },
+                (error) => {
+                    //error function
+                    console.log(error);
+                },
+                () => {
+                    //complete function
+                    storage
+                        .ref("products")
+                        .child(e.target.files[0].name)
+                        .getDownloadURL()
+                        .then((url) => {
+                            console.log(url);
+                            this.setState({ accImage: url });
+                        });
+                }
+            );
+        } else {
+            alert("Error Upload Image First")
+        }
     }
+
+    
+    //handle input feild
 
     handleInputChange = (e) => {
         const { name, value } = e.target;
         let formErrors = this.state.formErrors;
         switch (name) {
-            case "name":
-                formErrors.name =
+            case "accommodationId":
+                formErrors.accommodationId =
                     value.trim().length < 5
-                        ? "Minimum charachter must be 5"
+                        ? "Id must have minimum 5 charactors"
                         : "";
                 break;
-                case "noOfRomm":
-                    formErrors.noOfRomm =
-                        value < 0
-                            ? "Invalid Number !"
+                case "name":
+                    formErrors.name =
+                        value.trim().length < 5
+                            ? "this field is required minimum 5 charachter"
                             : "";
                     break;
-                    case "mobile":
-                        formErrors.mobile =
-                            value.length > 10 || value.length < 10
-                                ? "Mobile Number must have 10 digit"
+                    case "noOfRomm":
+                        formErrors.noOfRomm =
+                            value < 0
+                                ? "Invalid Number !"
                                 : "";
-                    break;
-                default:
-                    break;
+                        break;
+                        case "location":
+                            formErrors.location =
+                                value.trim().length < 2
+                                ? "this field is required minimum 2 charactor"
+                                : "";
+                            break;
+                            case "mobile":
+                                formErrors.mobile =
+                                    value.length > 10 || value.length < 10
+                                        ? "Mobile Number must have 10 digit"
+                                        : "";
+                            break;
+                        default:
+                            break;
         }
         this.setState({ formErrors, [name]: value }, () => console.log(this.state));
         this.setState({
@@ -77,12 +135,15 @@ export default class AddAccommodation extends Component {
         e.preventDefault();
         if (formValid(this.state)) {
 
-            const { accommodationType, name, noOfRomm, mobile } = this.state;
+            const { accommodationId, accommodationType, location, name, noOfRomm, mobile, accImage } = this.state;
             const data = {
+                accommodationId:accommodationId,
                 accommodationType:accommodationType,
                 name:name,
+                location: location,
                 noOfRomm:noOfRomm,
-                mobile:mobile
+                mobile:mobile,
+                accImage:accImage
             }
         //console.log(data)
         axios.post("http://localhost:5001/accommodation/add",data).then((res) => {
@@ -90,8 +151,10 @@ export default class AddAccommodation extends Component {
                 toast.success("Accommodation "+ this.state.name +" Added");
                 this.setState(
                     {
+                        accommodationId: "",
                         accommodationType: "",
                         name: "",
+                        location: "",
                         noOfRomm: Number,
                         mobile: Number
                     }
@@ -115,7 +178,7 @@ export default class AddAccommodation extends Component {
                     <div className="col-10">
                         <div className="row">
                             <div className="col position-relative link">
-                                <p><a href="/Accommodation_Home/">Accommodation Management</a> {'>'} <a href="/Accommodation_Home/Accommodation/">Accommodation</a> {'>'} Add Accommodation</p>
+                            <p><Link to="/">Home</Link> {'>'} <Link to="/Accommodation_Home/">Accommodation Management</Link> {'>'} <Link to="/Accommodation_Home/Accommodation/">Accommodation</Link> {'>'} Add Accommodation</p>
                             </div>
                         </div>
                         <div className="row">
@@ -130,6 +193,13 @@ export default class AddAccommodation extends Component {
                                 <div className="col-6 form">
                                     <form onSubmit={this.onSubmit}>
                                         <div className="form-row">
+                                            <div className="form-group col" style={{ marginTop: '15px' }}>
+                                                <label>Accommodation ID : </label>
+                                                <input type="text" className="form-control" minLength="5" name="accommodationId" placeholder="ACCXXXX" value={this.state.accommodationId} onChange={this.handleInputChange}  required />
+                                                {formErrors.accommodationId.length > 5 &&(
+                                                    <p style={{color:'red'}} className="errorMessage">{formErrors.accommodationId}</p>
+                                                )}                                                
+                                            </div>                                             
                                             <div className="form-group col" style={{ marginTop: '15px' }}>
                                                 <label>Accommodation type : </label>
                                                 <select id="type" className="form-control" name="type" onChange={this.handleTypeChange} value={this.state.accommodationType} required>
@@ -147,7 +217,14 @@ export default class AddAccommodation extends Component {
                                                 {formErrors.name.length > 5 &&(
                                                     <p style={{color:'red'}} className="errorMessage">{formErrors.name}</p>
                                                 )}                                                
-                                            </div>                                         
+                                            </div>  
+                                            <div className="form-group col" style={{ marginTop: '15px' }}>
+                                                <label>Location : </label>
+                                                <input type="text" className="form-control" name="location" placeholder="#Yaala" value={this.state.location} onChange={this.handleInputChange}  required />
+                                                {formErrors.location.length > 2 &&(
+                                                    <p style={{color:'red'}} className="errorMessage">{formErrors.location}</p>
+                                                )}                                                
+                                            </div>                                                                                    
                                             <div className="form-group col" style={{ marginTop: '15px' }}>
                                                 <label>Number of Rooms : </label>
                                                 <input type="number" className="form-control" name="noOfRomm" placeholder="#2" value={this.state.noOfRomm} onChange={this.handleInputChange}  required />
@@ -177,8 +254,32 @@ export default class AddAccommodation extends Component {
                                         </div>
                                     </form>
                                 </div>
-                                <div className="col-6 accImage">
-                                </div>
+                                    {/* add image */}
+                                    <div className="col-6 accAccImage">
+
+                                        {this.state.accImage ? (
+                                            <img
+                                                src={this.state.accImage}
+                                                alt="Room image"
+                                            />
+                                        ) : (
+                                            <img
+                                                src={this.state.NoItemImg}
+                                                alt="Room image"
+                                            />
+                                        )}
+                                        <div className="row">
+                                            <div className="form-group" style={{ width: "500px", marginTop: "40px", marginLeft: "10px" }}>
+                                                <Progress percentage={this.state.uploadPercentage} />
+                                            </div>
+                                        </div>
+                                        <div className="row" style={{ marginTop: '50px', marginBottom:'50px', maxWidth: '525px' }}>
+                                            <div class="input-group mb-3">
+                                                <input type="file" class="form-control" id="inputGroupFile02" name="Image" style={{ borderRadius: '20px' }}
+                                                    onChange={(e) => { this.setState({ file: e.target.files[0] }); this.uploadImage(e); }} />
+                                            </div>
+                                        </div>
+                                    </div>
                             </div>
                         </div>
                     </div>

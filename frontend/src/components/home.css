@@ -1,0 +1,92 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+
+.card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.imgSize{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1));
+    border-radius: 20px;
+    min-height: 220px;
+    max-height: 220px;
+}
+
+
+.img1{
+    background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1) ), url('../images/img-home-8.jpg');
+    background-size: cover;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15), 0 6px 20px 0 rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+}
+.img1:hover{
+    background: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2) ), url('../images/img-home-8.jpg');
+    background-size: cover;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15), 0 6px 20px 0 rgba(0, 0, 0, 0.25);
+}
+
+.img2{
+    background: linear-gradient( rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2) ), url('../images/img-home-9.jpg');
+    background-size: cover;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+}
+
+.img2:hover{
+    background: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2) ), url('../images/img-home-9.jpg');
+    background-size: cover;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15), 0 6px 20px 0 rgba(0, 0, 0, 0.25);
+}
+
+.img3{
+    background: linear-gradient( rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2) ), url('../images/img-home-11.jpg');
+    background-size: cover;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+}
+
+.img3:hover{
+    background: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2) ), url('../images/img-home-11.jpg');
+    background-size: cover;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15), 0 6px 20px 0 rgba(0, 0, 0, 0.25);
+}
+
+.img4{
+    background: linear-gradient( rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.1) ), url('../images/img-home-4.jpg');
+    background-size: cover;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+}
+
+.img4:hover{
+    background: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2) ), url('../images/img-home-4.jpg');
+    background-size: cover;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15), 0 6px 20px 0 rgba(0, 0, 0, 0.25);
+}
+
+.title{
+    margin-top: 0;    
+    height: 50px;
+    background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5) );
+    border-radius: 20px;
+}
+
+.title h4{
+    color: white;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    padding-top: 10px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.body{
+    padding-top: 20px;
+    text-align: center;
+}

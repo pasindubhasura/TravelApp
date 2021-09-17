@@ -6,6 +6,8 @@ import NavBar from "./components/NavBar/Sidebar";
 import Footer from "./components/Footer/Footer";
 import "./App.css";
 
+import './components/Home';
+
 //travelVehicle
 import AddVehicle from "./components/vehicle-lakshika/AddVehicle";
 import ViewVehicle from "./components/vehicle-lakshika/ViewVehicles";
@@ -32,6 +34,8 @@ import EditAccommodation from "./components/Accommodation/EditAccommodation";
 import Rooms from "./components/Accommodation/Rooms";
 import AddRoom from "./components/Accommodation/AddRoom";
 import EditRoom from "./components/Accommodation/EditRoom";
+import Home from "./components/Home";
+import '';
 
 export default function App() {
   return (
@@ -41,6 +45,9 @@ export default function App() {
         <GlobalStyle />
         <Router>
           <NavBar />
+
+          <Route path="/" component={Home} exact></Route>
+
           {/*Guides*/}
           <Route path="/get_guide" component={GuideHome} exact></Route>
           <Route path="/guide_add" component={AddGuide} exact></Route>

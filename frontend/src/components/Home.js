@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
+import Calendar from 'react-calendar'
 import './home.css';
+import "./calendar.css";
+
 
 export default class Home extends Component {
 
@@ -63,6 +66,9 @@ export default class Home extends Component {
                                 </Link>
                             </div>
                         </div>
+                    </div>
+                    <div className="col-md-4 col-xs-4">
+                        <Calendar className="calender"/>
                     </div>                                  
                 </div>
             </div>

@@ -35,7 +35,6 @@ import Rooms from "./components/Accommodation/Rooms";
 import AddRoom from "./components/Accommodation/AddRoom";
 import EditRoom from "./components/Accommodation/EditRoom";
 import Home from "./components/Home";
-import '';
 
 export default function App() {
   return (

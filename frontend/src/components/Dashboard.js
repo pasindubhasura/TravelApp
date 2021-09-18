@@ -13,8 +13,7 @@ export default class Home extends Component {
                 <div className="row dashboardCards" style={{marginTop:'45px'}}>
                     <div className="col-md-8 col-xs-8">
                         <div className="row">
-                            <div className="col-md-1 col-xs-1"/>
-                            <div className="col-md-5 col-xs-5 d-flex justify-content-center">
+                            <div className="col-md-5 col-xs-5 d-flex justify-content-center" style={{marginTop:'10px'}}>
                                 <Link to="/destinations" style={{textDecoration: 'none'}}>
                                     <div class="img1 imgSize" style={{width: '20rem'}} >
                                         <div className="title">
@@ -26,7 +25,7 @@ export default class Home extends Component {
                                     </div>
                                 </Link>                                
                             </div>
-                            <div className="col-md-5 col-xs-5 d-flex justify-content-center">
+                            <div className="col-md-5 col-xs-5 d-flex justify-content-center" style={{marginTop:'10px'}}>
                                 <Link to="/get_guide" style={{textDecoration: 'none'}}>
                                     <div class="img2 imgSize" style={{width: '20rem'}} >
                                         <div className="title">
@@ -38,10 +37,10 @@ export default class Home extends Component {
                                     </div>
                                 </Link>
                             </div>
+                            <div className="col-md-2 col-xs-2" />
                         </div>
                         <div className="row" style={{marginTop:'40px'}}>
-                            <div className="col-md-1 col-xs-1"/>
-                            <div className="col-md-5 col-xs-5 d-flex justify-content-center">
+                            <div className="col-md-5 col-xs-5 d-flex justify-content-center" style={{marginTop:'10px'}}>
                                 <Link to="/travelVehicle" style={{textDecoration: 'none'}}>
                                     <div class="img3 imgSize" style={{width: '20rem'}} >
                                         <div className="title">
@@ -53,7 +52,7 @@ export default class Home extends Component {
                                     </div>
                                 </Link>
                             </div>
-                            <div className="col-md-5 col-xs-5 d-flex justify-content-center">
+                            <div className="col-md-5 col-xs-5 d-flex justify-content-center" style={{marginTop:'10px'}}>
                                 <Link to="/Accommodation_Home" style={{textDecoration: 'none'}}>
                                     <div class="img4 imgSize" style={{width: '20rem'}} >
                                         <div className="title">
@@ -65,6 +64,7 @@ export default class Home extends Component {
                                     </div>
                                 </Link>
                             </div>
+                            <div className="col-md-2 col-xs-2" />
                         </div>
                     </div>
                     <div className="col-md-4 col-xs-4">

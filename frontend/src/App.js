@@ -6,7 +6,6 @@ import NavBar from "./components/NavBar/Sidebar";
 import Footer from "./components/Footer/Footer";
 import "./App.css";
 
-import './components/Home';
 
 //travelVehicle
 import AddVehicle from "./components/vehicle-lakshika/AddVehicle";
@@ -34,7 +33,8 @@ import EditAccommodation from "./components/Accommodation/EditAccommodation";
 import Rooms from "./components/Accommodation/Rooms";
 import AddRoom from "./components/Accommodation/AddRoom";
 import EditRoom from "./components/Accommodation/EditRoom";
-import Home from "./components/Home";
+
+import Home from "./components/Dashboard";
 
 export default function App() {
   return (

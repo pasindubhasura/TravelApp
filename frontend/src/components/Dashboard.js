@@ -20,7 +20,7 @@ export default class Home extends Component {
                                             <h4>Destination</h4>
                                         </div>
                                         <div className="body">
-                                            <h1 style={{color:'#fff'}}><i class="fas fa-map-marked-alt"></i>&nbsp;&nbsp;255</h1>
+                                            <h1 style={{color:'#fff'}}><i class="fas fa-map-marked-alt"></i>&nbsp;&nbsp;7</h1>
                                         </div>
                                     </div>
                                 </Link>                                
@@ -32,7 +32,7 @@ export default class Home extends Component {
                                             <h4>Guides</h4>
                                         </div>
                                         <div className="body">
-                                            <h1 style={{color:'#fff'}}><i class="far fa-user"></i>&nbsp;&nbsp;46</h1>
+                                            <h1 style={{color:'#fff'}}><i class="far fa-user"></i>&nbsp;&nbsp;2</h1>
                                         </div>
                                     </div>
                                 </Link>
@@ -47,7 +47,7 @@ export default class Home extends Component {
                                             <h4>Vehicles</h4>
                                         </div>
                                         <div className="body">
-                                            <h1 style={{color:'#fff'}}><i class="fas fa-car"></i>&nbsp;&nbsp;74</h1>
+                                            <h1 style={{color:'#fff'}}><i class="fas fa-car"></i>&nbsp;&nbsp;6</h1>
                                         </div>
                                     </div>
                                 </Link>
@@ -59,7 +59,7 @@ export default class Home extends Component {
                                             <h4>Accommodation</h4>
                                         </div>
                                         <div className="body">
-                                            <h1 style={{color:'#fff'}}><i class="fas fa-hotel"></i>&nbsp;&nbsp;82</h1>
+                                            <h1 style={{color:'#fff'}}><i class="fas fa-hotel"></i>&nbsp;&nbsp;9</h1>
                                         </div>
                                     </div>
                                 </Link>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import Calendar from 'react-calendar'
-import './home.css';
+import './Dashboard.css';
 import "./calendar.css";
 
 

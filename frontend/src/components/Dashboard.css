@@ -10,7 +10,6 @@
     max-height: 220px;
 }
 
-
 .img1{
     background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1) ), url('../images/img-home-8.jpg');
     background-size: cover;

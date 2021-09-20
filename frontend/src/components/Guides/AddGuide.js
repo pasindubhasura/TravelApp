@@ -39,6 +39,7 @@ export default class AddGuide extends Component {
             imgLink: "",
 
             formErrors: {
+                registrationNo:"",
                 phoneNo: Number,
                 name: "",
                 email: ""
@@ -90,6 +91,13 @@ export default class AddGuide extends Component {
         const { name, value } = e.target;
         let formErrors = this.state.formErrors;
         switch (name) {
+            
+            case "registrationNo":
+                formErrors.registrationNo =
+                value.length < 5 || value.length > 7
+                        ? "Guide registrationNo number should have charactor between 5 to 7"
+                        : "";
+                break;
             case "name":
                 formErrors.name =
                     value.length < 5
@@ -103,7 +111,7 @@ export default class AddGuide extends Component {
                 break;
             case "phoneNo":
                 formErrors.phoneNo =
-                    value.length > 10 || value.length > 10
+                    value.length < 10 || value.length > 10
                         ? "Please enter a valid phone number"
                         : "";
                 break;
@@ -174,7 +182,7 @@ export default class AddGuide extends Component {
         return (
             <div className="container containerTop">
                 <div className="row ">
-                    
+
                     <div className="col-12">
                         <div className="row">
                             <div className="col position-relative link">
@@ -199,13 +207,15 @@ export default class AddGuide extends Component {
                                                 <input type="text"
                                                     className="form-control"
                                                     name="registrationNo"
+                                                    minLength="4"
+                                                    maxLength="7"
                                                     placeholder="Enter Registration No"
                                                     value={this.state.registrationNo}
                                                     onChange={this.handleInputChange} />
-
-                                                {/* {formErrors.registrationNo.length > 5  &&(
-                                                    <span style={{color:'red'}} className="errorMessage">{formErrors.registrationNo}</span>
-                                                )} */}
+                                            
+                                            {formErrors.registrationNo.length < 5 || formErrors.registrationNo.length > 7 && (
+                                            <span style={{ color: 'red' }} className="errorMessage">{formErrors.registrationNo}</span>
+                                            )} 
 
                                             </div>
                                             {/* Guide Name */}
@@ -240,7 +250,7 @@ export default class AddGuide extends Component {
                                             <div className="form-group" style={{ marginBottom: '15px' }}>
                                                 <label style={{ marginBottom: '5px' }}>Email</label>
                                                 <input type="email"
-                                                    className={ "form-control"}
+                                                    className={"form-control"}
                                                     name="email"
                                                     placeholder="Enter email"
                                                     value={this.state.email}
@@ -260,9 +270,10 @@ export default class AddGuide extends Component {
                                                     value={this.state.phoneNo}
                                                     onChange={this.handleInputChange} />
 
-                                                {formErrors.phoneNo.length > 10 && (
+                                                {formErrors.phoneNo.length < 10 || formErrors.phoneNo.length > 10 && (
                                                     <span style={{ color: 'red' }} className="errorMessage">{formErrors.phoneNo}</span>
                                                 )}
+                                                
 
                                             </div>
 
@@ -276,12 +287,7 @@ export default class AddGuide extends Component {
                                                     <option value="German,English">German,English </option>
                                                     <option value="French,English">French,English </option>
                                                 </select>
-                                                {/* <input type="text"
-                                    className="form-control"
-                                    name="language"
-                                    placeholder="Enter Language"
-                                    value={this.state.language}
-                                    onChange={this.handleInputChange} /> */}
+                                       
                                             </div>
 
 
@@ -295,18 +301,13 @@ export default class AddGuide extends Component {
                                                     <option value="Unavailable">Unavailable</option>
                                                 </select>
 
-                                                {/* <input type="text"
-                                    className="form-control"
-                                    name="availability"
-                                    placeholder="Enter Availability"
-                                    value={this.state.availability}
-                                    onChange={this.handleInputChange} /> */}
+                                             
                                             </div>
 
 
-            
+
                                             <div>
-                                                <button  type="reset" className="btn btn-outline-success sub_btn2"><i class="far fa-times-circle"></i>&nbsp;Reset</button>
+                                                <button type="reset" className="btn btn-outline-success sub_btn2"><i class="far fa-times-circle"></i>&nbsp;Reset</button>
                                                 <button type="submit" className="btn btn-primary sub_btn" onClick={this.onSubmit}><i class="far fa-save"></i>&nbsp;Add</button>
 
                                             </div>

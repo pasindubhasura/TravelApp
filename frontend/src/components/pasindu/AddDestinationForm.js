@@ -14,13 +14,8 @@ export default function AddDestinationForm() {
   const [destination, setdestination] = useState("");
   const [city, setcity] = useState("");
   const [description, setdescription] = useState("");
-  const [destinationError, setdestinationError] = useState("");
-  const [cityError, setcityError] = useState("");
-  const [districtError, setdistrictError] = useState("");
-  const [provinceError, setprovinceError] = useState("");
-  const [descriptionError, setdescriptionError] = useState("");
-  const [imgError, setimgError] = useState("");
   const [errors, seterrors] = useState([]);
+  let hasErrors;
 
   const clear = () => {
     setcity("");
@@ -31,65 +26,65 @@ export default function AddDestinationForm() {
     setImg(defaultImage);
   };
   const formHandler = async (e) => {
-    seterrors([]);
     e.preventDefault();
-    const response = await axios.post(
-      "http://localhost:5001/destinations/add",
-      { district, province, destination, city, description, image: img }
-    );
-    if (district === "none")
+    seterrors([]);
+    hasErrors = false;
+    if (destination === ""){
+      seterrors((oldArr) => [
+        ...oldArr,
+        { msg: "Destination can't be empty" },
+      ]);
+      hasErrors = true;
+    }
+    if (city === ""){
+      seterrors((oldArr) => [
+        ...oldArr,
+        { msg: "City can't be empty" },
+      ]);
+      hasErrors = true;
+    }
+    if (district === "none"){
       seterrors((oldArr) => [
         ...oldArr,
         { msg: "District should be selected" },
       ]);
-    if (province === "none")
+      hasErrors = true;
+    }
+    if (province === "none"){
       seterrors((oldArr) => [
         ...oldArr,
         { msg: "Province should be selected" },
       ]);
-    if (response.data.success) window.location = "/destinations";
-    if (response.data.error) {
-      response.data.error.map((item) => {
-        seterrors((oldArr) => [...oldArr, { msg: item.msg }]);
-      });
+      hasErrors = true;
+    }
+    if (description.length < 10){
+      seterrors((oldArr) => [
+        ...oldArr,
+        { msg: "Description can't have less than 10 characters" },
+      ]);
+      hasErrors = true;
+    }
+    if (img == defaultImage){
+      seterrors((oldArr) => [
+        ...oldArr,
+        { msg: "Image can't be empty" },
+      ]);
+      hasErrors = true;
+    }
+    if(hasErrors === false){
+      console.log("true")
+      const response = await axios.post(
+        "http://localhost:5001/destinations/add",
+        { district, province, destination, city, description, image: img }
+      );
+      if (response.data.success) window.location = "/destinations";
+      // if (response.data.error) {
+      //   response.data.error.map((item) => {
+      //     seterrors((oldArr) => [...oldArr, { msg: item.msg }]);
+      //   });
+      // }
     }
   };
-  // const validation = () => {
-  //   setdestinationError("");
-  //   setcityError("");
-  //   setdistrictError("");
-  //   setprovinceError("");
-  //   setdescriptionError("");
-  //   setimgError("");
-
-  //   if (destination === "") {
-  //     setdestinationError("Destination can't be empty!");
-  //   }
-  //   if (city === "") {
-  //     setcityError("City can't be empty!");
-  //   }
-  //   if (district === "none") {
-  //     setdistrictError("District has to be selected!");
-  //   }
-  //   if (province === "none") {
-  //     setprovinceError("Province has to be selected!");
-  //   }
-  //   if (description === "") {
-  //     setdescriptionError("Description can't be empty!");
-  //   }
-  //   if (img === defaultImage) {
-  //     setimgError("Add an Image");
-  //   } else if (
-  //     destinationError === "" &&
-  //     cityError === "" &&
-  //     districtError === "" &&
-  //     provinceError === "" &&
-  //     descriptionError === "" &&
-  //     imgError === ""
-  //   ) {
-  //     return true;
-  //   }
-  // };
   const imageHandler = (evt) => {
     setisLoading(true);
     var f = evt.target.files[0]; // FileList object
@@ -129,33 +124,18 @@ export default function AddDestinationForm() {
         : null}
       <FormGrid onSubmit={formHandler}>
         <Column>
-          {destinationError.length > 0 ? (
-            <Span>{destinationError}</Span>
-          ) : (
-            <Span style={{ visibility: "hidden" }}></Span>
-          )}
           <TextInput
             placeholder="Destination"
             type="text"
             value={destination}
             onChange={(e) => setdestination(e.target.value)}
           />
-          {cityError.length > 0 ? (
-            <Span>{cityError}</Span>
-          ) : (
-            <Span style={{ visibility: "hidden" }}></Span>
-          )}
           <TextInput
             placeholder="City"
             type="text"
             onChange={(e) => setcity(e.target.value)}
             value={city}
           />
-          {districtError.length > 0 ? (
-            <Span>{districtError}</Span>
-          ) : (
-            <Span style={{ visibility: "hidden" }}></Span>
-          )}
           <Dropdown
             onChange={(e) => setdistrict(e.target.value)}
             value={district}
@@ -171,11 +151,6 @@ export default function AddDestinationForm() {
               );
             })}
           </Dropdown>
-          {provinceError.length > 0 ? (
-            <Span>{provinceError}</Span>
-          ) : (
-            <Span style={{ visibility: "hidden" }}></Span>
-          )}
           <Dropdown
             onChange={(e) => setprovince(e.target.value)}
             value={province}
@@ -191,11 +166,6 @@ export default function AddDestinationForm() {
               );
             })}
           </Dropdown>
-          {descriptionError.length > 0 ? (
-            <Span>{descriptionError}</Span>
-          ) : (
-            <Span style={{ visibility: "hidden" }}></Span>
-          )}
           <TextInputBox
             placeholder="Description"
             rows={8}
@@ -206,7 +176,7 @@ export default function AddDestinationForm() {
             color={colors.darkerGreen}
             style={{ marginRight: "2%" }}
             onClick={clear}
-            type="button"
+            type="reset"
           >
             Clear
           </Button>
@@ -219,14 +189,7 @@ export default function AddDestinationForm() {
             <ImageContainner>
               {isLoading ? <Spinner src={spinner} /> : <Image src={img} />}
             </ImageContainner>
-            {imgError.length > 0 ? (
-              <Span style={{ marginLeft: "15px", width: "90%" }}>
-                {imgError}
-              </Span>
-            ) : (
-              <Span style={{ visibility: "hidden" }}></Span>
-            )}
-            <FileInput type="file" onChange={imageHandler} id="fileInput" />
+            <FileInput type="file" onChange={imageHandler} id="fileInput"/>
             <UploadButton
               color={colors.darkerGreen}
               type="button"

@@ -65,7 +65,8 @@ export default class Accommodation extends Component {
     filterData(accommodations,searchKey){
         const result=accommodations.filter((accommodation)=>
             accommodation.accommodationType.toLowerCase().includes(searchKey)||
-            accommodation.name.toLowerCase().includes(searchKey)
+            accommodation.name.toLowerCase().includes(searchKey) ||
+            accommodation.location.toLowerCase().includes(searchKey)
         )
         this.setState({accommodations:result});
     }

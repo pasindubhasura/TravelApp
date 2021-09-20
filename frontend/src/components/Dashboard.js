@@ -1,13 +1,27 @@
-import React, { Component } from 'react'
+import React,{useState,useEffect} from 'react'
 import { Link } from 'react-router-dom';
 import Calendar from 'react-calendar'
 import './Dashboard.css';
 import "./calendar.css";
+import axios from "axios";
 
+const Home = () => {
+    const [destinationC, setdestinationC] = useState(0);
+    const [accommodationC, setaccommodationC] = useState(0);
+    const [vehiclesC, setvehiclesC] = useState(0);
+    const [guidesC, setguidesC] = useState(0);
 
-export default class Home extends Component {
+    useEffect(() => {
+        getCount();
+    },[])
 
-    render() {
+    const getCount = async() => {
+    const res = await axios.get("http://localhost:5001/destinations/getCount");
+    setdestinationC(res.data.destinationC);
+    setaccommodationC(res.data.accommodationC);
+    setvehiclesC(res.data.vehiclesC);
+    setguidesC(res.data.guidesC);
+    }
         return (
             <div className="container">
                 <div className="row dashboardCards" style={{marginTop:'45px'}}>
@@ -20,19 +34,19 @@ export default class Home extends Component {
                                             <h4>Destination</h4>
                                         </div>
                                         <div className="body">
-                                            <h1 style={{color:'#fff'}}><i class="fas fa-map-marked-alt"></i>&nbsp;&nbsp;7</h1>
+                                            <h1 style={{color:'#fff'}}><i class="fas fa-map-marked-alt"></i>&nbsp;&nbsp;{destinationC}</h1>
                                         </div>
                                     </div>
                                 </Link>                                
                             </div>
-                            <div className="col-md-5 col-xs-5 d-flex justify-content-center" style={{marginTop:'10px'}}>
+                            <div className="col-md-5 col-xs-5 d-flex justify-content-center" style={{marginTop:'10px', marginLeft:'20px'}}>
                                 <Link to="/get_guide" style={{textDecoration: 'none'}}>
                                     <div class="img2 imgSize" style={{width: '20rem'}} >
                                         <div className="title">
                                             <h4>Guides</h4>
                                         </div>
                                         <div className="body">
-                                            <h1 style={{color:'#fff'}}><i class="far fa-user"></i>&nbsp;&nbsp;2</h1>
+                                            <h1 style={{color:'#fff'}}><i class="far fa-user"></i>&nbsp;&nbsp;{guidesC}</h1>
                                         </div>
                                     </div>
                                 </Link>
@@ -47,19 +61,19 @@ export default class Home extends Component {
                                             <h4>Vehicles</h4>
                                         </div>
                                         <div className="body">
-                                            <h1 style={{color:'#fff'}}><i class="fas fa-car"></i>&nbsp;&nbsp;6</h1>
+                                            <h1 style={{color:'#fff'}}><i class="fas fa-car"></i>&nbsp;&nbsp;{vehiclesC}</h1>
                                         </div>
                                     </div>
                                 </Link>
                             </div>
-                            <div className="col-md-5 col-xs-5 d-flex justify-content-center" style={{marginTop:'10px'}}>
+                            <div className="col-md-5 col-xs-5 d-flex justify-content-center" style={{marginTop:'10px',marginLeft:'20px'}}>
                                 <Link to="/Accommodation_Home" style={{textDecoration: 'none'}}>
                                     <div class="img4 imgSize" style={{width: '20rem'}} >
                                         <div className="title">
                                             <h4>Accommodation</h4>
                                         </div>
                                         <div className="body">
-                                            <h1 style={{color:'#fff'}}><i class="fas fa-hotel"></i>&nbsp;&nbsp;9</h1>
+                                            <h1 style={{color:'#fff'}}><i class="fas fa-hotel"></i>&nbsp;&nbsp;{accommodationC}</h1>
                                         </div>
                                     </div>
                                 </Link>
@@ -73,5 +87,5 @@ export default class Home extends Component {
                 </div>
             </div>
         )
-    }
 }
+export default Home;

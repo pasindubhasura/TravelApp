@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
 const Destination = require("../models/destination");
+const Accommodation = require("../models/accommodation");
+const Guides = require("../models/guide");
+const Vehicles = require("../models/travelVehicle");
 const router = require("express").Router();
 const imgbbUploader = require("imgbb-uploader");
 const validator = require("../functions/validator");
@@ -103,5 +106,22 @@ router.post("/upload", async (req, res) => {
   console.log(response.image.url);
   res.json({ imgUrl: response.image.url });
 });
+
+router.get("/getCount" , async (req,res) => {
+  const destinationC = await Destination.count((err, count) => {
+    console.log(count)
+  })
+  const accommodationC = await Accommodation.count((err, count) => {
+    console.log(count)
+    
+  })
+  const vehiclesC = await Vehicles.count((err, count) => {
+    console.log(count)
+  })
+  const guidesC = await Guides.count((err, count) => {
+    console.log(count)
+  })
+  return res.json({destinationC,accommodationC,vehiclesC,guidesC});
+})
 
 module.exports = router;

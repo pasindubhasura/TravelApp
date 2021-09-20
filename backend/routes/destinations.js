@@ -31,7 +31,7 @@ router.get("/get_one/:id", async (req, res) => {
   }
 }); //get one destination record
 
-router.post("/add", validator.validate("addDestination"), async (req, res) => {
+router.post("/add", async (req, res) => {
   const destination = await new Destination();
   destination.destination = req.body.destination;
   destination.city = req.body.city;
@@ -39,12 +39,6 @@ router.post("/add", validator.validate("addDestination"), async (req, res) => {
   destination.province = req.body.province;
   destination.description = req.body.description;
   destination.image = req.body.image;
-
-  let errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    res.json({ error: errors.array() });
-    return;
-  }
 
   try {
     await destination.save();
@@ -56,12 +50,8 @@ router.post("/add", validator.validate("addDestination"), async (req, res) => {
 
 router.post(
   "/update",
-  validator.validate("editDestination"),
   async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.json({ error: errors.array() });
-    }
+
 
     try {
       const id = req.body.id;

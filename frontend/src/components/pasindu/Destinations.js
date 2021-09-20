@@ -22,14 +22,20 @@ export default function Destinations(props) {
     window.location = "/destinations/add";
   };
   const deleteItem = async (id) => {
-    alert("Are you sure?");
+    let response;
+    let action = window.confirm("Are you sure?");
     console.log(id);
-    const response = await axios.post(
-      "http://localhost:5001/destinations/delete",
-      {
-        id,
-      }
-    );
+    if(action == true){
+      response = await axios.post(
+        "http://localhost:5001/destinations/delete",
+        {
+          id,
+        }
+      );
+    }
+    else{
+      return;
+    }
     if (response.data.success) window.location = "/destinations";
     if (response.data.error) alert(response.data.error);
   };

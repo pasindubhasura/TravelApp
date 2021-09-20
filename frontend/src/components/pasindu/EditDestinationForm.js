@@ -1,3 +1,4 @@
+//import statements 
 import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
 import axios from "axios";
@@ -7,6 +8,7 @@ import { districts, provinces, colors } from "./data";
 import spinner from "../../images/spinner.gif";
 
 export default function EditDestinationForm(props) {
+  //states and variables
   const [img, setImg] = useState(defaultImage);
   const [district, setdistrict] = useState("none");
   const [province, setprovince] = useState("none");
@@ -18,15 +20,18 @@ export default function EditDestinationForm(props) {
   const [errors, seterrors] = useState([]);
   let hasErrors;
 
+  //trigger function when page renders 
   useEffect(() => {
-    fetchData();
+    fetchData();//calling function
   }, [id]);
 
+  //API request
   const fetchData = async () => {
     const response = await axios.get(
       `http://localhost:5001/destinations/get_one/${id}`
     );
     if (response.data.destination) {
+      //assign input fields based on API response
       const destination = response.data.destination;
       setcity(destination.city);
       setdistrict(destination.district);
@@ -37,6 +42,7 @@ export default function EditDestinationForm(props) {
     }
   };
 
+  //input fields clear function
   const clear = () => {
     setcity("");
     setdistrict("none");
@@ -46,6 +52,7 @@ export default function EditDestinationForm(props) {
     setImg(defaultImage);
   };
   
+  //handle form submit and validation
   const formHandler = async (e) => {
     e.preventDefault();
     seterrors([]);
@@ -93,14 +100,17 @@ export default function EditDestinationForm(props) {
       hasErrors = true;
     }
     if(hasErrors === false){
-      console.log("true")
+      //sending API request
       const response = await axios.post(
         "http://localhost:5001/destinations/update",
         { id, district, province, destination, city, description, image: img }
       );
+      //redirecting if success
       if (response.data.success) window.location = "/destinations";
     }
   };
+
+  //image upload handler
   const imageHandler = (evt) => {
     setisLoading(true);
     var f = evt.target.files[0]; // FileList object
@@ -126,6 +136,7 @@ export default function EditDestinationForm(props) {
     reader.readAsBinaryString(f);
   };
 
+   //handle image button click 
   const uploadButtonClickHandler = () => {
     document.getElementById("fileInput").click();
   };
@@ -224,6 +235,7 @@ export default function EditDestinationForm(props) {
   );
 }
 
+//component styles 
 const MainDiv = Styled.div`
 margin:40px auto;
 background-color:white;

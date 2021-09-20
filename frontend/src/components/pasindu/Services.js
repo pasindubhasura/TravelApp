@@ -1,3 +1,4 @@
+//import statements 
 import React, { useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
@@ -5,9 +6,12 @@ import styled from "styled-components";
 import DestinationList from "./DestinationList";
 import VehicleList from "../vehicle-lakshika/VehicleList";
 import { colors } from "./data";
+
 export default function Services() {
+
+  //states and variables
   const [selectedTab, setselectedTab] = useState(0);
-  console.log(selectedTab);
+  
   return (
     <Div>
       {selectedTab === 0 ? (
@@ -46,6 +50,7 @@ export default function Services() {
   );
 }
 
+//search function
 function Search() {
   const [searchInput, setsearchInput] = useState("");
   const searchHandler = () => {
@@ -73,6 +78,8 @@ function Search() {
     </Coulmn>
   );
 }
+
+//styles
 const Coulmn = styled.div`
   display: flex;
   justify-content: center;

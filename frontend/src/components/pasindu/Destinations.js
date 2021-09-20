@@ -1,3 +1,4 @@
+//import statements 
 import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
 import axios from "axios";
@@ -7,24 +8,32 @@ import "jspdf-autotable";
 import Logo from "../../images/Logo.png";
 
 export default function Destinations(props) {
+  //states and variables
   let [destinations, setdestinations] = useState([]);
   let [search, setsearch] = useState("");
+
+  //trigger function when page renders
   useEffect(() => {
     fetchData();
   }, []);
 
+  //fetching data from API
   const fetchData = async () => {
     const response = await axios.get("http://localhost:5001/destinations");
     if (!response.data.error) setdestinations(response.data.destinations);
   };
 
+  //redirect to add destination form
   const addDestinationForm = () => {
     window.location = "/destinations/add";
   };
+
+  //delete function
   const deleteItem = async (id) => {
+
     let response;
-    let action = window.confirm("Are you sure?");
-    console.log(id);
+    let action = window.confirm("Are you sure?");//confirm alert
+
     if(action == true){
       response = await axios.post(
         "http://localhost:5001/destinations/delete",
@@ -36,22 +45,30 @@ export default function Destinations(props) {
     else{
       return;
     }
+
     if (response.data.success) window.location = "/destinations";
     if (response.data.error) alert(response.data.error);
   };
+
+  //redirect edit form
   const editDestinationForm = (id) => {
     props.history.push("destinations/edit", { id });
   };
+
+  //search function
   if (search.length > 0) {
     destinations = destinations.filter((i) => {
       return i.destination.toLowerCase().match(search.toLowerCase());
     });
   }
 
+  //report generation function
   const pdf = () => {
+
     let bodyData = [];
     let length = destinations.length;
     let x = 1;
+
     for (let i = 0; i < length; i++) {
       bodyData.push([
         x++,
@@ -166,6 +183,8 @@ export default function Destinations(props) {
     </MainDiv>
   );
 }
+
+//styles
 const MainDiv = Styled.div`
 margin:30px auto;
 background-color:white;

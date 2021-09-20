@@ -39,7 +39,7 @@ export default class Home extends Component {
                             </div>
                             <div className="col-md-2 col-xs-2" />
                         </div>
-                        <div className="row" style={{marginTop:'40px'}}>
+                        <div className="row bottom" style={{marginTop:'40px'}}>
                             <div className="col-md-5 col-xs-5 d-flex justify-content-center" style={{marginTop:'10px'}}>
                                 <Link to="/travelVehicle" style={{textDecoration: 'none'}}>
                                     <div class="img3 imgSize" style={{width: '20rem'}} >

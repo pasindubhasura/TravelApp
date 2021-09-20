@@ -1,3 +1,4 @@
+//data file
 export const districts = [
   "Ampara",
   "Anuradhapura",

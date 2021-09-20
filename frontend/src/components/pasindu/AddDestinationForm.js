@@ -1,3 +1,4 @@
+//import statements 
 import React, { useState } from "react";
 import Styled from "styled-components";
 import axios from "axios";
@@ -7,6 +8,7 @@ import { districts, provinces, colors } from "./data";
 import spinner from "../../images/spinner.gif";
 
 export default function AddDestinationForm() {
+  //states and variables
   const [img, setImg] = useState(defaultImage);
   const [isLoading, setisLoading] = useState(false);
   const [district, setdistrict] = useState("none");
@@ -17,6 +19,7 @@ export default function AddDestinationForm() {
   const [errors, seterrors] = useState([]);
   let hasErrors;
 
+  //input fields clear function
   const clear = () => {
     setcity("");
     setdistrict("none");
@@ -25,6 +28,8 @@ export default function AddDestinationForm() {
     setdescription("");
     setImg(defaultImage);
   };
+
+  //handle form submit and validation
   const formHandler = async (e) => {
     e.preventDefault();
     seterrors([]);
@@ -72,19 +77,18 @@ export default function AddDestinationForm() {
       hasErrors = true;
     }
     if(hasErrors === false){
-      console.log("true")
+      
+      //sending API request
       const response = await axios.post(
         "http://localhost:5001/destinations/add",
         { district, province, destination, city, description, image: img }
       );
+      //redirecting if success
       if (response.data.success) window.location = "/destinations";
-      // if (response.data.error) {
-      //   response.data.error.map((item) => {
-      //     seterrors((oldArr) => [...oldArr, { msg: item.msg }]);
-      //   });
-      // }
     }
   };
+  
+  //image upload handler
   const imageHandler = (evt) => {
     setisLoading(true);
     var f = evt.target.files[0]; // FileList object
@@ -110,6 +114,7 @@ export default function AddDestinationForm() {
     reader.readAsBinaryString(f);
   };
 
+  //handle image button click 
   const uploadButtonClickHandler = () => {
     document.getElementById("fileInput").click();
   };
@@ -204,6 +209,7 @@ export default function AddDestinationForm() {
   );
 }
 
+//component styles 
 const MainDiv = Styled.div`
 margin:40px auto;
 background-color:white;

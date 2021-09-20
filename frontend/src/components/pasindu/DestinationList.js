@@ -1,18 +1,26 @@
+//import statements 
 import React, { useState, useEffect } from "react";
 import Styled from "styled-components";
 import axios from "axios";
 import { resetIdCounter } from "react-tabs";
 
 export default function DestinationList() {
+
+  //states and variables
   let [destinations, setdestinations] = useState([]);
   let [search, setsearch] = useState("");
+
+  //trigger function when page renders
   useEffect(() => {
     fetchData();
   }, []);
+
+  //fetching data from API
   const fetchData = async () => {
     const response = await axios.get("http://localhost:5001/destinations");
     if (!response.data.error) setdestinations(response.data.destinations);
   };
+
   return (
     <Div>
       {destinations.map((item, index) => {
@@ -42,6 +50,8 @@ export default function DestinationList() {
     </Div>
   );
 }
+
+//styles
 const Div = Styled.div`
   width: 100%;
   margin: 0 auto;

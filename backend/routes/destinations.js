@@ -1,3 +1,4 @@
+//import statements
 const mongoose = require("mongoose");
 const Destination = require("../models/destination");
 const Accommodation = require("../models/accommodation");
@@ -18,8 +19,9 @@ router.get("/", async (req, res) => {
 }); //get all destination records
 
 router.get("/get_one/:id", async (req, res) => {
+
   const id = req.params.id;
-  console.log(id);
+  
   try {
     const destination = await Destination.findById(id);
     if (destination == null) {
@@ -32,6 +34,8 @@ router.get("/get_one/:id", async (req, res) => {
 }); //get one destination record
 
 router.post("/add", async (req, res) => {
+
+  //variables
   const destination = await new Destination();
   destination.destination = req.body.destination;
   destination.city = req.body.city;
@@ -51,8 +55,6 @@ router.post("/add", async (req, res) => {
 router.post(
   "/update",
   async (req, res) => {
-
-
     try {
       const id = req.body.id;
       const destination = await Destination.findById(id);
@@ -74,7 +76,7 @@ router.post(
 
 router.post("/delete", async (req, res) => {
   const id = req.body.id;
-  console.log(id);
+
   try {
     await Destination.findByIdAndDelete(id);
     res.json({ success: "Record Successfully Deleted!" });
@@ -112,6 +114,6 @@ router.get("/getCount" , async (req,res) => {
     console.log(count)
   })
   return res.json({destinationC,accommodationC,vehiclesC,guidesC});
-})
+})//document counter 
 
 module.exports = router;

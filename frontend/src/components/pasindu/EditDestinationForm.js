@@ -159,6 +159,13 @@ export default function EditDestinationForm(props) {
             <option value="none" disabled hidden>
               District
             </option>
+            {districts.map((item) => {
+              return (
+                <option value={item} key={item}>
+                  {item}
+                </option>
+              );
+            })}
           </Dropdown>
           <Dropdown
             onChange={(e) => setprovince(e.target.value)}
@@ -167,6 +174,13 @@ export default function EditDestinationForm(props) {
             <option value="none" disabled hidden>
               Province
             </option>
+            {provinces.map((item) => {
+              return (
+                <option value={item} key={item}>
+                  {item}
+                </option>
+              );
+            })}
           </Dropdown>
           <TextInputBox
             placeholder="Description"

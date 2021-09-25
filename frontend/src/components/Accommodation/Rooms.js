@@ -16,7 +16,7 @@ export default class Rooms extends Component {
     constructor(props){
         super(props);
         this.state={
-            rooms:[],
+            rooms:[], //define room list as array
             roomNo: Number
         };
     }  
@@ -26,7 +26,7 @@ export default class Rooms extends Component {
     componentDidMount(){
         this.retrieveRooms();
     }
-
+    //retrieve rooms from mongodb parsing the url
     retrieveRooms(){
         axios.get(`http://localhost:5001/room/`).then(res => {
             if(res.data.success){
@@ -47,7 +47,7 @@ export default class Rooms extends Component {
             icon: "warning",
             buttons: ["Cancel","Delete"],
             dangerMode: true,
-          })
+          })//if user select yes as option this .then will call and delete data from the database
           .then((willDelete) => {
             if (willDelete) {
                 axios.delete(`http://localhost:5001/room/delete/${id}`).then((res) => {
@@ -55,6 +55,7 @@ export default class Rooms extends Component {
                     swl('Room successfully Deleted',{
                       icon: "success",
                     });
+                    //rederect to the rooms page
                     this.retrieveRooms();
                 })                
             }
@@ -64,7 +65,8 @@ export default class Rooms extends Component {
 
     //define search options
     filterData(rooms,searchKey){
-        const result=rooms.filter((room)=>            
+        const result=rooms.filter((room)=>    
+            //defining searching keyworlds        
             room.accName.toLowerCase().includes(searchKey)||
             room.airCondition.toLowerCase().includes(searchKey)||
             room.availability.toLowerCase().includes(searchKey)            
@@ -161,6 +163,7 @@ export default class Rooms extends Component {
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
+                                        {/* retrieve Room details using mapping  */}
                                         {this.state.rooms.map((rooms, index) => (
                                             <tbody>
                                                 <tr>

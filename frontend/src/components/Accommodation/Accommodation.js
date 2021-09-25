@@ -47,7 +47,7 @@ export default class Accommodation extends Component {
             icon: "warning",
             buttons: ["Cancel","Delete"],
             dangerMode: true,
-          })
+          })//if user select yes as option this .then will call and delete data from the database
           .then((willDelete) => {
             if (willDelete) {
                 axios.delete(`http://localhost:5001/accommodation/delete/${id}`).then((res) => {
@@ -55,6 +55,7 @@ export default class Accommodation extends Component {
                     swl('Accommdation successfully Deleted',{
                       icon: "success",
                     });
+                    //rederect to the accommodation page
                     this.retrieveAccommodations();
                 })                
             }
@@ -64,6 +65,7 @@ export default class Accommodation extends Component {
     //search  accommdation function
     filterData(accommodations,searchKey){
         const result=accommodations.filter((accommodation)=>
+            //defining searching keyworlds
             accommodation.accommodationType.toLowerCase().includes(searchKey)||
             accommodation.name.toLowerCase().includes(searchKey) ||
             accommodation.location.toLowerCase().includes(searchKey)
@@ -157,6 +159,7 @@ export default class Accommodation extends Component {
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
+                                        {/* retrieve Accommodation details using mapping  */}
                                         {this.state.accommodations.map((accommodations, index) => (
                                             <tbody>
                                                 <tr>

@@ -8,7 +8,7 @@ import { storage } from "../../firebase";
 import Progress from "./Progress";
 import './AccStyles.css';
 
-
+//set form validator 
 const formValid = ({ formErrors, ...rest }) => {
     let valid = true;
     Object.values(formErrors).forEach(val => {
@@ -97,6 +97,7 @@ export default class EditRoom extends Component {
 
     handleInputChange = (e) => {
         const { name, value } = e.target;
+        //validate form errors
         let formErrors = this.state.formErrors;
         switch (name) {
             case "roomNo":
@@ -133,7 +134,10 @@ export default class EditRoom extends Component {
     };   
     
 
-    //display accommdation
+    /*
+        display accommdation
+        for get accommodation name
+    */
     retrieveAccommodations() {
         axios.get('http://localhost:5001/accommodation/').then(res => {
             if (res.data.success) {
@@ -145,10 +149,12 @@ export default class EditRoom extends Component {
         });
     }    
     
+    //this function will triger when save button clicked
     onSubmit = (e) => {
 
         e.preventDefault();
         if (formValid(this.state)) {
+            //check form value is recieved 
             const id = this.props.match.params.id;
             const { accName, roomNo, noOfBeds, airCondition, price, description, availability, image } = this.state;
             const data = {
@@ -165,6 +171,7 @@ export default class EditRoom extends Component {
         axios.put(`http://localhost:5001/room/update/${id}`, data).then((res) => {
             if (res.data.success) {
                 toast.success('Room no ' + this.state.roomNo + ' Update Successfully !');
+                //after adding form data to database form input fields will empty
                 this.setState(
                     {
                         accName: "",
@@ -177,11 +184,13 @@ export default class EditRoom extends Component {
                     }
                 )
             } else {
+                //if any database connection occur this will trigers
                 toast.error("You have an Error in Updating 🛑");
             }
         });
     }
     else
+        //if form values are didn't receive to the state this message will displayed
         toast.error("Please Enter Details Correclty ❗");
     };    
     
@@ -189,6 +198,8 @@ export default class EditRoom extends Component {
     componentDidMount() {
         //retrieve  Accommodations name
         this.retrieveAccommodations();
+
+        //retrive room details from room table view
         const id = this.props.match.params.id;
         axios.get(`http://localhost:5001/room/${id}`).then((res) => {
             if (res.data.success) {

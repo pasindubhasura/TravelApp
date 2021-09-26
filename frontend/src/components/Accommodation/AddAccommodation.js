@@ -8,7 +8,7 @@ import { storage } from "../../firebase";
 import Progress from "./Progress";
 import './AccStyles.css';
 
-
+//set form validator 
 const formValid = ({ formErrors, ...rest }) => {
     let valid = true;
     Object.values(formErrors).forEach(val => {
@@ -79,6 +79,7 @@ export default class AddAccommodation extends Component {
                 }
             );
         } else {
+            //if any error occur image not will upload
             toast.error("Error in Uploading an Image 🛑");
         }
     }
@@ -88,6 +89,7 @@ export default class AddAccommodation extends Component {
 
     handleInputChange = (e) => {
         const { name, value } = e.target;
+        //validate form errors
         let formErrors = this.state.formErrors;
         switch (name) {
             case "accommodationId":
@@ -130,11 +132,12 @@ export default class AddAccommodation extends Component {
         });
     };
 
+    //this function will triger when save button clicked
     onSubmit = (e) => {
 
         e.preventDefault();
         if (formValid(this.state)) {
-
+            //check form value is recieved 
             const { accommodationId, accommodationType, location, name, noOfRomm, mobile, accImage } = this.state;
             const data = {
                 accommodationId:accommodationId,
@@ -149,6 +152,7 @@ export default class AddAccommodation extends Component {
         axios.post("http://localhost:5001/accommodation/add",data).then((res) => {
             if (res.data.success) {
                 toast.success("Accommodation "+ this.state.name +" Added");
+                //after adding form data to database form input fields will empty
                 this.setState(
                     {
                         accommodationId: "",
@@ -160,12 +164,14 @@ export default class AddAccommodation extends Component {
                     }
                 )
             } else {
+                //if any database connection occur this will trigers
                 toast.error("You have an Error in Updating 🛑");
             }
         });
     }
     else
-        toast.error("Please Enter Details Correclty ❗");
+        //if form values are didn't receive to the state this message will displayed
+        toast.error("Please Enter Details Correclty ❗"); 
     };
 
 
@@ -196,6 +202,7 @@ export default class AddAccommodation extends Component {
                                             <div className="form-group col" style={{ marginTop: '15px' }}>
                                                 <label>Accommodation ID : </label>
                                                 <input type="text" className="form-control" minLength="5" name="accommodationId" placeholder="ACCXXXX" value={this.state.accommodationId} onChange={this.handleInputChange}  required />
+                                                {/* display form error message */}
                                                 {formErrors.accommodationId.length > 5 &&(
                                                     <p style={{color:'red'}} className="errorMessage">{formErrors.accommodationId}</p>
                                                 )}                                                
@@ -214,6 +221,7 @@ export default class AddAccommodation extends Component {
                                             <div className="form-group col" style={{ marginTop: '15px' }}>
                                                 <label>Accommodation Name : </label>
                                                 <input type="text" className="form-control" name="name" placeholder="#River side" value={this.state.name} onChange={this.handleInputChange}  required />
+                                                {/* display form error message */}
                                                 {formErrors.name.length > 5 &&(
                                                     <p style={{color:'red'}} className="errorMessage">{formErrors.name}</p>
                                                 )}                                                
@@ -221,6 +229,7 @@ export default class AddAccommodation extends Component {
                                             <div className="form-group col" style={{ marginTop: '15px' }}>
                                                 <label>Location : </label>
                                                 <input type="text" className="form-control" name="location" placeholder="#Yaala" value={this.state.location} onChange={this.handleInputChange}  required />
+                                                {/* display form error message */}
                                                 {formErrors.location.length > 2 &&(
                                                     <p style={{color:'red'}} className="errorMessage">{formErrors.location}</p>
                                                 )}                                                
@@ -228,6 +237,7 @@ export default class AddAccommodation extends Component {
                                             <div className="form-group col" style={{ marginTop: '15px' }}>
                                                 <label>Number of Rooms : </label>
                                                 <input type="number" className="form-control" name="noOfRomm" placeholder="#2" value={this.state.noOfRomm} onChange={this.handleInputChange}  required />
+                                                {/* display form error message */}
                                                 {formErrors.noOfRomm < 1   ||(
 											        <p style={{color:'red'}} className="errorMessage">{formErrors.noOfRomm}</p>
 										        )}                                                                                                                                                 
@@ -235,6 +245,7 @@ export default class AddAccommodation extends Component {
                                             <div className="form-group col" style={{ marginTop: '15px' }}>
                                                 <label>Telephone Number : </label>
                                                 <input type="number" className="form-control" id="mobile" name="mobile" placeholder="011456XXXX" value={this.state.mobile} onChange={this.handleInputChange}  required />
+                                                {/* display form error message */}
                                                 {formErrors.mobile.length > 10  &&(
                                                     <p style={{color:'red'}} className="errorMessage">{formErrors.mobile}</p>
                                                 )}

@@ -8,6 +8,7 @@ import { storage } from "../../firebase";
 import Progress from "./Progress";
 import './AccStyles.css';
 
+//set form validator 
 const formValid = ({ formErrors, ...rest }) => {
     let valid = true;
     Object.values(formErrors).forEach(val => {
@@ -89,7 +90,7 @@ export default class AddRoom extends Component {
     handleNameChange = (e) => {
         this.setState({ accName: e.target.value });
     }
-
+    //validate form errors
     handleInputChange = (e) => {
         const { name, value } = e.target;
         let formErrors = this.state.formErrors;
@@ -143,11 +144,13 @@ export default class AddRoom extends Component {
             }
         });
     }
-
+    
+    //this function will triger when save button clicked
     onSubmit = (e) => {
-
+        
         e.preventDefault();
         if (formValid(this.state)) {
+            //check form value is recieved 
             const { accName, roomNo, noOfBeds, airCondition, price, description, image } = this.state;
             const data = {
                 accName: accName,
@@ -162,6 +165,7 @@ export default class AddRoom extends Component {
             axios.post("http://localhost:5001/room/add", data).then((res) => {
                 if (res.data.success) {
                     toast.success('Room no ' + this.state.roomNo + ' added Successful !');
+                    //after adding form data to database form input fields will empty
                     this.setState(
                         {
                             accName: "",
@@ -173,11 +177,13 @@ export default class AddRoom extends Component {
                         }
                     )
                 } else {
+                    //if any database connection occur this will trigers
                     toast.error("You have an Error in Inserting 🛑");
                 }
             });
         }
         else
+            //if form values are didn't receive to the state this message will displayed
             toast.error("Please Enter Details Correclty ❗");
     };
 
@@ -209,6 +215,7 @@ export default class AddRoom extends Component {
                                                 <label>Accommodation Name : </label>
                                                 <select id="type" className="form-control" name="type" onChange={this.handleNameChange} value={this.state.accName} style={{ marginTop: '10px' }} required>
                                                     <option selected>Choose accommodation...</option>
+                                                    {/* display form error message */}
                                                     {this.state.accommodations.map((accommodations) => (
                                                         <option value={accommodations.name} required>{accommodations.name}</option>
                                                     ))}
@@ -217,6 +224,7 @@ export default class AddRoom extends Component {
                                             <div className="form-group col" style={{ marginTop: '15px' }}>
                                                 <label>Room No : </label>
                                                 <input type="text" className="form-control" name="roomNo" placeholder="10XXX" onChange={this.handleInputChange} value={this.state.roomNo} style={{ marginTop: '10px' }} required />
+                                                {/* display form error message */}
                                                 {formErrors.roomNo < 5 || (
                                                     <p style={{ color: 'red' }} className="errorMessage">{formErrors.roomNo}</p>
                                                 )}
@@ -224,6 +232,7 @@ export default class AddRoom extends Component {
                                             <div className="form-group col" style={{ marginTop: '15px' }}>
                                                 <label>Number of Beds : </label>
                                                 <input type="number" className="form-control" name="noOfBeds" placeholder="2" value={this.state.noOfBeds} onChange={this.handleInputChange} style={{ marginTop: '10px' }} required />
+                                                {/* display form error message */}
                                                 {formErrors.noOfBeds < 1 || (
                                                     <p style={{ color: 'red' }} className="errorMessage">{formErrors.noOfBeds}</p>
                                                 )}
@@ -240,6 +249,7 @@ export default class AddRoom extends Component {
                                                     <input class="form-check-input" type="radio" name="airCondition" id="condition" onChange={this.handleInputChange} value="Non-AC" style={{ marginTop: '10px' }} required />
                                                     <label class="form-check-label" for="inlineRadio2">Non-AC</label>
                                                 </div>
+                                                {/* display form error message */}
                                                 {formErrors.airCondition < 1 || (
                                                     <p style={{ color: 'red' }} className="errorMessage">{formErrors.airCondition}</p>
                                                 )}
@@ -252,6 +262,7 @@ export default class AddRoom extends Component {
                                                 <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" name="price" placeholder="XXX" value={this.state.price} onChange={this.handleInputChange} required />
                                                 <span class="input-group-text">.00</span>
                                             </div>
+                                            {/* display form error message */}
                                             {formErrors.price < 1 || (
                                                 <p style={{ color: 'red' }} className="errorMessage">{formErrors.price}</p>
                                             )}
